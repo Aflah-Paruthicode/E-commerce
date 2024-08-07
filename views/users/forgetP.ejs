@@ -1,0 +1,40 @@
+<%- include('../layouts/header.ejs') %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<div class="forget-div-main">
+    <div class="forget-container">
+        <div class="forget-div">
+            <form action="loadFpOtpPage" method="post">
+                <h2>Enter youre email</h2>
+                <input type="email" name="email" style="    padding: 5px;
+                font-size: 13px;">
+                <input type="submit" value="Get OTP" style="    background-color: black;
+                border: none;
+                color: white;
+                padding: 6px;
+                font-size: 14px;
+                width: 86px;
+                border-radius: 5px;">
+            </form>
+            <% if (typeof emessage !== 'undefined') { %>
+                <script>
+                    Swal.fire({
+                        title: 'Failed!',
+                        text: '<%= emessage %>',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    })
+                </script>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<%- include('../layouts/footer.ejs') %>
+

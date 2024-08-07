@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Report</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/adminCss/adminHome.css">
+  <link rel="stylesheet" href="/css/adminCss/adminListCus.css">
+  <style>
+    .filter-container {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .filter-container .filter {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ad-home-header-section">
+    <div class="ad-home-header-container">
+      <nav>
+        <div class="logo">
+          <img src="/logo/DashFootwares.png" alt="">
+          <h3 style="color: black;font-size: 16px;font-weight: 400;margin: 0;"> DASH FOOTWARES </h3>
+        </div>
+        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/bell (1).png" alt="">
+        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/user (1).png" alt="">
+        <h3 style="color: black;font-size: 16px;font-weight: 400;margin-right: 25px;margin-bottom: 0;">Aflah</h3>
+        <form action="/admin/logout">
+          <input type="submit" value="Logout">
+        </form>
+      </nav>
+    </div>
+  </div>
+  <div class="ad-home-dashboard-section">
+    <div class="ad-home-dashboard-container">
+      <div class="ad-home-dashboard-options">
+        <button><img src="/adminOptionsImages/dashboard.png" alt=""><a href="/admin/dashboard">Dashboard</a></button>
+        <button><img src="/adminOptionsImages/customer.png" alt=""><a href="/admin/customers">Customers</a></button>
+        <button><img src="/adminOptionsImages/product.png" alt=""><a href="/admin/product">Products</a></button>
+        <button><img src="/adminOptionsImages/checkout.png" alt=""><a href="/admin/orders">Orders</a></button>
+        <button><img src="/adminOptionsImages/slider.png" alt=""><a href="/admin/banner">Banner
+            Management</a></button>
+        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon
+            Management</a></button>
+        <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
+        <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
+      </div>
+      <div class="ad-home-dashboard-optionsDetailPage">
+        <div style="    width: 100%; display: flex; justify-content: space-evenly;
+        ">
+
+          <h2>SALES REPORT</h2>
+
+
+          <h5 style="background-color: #000000c7;
+          color: white;
+          padding: 20px;
+          border-radius: 10px;text-align: center;">Overall sales count <br>
+                 <%= pagination.totalOrders %> </h5>
+
+                <h5 style="background-color: #000000c7;
+                color: white;
+                padding: 20px;
+                border-radius: 10px;text-align: center;">Overall ammount <br>
+                 ₹&nbsp;<%= orderTotel %>.00 </h5>
+
+        </div>
+        <div class="filter-container">
+
+          <form action="/admin/salesReport" id="reportForm" method="get" style="display: flex;
+          gap: 50px;">
+            <div style="display: flex;align-items: center;gap: 7px;">
+              <label for="dateFilter">Export: </label>
+              <select name="format" class="form-select" onchange="submitForm()">
+                <option value="">as..</option>
+                <option value="pdf">PDF</option>
+                <option value="excel">Excel</option>
+              </select>
+            </div>
+
+            <div class="filter">
+              <label for="dateFilter">Sort: </label>
+              <select id="dateFilter" class="form-select" name="dura" onclick="submitFormSort(this.value)">
+                <option value="">Choose one...</option>
+                <option value="day">Daily</option>
+                <option value="week">Weekly</option>
+                <option value="month">Monthly</option>
+                <option value="year">Yearly</option>
+              </select>
+          </form>
+        </div>
+        <div class="filter">
+          <label for="startDate">Custom Date: </label>
+          <input type="date" id="startDate" class="form-control">
+          <button id="filterButton" class="btn btn-primary">Filter</button>
+        </div>
+
+
+
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Buyer</th>
+            <th scope="col">Product name</th>
+            <th scope="col">Qty</th>
+            <th scope="col">Price</th>
+            <th scope="col">GST</th>
+            <th scope="col">Coupon Discount</th>
+            <th scope="col">Category</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider" id="salesReportTable">
+          <% let k = 0 %>
+          
+          <% orders.forEach((order)=> { %>
+            <tr>
+
+              <td scope="col">
+                <%= i+1 %>
+              </td>
+              <td scope="col">
+                <%= users[k].name %>
+              </td>
+              <td scope="col">
+                <% let slicedName = products[k].name.slice(0,35) %>
+                <%= slicedName %>...
+              </td>
+              <td scope="col">
+                <%= order.quantity %>
+              </td>
+              <td scope="col">
+                ₹&nbsp;<%= products[k].price %>.00
+              </td>
+              
+              <td scope="col">
+                ₹&nbsp;<%= products[k].price/10 %>.00
+              </td>
+
+              <% if(orders[k].coupon_applied !== 'no') { %>
+                <td scope="col" style="color: green;font-weight: 600;"> ₹&nbsp;-<%= coupon[k].discount %>.00 </td>
+
+             <% } else { %>
+              <td scope="col"> ₹&nbsp;00.00 </td>
+
+            <% } %>
+              <td scope="col">
+                <%= products[k].category %>
+              </td>
+              <td scope="col">
+                ₹&nbsp;<%= order.totelAmmount %>.00
+              </td>
+
+
+
+            </tr>
+            <% k++ %>
+            <% i++ %>
+              <% }) %>
+                <!-- Data will be inserted here by JavaScript -->
+        </tbody>
+      </table>
+      
+      
+      
+      <% if (pagination.totalPages > 1) { %>
+        <div class="pagination">
+            <% if (pagination.hasPrevPage) { %>
+                <a class="btn" href="?page=<%= pagination.currentPage - 1 %>&limit=<%= pagination.limit %>">Previous</a>
+            <% } %>
+            <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                <a href="?page=<%= i %>&limit=<%= pagination.limit %>" class="btn <%= pagination.currentPage === i ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+            <% if (pagination.hasNextPage) { %>
+                <a class="btn" href="?page=<%= pagination.currentPage + 1 %>&limit=<%= pagination.limit %>">Next</a>
+            <% } %>
+        </div>
+    <% } %>
+
+
+
+    </div>
+  </div>
+  </div>
+  <script>
+
+
+    function submitForm() {
+      document.getElementById('reportForm').submit();
+    }
+
+
+    function submitFormSort (data) {
+
+      window.location.href = `/admin/salesReport/?period=${data}`;
+
+    }
+  </script>
+</body>
+
+</html>

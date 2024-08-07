@@ -1,0 +1,126 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat',sans-serif;
+}
+
+body {
+    background-color: #e3dfdf73;
+
+}
+
+
+.ad-home-header-section {
+
+    position: fixed;
+    width: 100%;
+    background-color: #FFFF;
+    margin-bottom: 10px;
+    height: 6.5rem;
+}
+
+
+.ad-home-header-section .ad-home-header-container {
+
+    max-width: 1270px;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFF;
+}
+
+.ad-home-header-section .ad-home-header-container nav {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.ad-home-header-section .ad-home-header-container nav .logo {
+
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.ad-home-header-section .ad-home-header-container nav .logo img {
+    width: 10.5%;
+}
+
+
+.ad-home-header-section .ad-home-header-container nav form input {
+
+    width: 100%;
+    font-size: 16px;
+    color: #fff;
+    padding: 0px 13px;
+    line-height: 39px;
+    border-radius: 5px;
+    font-weight: 500;
+    border: none;
+    border-bottom: 2px solid #00000070;
+    background: black;
+    transition: ease-out 0.3s;
+}
+
+.ad-home-header-section .ad-home-header-container nav form input:hover {
+    background-color: #fff;
+    color: black;
+    transition: ease-in 0.3s;
+}
+
+
+.ad-home-dashboard-section {
+    padding-top: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.ad-home-dashboard-section .ad-home-dashboard-container {
+    width: 98%;
+    display: flex;
+    gap: 10px;
+}
+
+.ad-home-dashboard-section .ad-home-dashboard-container .ad-home-dashboard-options {
+    margin-top: 25px;
+    padding-top: 17px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 17px;
+    width: 25%;
+    height: 825px;
+    background-color: rgb(255, 255, 255);
+}
+
+.ad-home-dashboard-section .ad-home-dashboard-container .ad-home-dashboard-options button {
+
+    width: 75%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 40px;
+    background: white;
+    border: solid 1px #00000021;
+    border-radius: 55px;
+}   
+.ad-home-dashboard-section .ad-home-dashboard-container .ad-home-dashboard-options button img {
+
+    width: 12%;
+}
+
+.ad-home-dashboard-section .ad-home-dashboard-container .ad-home-dashboard-options button a {
+
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-weight: 600;
+}

@@ -1,0 +1,25 @@
+.aboutUs-section {
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.aboutUs-section .aboutUs-container {
+
+    padding: 8%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.aboutUs-section .aboutUs-container h3 {
+    font-size: 27px;
+    margin: 13px;
+}
+
+.aboutUs-section .aboutUs-container p {
+
+    line-height: 26px;
+}

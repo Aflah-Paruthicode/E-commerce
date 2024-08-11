@@ -118,21 +118,63 @@ const loadRegister = async (req, res) => {
 }
 
 const successGoogleLogin = async (req, res) => {
-    if (!req.user) {
 
-        res.redirect('/failure');
+    try {
+
+
+        console.log('user ;;;; ',req.user)
+        if (!req.user) {
+    
+            res.redirect('/failure');
+        } else {
+        const { email } = req.body;
+        console.log(req.user);
+        let useR = await User.findOne({ email: req.user.email });
+    
+        if(!useR) {
+            const hashed_pass = await securePassword(req.user.id);
+    
+            const user = new User({
+                name: req.user.displayName,
+                mobile: 1010101010,
+                email: req.user.email,
+                password: hashed_pass,
+                is_verified: 0,
+                
+            })
+            let userSaved = await user.save()
+            useR = await User.findOne({ email: req.user.email })
+    
+            let newWallet = new Wallet({
+                user_id: useR._id
+                
+            })
+            let walletSave = await newWallet.save();
+            
+        }
+    
+        console.log('hahaa : ', req.body._id)
+        req.session.user_id = useR._id;
+        console.log(req.body._id)
+        res.redirect('/')
+
     }
-    const { email } = req.body;
-    console.log(req.user);
-    const useR = await User.findOne({ email: email });
 
-    req.session.user_id = req.body._id;
-    console.log(req.body._id)
-    res.render('home', { items: array })
+ 
+    } catch (error) {
+        console.log(error.message);
+    }
+   
 }
 
-const failureGoogleLogin = (req, res) => {
-    res.send('Error');
+const failureGoogleLogin = async (req, res) => {
+
+    try {
+        res.redirect('/')
+
+    } catch (error) {
+        console.log(error.message)
+    }
 }
 
 
@@ -1369,6 +1411,7 @@ const cancelOrder = async (req, res) => {
             let walletUpdate = await Wallet.findOneAndUpdate({user_id:req.session.user_id},{$inc: {Money:reducePoinValue}});
 
             const newTransaction = new walletTransactionModel({
+                user:req.session.user_id,
                 product_name: restoreQuantity.name,
                 money: FindProductForRestoreQuantity.totelAmmount,
                 quantity: FindProductForRestoreQuantity.quantity,
@@ -1405,8 +1448,8 @@ const loadWallet = async (req,res) => {
         let i = skip+1
 
         let wallet = await Wallet.findOne({user_id:req.session.user_id});
-        let walletHistory = await walletTransactionModel.find().sort({_id:-1}).skip(skip).limit(limit)
-        const totalTransactions = await walletTransactionModel.countDocuments();
+        let walletHistory = await walletTransactionModel.find({user:req.session.user_id}).sort({_id:-1}).skip(skip).limit(limit)
+        const totalTransactions = await walletTransactionModel.countDocuments({user:req.session.user_id});
         let user = await User.findById({_id:req.session.user_id})
         // let reversedHistory = walletHistory.reverse()
         console.log(wallet)
@@ -2272,7 +2315,7 @@ const loadCartCheckout = async (req, res) => {
         let USEr = await User.findById({ _id: user })
         let address = await Address.find({ user_id: user })
 
-        if (USEr.address !== undefined) {
+        if (USEr.address.length !== 0) {
 
 
 
@@ -2425,6 +2468,7 @@ const loadCartCheckout = async (req, res) => {
 
         } else {
             console.log('yeaahaa :',req.query.quantities)
+            console.log('yeah ith sett address illah')
 
             res.redirect('/cart?ThisFrom=nonAd')
 
@@ -2561,6 +2605,7 @@ const placeOrder = async (req, res) => {
 
 
                             const newTransaction = new walletTransactionModel({
+                                user:req.session.user_id,
                                 product_name: findProdcut.name,
                                 money: totelAmmount,
                                 quantity: quantity,
@@ -2758,6 +2803,7 @@ const placeOrder = async (req, res) => {
     
     
                                 const newTransaction = new walletTransactionModel({
+                                    user:req.session.user_id,
                                     product_name: findProdcut.name,
                                     money: Math.floor(totelAmmount + (findProdcut.price*quantity/10)),
                                     quantity: quantity,

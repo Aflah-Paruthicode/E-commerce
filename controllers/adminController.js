@@ -153,11 +153,13 @@ const loadDashboard = async (req, res) => {
 
         console.log('aaha',topBrands)
 
-
+        console.log('Rendering home with data:', { userData, topProducts, topCategories, topBrands, totelOrders, visitors, totalAmmount, productCount, categoryCount });
 
         const filter = req.query.filter;
     let salesData;
-
+        if(filter) {
+            console.log('verthe keri')
+        
     if (filter === 'yearly') {
         const { startDate, endDate } = getDateRange(filter);
 
@@ -187,10 +189,14 @@ const loadDashboard = async (req, res) => {
         console.log('yeah from daily')
         res.json(salesData);
 
-    } else {
-
-        res.render('home', { userData,topProducts,topCategories,topBrands,totelOrders,visitors,totalAmmount,productCount,categoryCount });
     }
+
+        
+    } else {
+        console.log('illaah kerittilla')
+    res.render('home', { userData,topProducts,topCategories,topBrands,totelOrders,visitors,totalAmmount,productCount,categoryCount });
+
+}
 
     
 

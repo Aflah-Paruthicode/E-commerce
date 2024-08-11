@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const walletTransactionSchema = mongoose.Schema({
+    user:{
+        type:String,
+        required:true
+    },
     product_name:{
         type:String,
         required:true

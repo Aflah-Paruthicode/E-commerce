@@ -1499,11 +1499,19 @@ const addANewAddress = async (req, res) => {
         if (country.trim() == "" || state.trim() == "" || district.trim() == "" || pincode.trim() == "" || city.trim() == "" || street.trim() == "" || houseNo.trim() == "") {
 
             console.log('yup got an err,...,,,,..')
-            res.render('user-addAddress', { emessage: "fields can't be empty",user });
+            res.render('user-addAddress', { emessage: "fields can't be empty",user,
+            details:{
+                country, state, district, pincode, city, street, houseNo
+            }
+        });
         
         }  else if (city.length < 6 || city.length > 25 || street.length < 6 || street.length > 20 || houseNo.length < 6 || houseNo.length > 20 || pincode.length !== 6) {
 
-            res.render('user-addAddress', { emessage: "please enter  a propper address",user });
+            res.render('user-addAddress', { emessage: "please enter  a propper address",user,
+            details:{
+                country, state, district, pincode, city, street, houseNo
+            }
+         });
 
 
         } else {
@@ -1522,12 +1530,8 @@ const addANewAddress = async (req, res) => {
     
             const aDDress = await ADdress.save();
             let address = await Address.find({ user_id: req.session.user_id });
-            console.log(address)
-            if (aDDress) {
-                res.render('user-manageAdd', { message: `address added`, address,user });
-            } else {
-                res.render('user-manageAdd', { message: `address adding failed`, address,user });
-            }
+            res.render('user-manageAdd', { message: `address added`, address,user });
+            
             
         }
 
@@ -1581,11 +1585,15 @@ const submitEditAddress = async (req, res) => {
         console.log('query set aan :  ', id)
         console.log('ellam here mwoneee : ', req.body);
         const { country, state, district, pincode, city, street, houseNo } = req.body;
+        const addressData = await Address.findById({ _id: id });
 
         if (country.trim() == "" || state.trim() == "" || district.trim() == "" || pincode.trim() == "" || city.trim() == "" || street.trim() == "" || houseNo.trim() == "") {
-            const addressData = await Address.findById({ _id: id });
-            console.log('yup got an err,...,,,,..')
-            res.render('user-editAdd', { emessage: "fields can't be empty", address: addressData,user:USer });
+            console.log('yup got an err,...,,,,..',addressData)
+            res.render('user-editAdd', { emessage: "fields cant be empty", address: addressData,user:USer });
+
+        }  else if (city.length < 6 || city.length > 25 || street.length < 6 || street.length > 20 || houseNo.length < 6 || houseNo.length > 20 || pincode.length !== 6) {
+           
+            res.render('user-editAdd', { emessage: "enter proper address", address: addressData,user:USer });
 
         } else {
 
@@ -1643,7 +1651,7 @@ const submitEditAddress = async (req, res) => {
     } catch (error) {
 
 
-        console.log(error, message);
+        console.log(error.message);
 
     }
 }

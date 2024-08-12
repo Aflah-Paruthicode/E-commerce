@@ -71,6 +71,27 @@
                                 <h3 style="color: black;">Your cart</h3>
 
                                 <% if (typeof emessage !=='undefined' ) { %>
+
+                                  <%  if(emessage === "Please select an address") { %>
+
+                                        <script>
+
+                                            Swal.fire({
+                                            title: 'Failed!',
+                                            text: '<%= emessage %>',
+                                            icon: 'error',
+                                            confirmButtonText: 'Add address'
+                                            }).then((result) => {
+                                                if (result) {
+                                                    // Redirect to the href of the anchor tag if the user confirms
+                                                    window.location.href = '/manageAddress';
+                                                }
+                                            })
+                                    
+                                        </script>
+
+                                  <%  } else {  %>
+
                                     <script>
                                         Swal.fire({
                                             title: 'Failed!',
@@ -79,6 +100,8 @@
                                             confirmButtonText: 'OK'
                                         })
                                     </script>
+                                  <%  } %>
+                                    
                                     <% } %>
 
                                         <% if (products.length==1) { %>

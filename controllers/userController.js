@@ -1500,31 +1500,40 @@ const addANewAddress = async (req, res) => {
 
             console.log('yup got an err,...,,,,..')
             res.render('user-addAddress', { emessage: "fields can't be empty",user });
-        }
+        
+        }  else if (city.length < 6 || city.length > 25 || street.length < 6 || street.length > 20 || houseNo.length < 6 || houseNo.length > 20 || pincode.length !== 6) {
+
+            res.render('user-addAddress', { emessage: "please enter  a propper address",user });
 
 
-
-        const ADdress = new Address({
-            user_id: req.session.user_id,
-            country: country,
-            state: state,
-            district: district,
-            pincode: pincode,
-            city: city,
-            street: street,
-            houseNo: houseNo
-        })
-
-
-        const aDDress = await ADdress.save();
-        let address = await Address.find({ user_id: req.session.user_id });
-        console.log(address)
-        if (aDDress) {
-            res.render('user-manageAdd', { message: `address added`, address,user });
         } else {
-            res.render('user-manageAdd', { message: `address adding failed`, address,user });
+
+            const ADdress = new Address({
+                user_id: req.session.user_id,
+                country: country,
+                state: state,
+                district: district,
+                pincode: pincode,
+                city: city,
+                street: street,
+                houseNo: houseNo
+            })
+    
+    
+            const aDDress = await ADdress.save();
+            let address = await Address.find({ user_id: req.session.user_id });
+            console.log(address)
+            if (aDDress) {
+                res.render('user-manageAdd', { message: `address added`, address,user });
+            } else {
+                res.render('user-manageAdd', { message: `address adding failed`, address,user });
+            }
+            
         }
 
+
+
+        
 
 
 
@@ -2315,6 +2324,7 @@ const loadCartCheckout = async (req, res) => {
         let USEr = await User.findById({ _id: user })
         let address = await Address.find({ user_id: user })
 
+            console.log('the user address : ',USEr.address)
         if (USEr.address.length !== 0) {
 
 
@@ -2332,6 +2342,13 @@ const loadCartCheckout = async (req, res) => {
 
             })
 
+
+            if(resAddress.length == 0) {
+
+                res.redirect(`/cart/?qMessage=Please select an address`);
+
+
+            } else {
             console.log('athaaan ith ee add : ', resAddress)
             console.log('athaaan ith re.body : ')
 
@@ -2463,7 +2480,7 @@ const loadCartCheckout = async (req, res) => {
 
             } 
 
-
+        }
 
 
         } else {

@@ -3,6 +3,8 @@
   rel="stylesheet">
 <link rel="stylesheet" href="/css/adminCss/adminHome.css">
 <link rel="stylesheet" href="/css/adminCss/addCategory.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 
 
@@ -27,6 +29,30 @@
     </nav>
   </div>
 </div>
+
+
+
+<% if (typeof emessage !== 'undefined') { %>
+  <script>
+      Swal.fire({
+          title: 'Failed!',
+          text: '<%= emessage %>',
+          icon: 'error',
+          confirmButtonText: 'OK'
+      })
+  </script>
+<% } %>
+
+<% if (typeof message !== 'undefined') { %>
+<script>
+    Swal.fire({
+        title: 'Success!',
+        text: '<%= message %>',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    })
+</script>
+<% } %>
 
 
 
@@ -120,12 +146,7 @@
       <div class="addCoupon-div">
         <h2 style="font-weight: 600;    font-size: 23px; margin: 0;
         ">ADD NEW COUPON</h2>
-      
-      <% if(typeof emessage !== 'undefined') { %>
-
-        <p style="color: red;"> <%= emessage %> </p>
-
-      <%  } %>
+     
 
         <div class="addInpu">
           <form action="/admin/addCoupon" method="post" style="    display: flex;
@@ -189,7 +210,7 @@
               </table>
 
 
-        <input style="background-color: black;color: #fff;border: none;padding: 11px 28px;border-radius: 8px;" type="submit" value="ADD CATEGORY">
+        <input style="background-color: black;color: #fff;border: none;padding: 11px 28px;border-radius: 8px;" type="submit" value="ADD COUPON">
       </form>
       </div>
       

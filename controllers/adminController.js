@@ -893,12 +893,21 @@ const submitEditedProduct = async (req, res) => {
         console.log('id is here ',id)
         console.log('ellam here : ',req.body);
         const { name, company,product_desc,price,original_price,quantity,category } = req.body;
+        const productData = await Product.findById({ _id: id });
+        let categorys = await CAtegory.find()
         
         if (name.trim() == "" || product_desc.trim() == ""|| company.trim() =="" || price.trim() == "" || original_price.trim() == "" || quantity.trim() == "") {
-            const productData = await Product.findById({ _id: id });
             console.log('eeeeeeeettttthhhhhhhiiii')
-                let category = await CAtegory.find()
-            res.render('productEdit', { emessage: "fields cant be empty",category, product: productData });
+            res.render('productEdit', { emessage: "fields cant be empty",category:categorys, product: productData });
+
+        } else if (price <1 || original_price <1) {
+            res.render('productEdit', { emessage: "Do not accept minus value on price and og price",category:categorys, product: productData });
+
+        } else if (quantity <0) {
+            res.render('productEdit', { emessage: "Do not accept minus value on quantity",category:categorys, product: productData });
+
+        } else if (price <= original_price) {
+            res.render('productEdit', { emessage: "Please set prize amount greater than og prize",category:categorys, product: productData });
 
         } else {
             
@@ -908,8 +917,7 @@ const submitEditedProduct = async (req, res) => {
                 console.log('success kuttaaaa')
                 res.redirect('/admin/product/?edited=true');
             } else {
-                let category = await CAtegory.find()
-            res.render('productEdit', { emessage: "Updation failed" ,category, product: productData });
+            res.render('productEdit', { emessage: "Updation failed" ,category:categorys, product: productData });
             }
         }
 
@@ -1005,7 +1013,6 @@ const submitNewProduct = async(req,res) => {
         console.log('ivde aan boadysss verndath : ',req.body)
         console.log('category is here : ',req.body.category);
         const GotProducts = await CAtegory.find();
-        const proDucts = await Product.find();
 
 
         if(req.files) {
@@ -1015,14 +1022,79 @@ const submitNewProduct = async(req,res) => {
 
         if(name.trim() == "" || company.trim() == "" || price.trim() == "" || original_price.trim() == "" || quantity.trim() == "" || category.trim() == "" || product_desc.trim() == "") {
 
-            res.render('addProduct',{emessage:'Fields cant be empty',category:GotProducts});
+            res.render('addProduct',{emessage:'Fields cant be empty',category:GotProducts,
+            
+                details:{
+                    name,
+                    company,
+                    price,
+                    original_price,
+                    quantity,
+                    category,
+                    product_desc
+
+                }
+        });
 
         } else {
 
             if(req.files.length < 3) {
 
-                res.render('addProduct',{emessage:'Minimum three pictures needed',category:GotProducts});
+                res.render('addProduct',{emessage:'Minimum three pictures needed',category:GotProducts,
+                details:{
+                    name,
+                    company,
+                    price,
+                    original_price,
+                    quantity,
+                    category,
+                    product_desc
 
+                }
+            });
+
+
+            } else if (price <1 || original_price <1) {
+
+                res.render('addProduct',{emessage:'Do not accept minus value on price section',category:GotProducts,
+                details:{
+                    name,
+                    company,
+                    price,
+                    original_price,
+                    quantity,
+                    category,
+                    product_desc
+
+                } });
+ 
+            } else if (price >= original_price) {
+
+                res.render('addProduct',{emessage:'Set original price greater than price amount',category:GotProducts,
+                details:{
+                    name,
+                    company,
+                    price,
+                    original_price,
+                    quantity,
+                    category,
+                    product_desc
+
+                } });
+
+            } else if (quantity<1) {
+
+                res.render('addProduct',{emessage:'Do not accept quantity less than 1',category:GotProducts,
+                details:{
+                    name,
+                    company,
+                    price,
+                    original_price,
+                    quantity,
+                    category,
+                    product_desc
+
+                } });
 
             } else {
 
@@ -1037,8 +1109,8 @@ const submitNewProduct = async(req,res) => {
             const product = new Product ({
                 name:name,
                 company:company.toUpperCase(),
-                price:price,
-                og_price:original_price,
+                price: parseFloat(price) ,
+                og_price:parseFloat(original_price),
                 quantity:quantity,
                 category:category,
                 product_desc:product_desc,
@@ -1054,7 +1126,18 @@ const submitNewProduct = async(req,res) => {
     }
         }} else {
 
-            res.render('addProduct',{emessage:'Please add an image',category:GotProducts});
+            res.render('addProduct',{emessage:'Please add an image',category:GotProducts, 
+            details:{
+                name,
+                company,
+                price,
+                original_price,
+                quantity,
+                category,
+                product_desc
+
+            }
+        });
 
         }
   
@@ -1129,6 +1212,16 @@ const loadcouponManagement = async(req,res) => {
             },i });
 
 
+        } else if (req.query.success) {
+
+            res.render('addCoupon', { coupons, message:'Coupon added successful',pagination: {
+                totalCoupons,
+                totalPages,
+                currentPage: page,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1,
+            },i });
+
         } else {
 
             res.render('addCoupon', { coupons,pagination: {
@@ -1197,13 +1290,10 @@ const addCoupon = async(req,res) => {
 
          
          const couponSaved = await coupon.save();
-         if(couponSaved) {
+         
+        res.redirect('/admin/couponManagement/?success=true');
 
-            res.redirect('/admin/couponManagement');
-     } else {
-        res.redirect('/admin/couponManagement');
-
-     }
+     
     }
 
 

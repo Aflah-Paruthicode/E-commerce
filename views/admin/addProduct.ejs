@@ -69,20 +69,38 @@
             <form action="/admin/add-product" id="uploadForm" method="post" enctype="multipart/form-data">
             <div class="pName in">
               <label for="">Product Name :</label>
-              <input type="text" name="name">
+             <% if(typeof details !== 'undefined') { %>
+
+                <input type="text" name="name" value="<%= details.name %>">
+             <%  } else {  %>
+                <input type="text" name="name">
+
+             <% } %>
             </div>
 
               
               <div class="pName in">
                 <label for="">Company Name :</label>
-                <input type="text" name="company">
+                <% if(typeof details !== 'undefined') { %>
+
+                  <input type="text" name="company" value="<%= details.company %>">
+               <%  } else {  %>
+                  <input type="text" name="company">
+  
+               <% } %>              
               </div>
 
             <div class="pCategory in">
               <label for="">Category :</label>
               
               <select name="category">
+                <% if(typeof details !== 'undefined') { %>
+
+                  <option value="<%= details.category %>"><%= details.category %></option>
+               <%  } else {  %>
                 <option value="chooddd">Choose one ...</option>
+  
+               <% } %>
                 <%   category.forEach((cate) => { %>
                 
                 <option><%= cate.category %></option>
@@ -94,20 +112,53 @@
 
             <div class="pDescription in">
               <label for="">Description :</label>
+              <% if(typeof details !== 'undefined') { %>
+
+                <input type="text" name="product_desc" value="<%= details.product_desc %>">
+
+             <%  } else {  %>
               <input type="text" name="product_desc">
+
+             <% } %>
             </div>
 
             <div class="pPrice in">
               <label for="">Product Price :</label>
+              <% if(typeof details !== 'undefined') { %>
+
+                <input style="width: 30%;" type="number" name="price" value="<%= details.price %>">
+
+             <%  } else {  %>
               <input style="width: 30%;" type="number" name="price">
 
+             <% } %>
+
               <label style="margin: 30px;margin-left: 55px;" for="">Product Original Price :</label>
+              <% if(typeof details !== 'undefined') { %>
+
+                <input style="width: 30%;" type="number" name="original_price" value="<%= details.original_price %>"> 
+
+
+             <%  } else {  %>
+
               <input style="width: 30%;" type="number" name="original_price">
+
+
+
+              <% } %>
             </div>
 
             <div class="pQuantity in">
               <label for="">Quantity :</label>
+              <% if(typeof details !== 'undefined') { %>
+
+                <input type="number" name="quantity" value="<%= details.quantity %>">
+
+
+             <%  } else {  %>
               <input type="number" name="quantity">
+
+              <% } %>
             </div>
 
             <div class="pImages in">

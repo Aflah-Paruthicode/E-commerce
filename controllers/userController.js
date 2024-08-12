@@ -12,15 +12,12 @@ const Banner = require('../models/bannerModel');
 const Category = require('../models/categoryModel');
 require('dotenv').config();
 
-let Otp = require('../models/otpModel');
-const addressModel = require('../models/addressModel');
 
 let idOfCHangePass;
 let otp;
 
 const Razorpay = require('razorpay');
 const walletTransactionModel = require('../models/walletTransactionModel');
-const categoryModel = require('../models/categoryModel');
 const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID;
 const RAZORPAY_SECRET_KEY = process.env.RAZORPAY_SECRET_KEY;
 
@@ -3187,115 +3184,133 @@ const onlinePaymentController = async (req,res) => {
 const downloadOrderInvoice = async(req,res) => {
 
     try {
-        const easyinvoice = require('easyinvoice');
-        const fs = require('fs');
- 
-
-        console.log('query is here now : ',req.query)
-        let order = await Order.findById({_id:req.query.orderId});
-        let product = await Product.findById({_id:order.product});
-        let user = await User.findById({_id:req.session.user_id});
-         // for delivery date
-         let dateParts = order.date.split('/');
-         let dateObject = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
- 
-         // Calculate the date 7 days ago
-         let date7DaysLater = new Date();
-         date7DaysLater.setDate(dateObject.getDate() + 7);
-
-
         
-          // Define your invoice data
-    let data = {
 
-        'translate' : {
-            "invoice": "Order Invoice",  // Default to 'INVOICE'
-            "taxNotation": "GST", // or GST
-            'number': "Id", // Defaults to 'Number'
-            'date': "Order", // Default to 'Date'
-            'dueDate': "Delivery", // Defaults to 'Due Date'
-            'subtotal': "Totel", // Defaults to 'Subtotal'
-            'products': "Product", // Defaults to 'Products'
-            'quantity': "Quantity", // Default to 'Quantity'
-            'price': "Unit Price", // Defaults to 'Price'
-            'productTotal': "Totel", // Defaults to 'Total'
-            'total': `Ammount (including GST)
 
-            * Delivery 50₹ will be adedd`, // Defaults to 'Total'
-        },
+        const easyinvoice = require('easyinvoice');
+const fs = require('fs');
 
-        'settings' : {
+console.log('query is here now : ', req.query);
+let order = await Order.findById({_id: req.query.orderId});
+let product = await Product.findById({_id: order.product});
+let user = await User.findById({_id: req.session.user_id});
 
-            "documentTitle": "Order Invoice", // Defaults to INVOICE
-            "currency": "INR",
-            "marginTop": 25,
-            "marginRight": 25,
-            "marginLeft": 25,
-            "marginBottom": 25,
-        },
-        'images': {
-            // The logo on top of your invoice
-            'logo': "https://public.budgetinvoice.com/img/logo_en_original.png",
-        },
-        "sender": {
-            "company": "DASH FOOTWARES",
-            "address": "Malappuram, Kerala",
-            "zip": "675636",
-            "city": "Malappuram",
-            "country": "India"
-        },
-        "client": {
-            "company": `${user.name}`,
-            "address": `${user.address}`
-            
-        },
-        'information': {
-            // Invoice number
-            'number': `${order._id}`,
-            // Invoice data
-            'date': `${dateObject.toDateString()}`,
-            // Invoice due date
-            'dueDate': `${date7DaysLater.toDateString()}`
-        },
-        "products": [
-            {
-                'quantity': `${order.quantity}`,
-                'description': `${product.name}`,
-                'taxRate': 10,
-                'price': `${product.price}`,
+// for delivery date
+let dateParts = order.date.split('/');
+let dateObject = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
 
-            },
-            
-        ],
-        "deliveryCharge": {
-                "description": "Delivery Charge",
-                "price": '15.00' // Example delivery charge amount
-            },
-        "bottomNotice": "Thank you for choosing DASH FOOTWARES."
-    };
+// Calculate the date 7 days later
+let date7DaysLater = new Date();
+date7DaysLater.setDate(dateObject.getDate() + 7);
 
-    try {
-        // Create the invoice
-        const result = await easyinvoice.createInvoice(data);
+// Define delivery charge
+const deliveryCharge = 50;
 
-        // Save the invoice to a file
-        fs.writeFileSync("invoice.pdf", result.pdf, 'base64');
+// Calculate total including delivery charge
+const itemTotal = order.quantity * product.price;
+const totalAmount = itemTotal + deliveryCharge + order.quantity * product.price/10;
 
-        // Send the invoice as a download
-        res.download('invoice.pdf', 'invoice.pdf', (err) => {
-            if (err) {
-                console.log(err);
-            }
+// Define your invoice data
+let data = {
+    'translate': {
+        "invoice": "Order Invoice",
+        "taxNotation": "GST",
+        'number': "Id",
+        'date': "Order",
+        'dueDate': "Delivery",
+        'subtotal': "Total",
+        'products': "Product",
+        'quantity': "Quantity",
+        'price': "Unit Price",
+        'productTotal': "Total",
+        'total': `Amount (including GST and delivery charge)`,
+    },
 
-            // Optionally, delete the file after sending
-            fs.unlinkSync('invoice.pdf');
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Failed to create invoice.");
+    'settings': {
+        "documentTitle": "Order Invoice",
+        "currency": "INR",
+        "marginTop": 25,
+        "marginRight": 25,
+        "marginLeft": 25,
+        "marginBottom": 25,
+    },
+    'images': {
+        // The logo on top of your invoice
+        'logo': "https://public.budgetinvoice.com/img/logo_en_original.png",
+    },
+    "sender": {
+        "company": "DASH FOOTWARES",
+        "address": "Malappuram, Kerala",
+        "zip": "675636",
+        "city": "Malappuram",
+        "country": "India"
+    },
+    "client": {
+        "company": `${user.name}`,
+        "address": `${user.address}`
+    },
+    'information': {
+        'number': `${order._id}`,
+        'date': `${dateObject.toDateString()}`,
+        'dueDate': `${date7DaysLater.toDateString()}`
+    },
+    "products": [
+        {
+            'quantity': `${order.quantity}`,
+            'description': `${product.name}`,
+            'taxRate': 10,
+            'price': `${product.price}`,
+            'total': `${itemTotal}`
+        },{
+            'quantity': 1, // Set quantity to 1
+            'description': 'Delivery Charge',
+            'price': `${deliveryCharge}`,
+            'total': `${deliveryCharge}`
+        }
+    ],
+    "bottomNotice": `Thank you for choosing DASH FOOTWARES. Delivery charge: ₹${deliveryCharge}.`,
+    'total': `₹${totalAmount}`
+};
+
+
+    if(order.coupon_applied !== 'no') {
+
+            let coupon = await Coupon.findOne({code:order.coupon_applied})
+
+        data.products.push({
+            'quantity': 1, // Set quantity to 1
+            'description': `${coupon.code}`,
+            'price': `${-coupon.discount}`,
+            'total': `${-coupon.discount}`
+        })
+        
     }
 
 
+console.log('Invoice Data:', data);
+
+
+
+try {
+    // Create the invoice
+    const result = await easyinvoice.createInvoice(data);
+
+
+    // Save the invoice to a file
+    fs.writeFileSync("invoice.pdf", result.pdf, 'base64');
+
+    // Send the invoice as a download
+    res.download('invoice.pdf', 'invoice.pdf', (err) => {
+        if (err) {
+            console.log(err);
+        }
+
+        // Optionally, delete the file after sending
+        fs.unlinkSync('invoice.pdf');
+    });
+} catch (error) {
+    console.error('Error creating invoice:', error);
+}
 
         
 

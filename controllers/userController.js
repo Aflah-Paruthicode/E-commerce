@@ -2212,11 +2212,25 @@ const couponAdding = async (req, res) => {
 
 
 
-            let coupons = await Coupon.find({code:req.query.code.toUpperCase()})
+            let coupons = await Coupon.findOne({code:req.query.code.toUpperCase()})
             console.log(coupons)
 
-            if(coupons.length>0){
-                res.redirect(`/cartCheckout/?couponAdded=${coupons[0].code}&quantity=${req.query.quantity}`);
+            if(coupons){
+
+                let today = new Date()
+
+                if(coupons.expiry < today) {
+                    res.redirect(`/cartCheckout/?couponAdded=expired&quantity=${req.query.quantity}`);
+
+                } else if (coupons.amount > req.query.sumAmount) {
+
+                    res.redirect(`/cartCheckout/?couponAdded=minimumAmt&quantity=${req.query.quantity}&amount=${coupons.amount}`);
+
+
+                } else {
+
+                    res.redirect(`/cartCheckout/?couponAdded=${coupons.code}&quantity=${req.query.quantity}`);
+                }
 
             } else {
                 res.redirect(`/cartCheckout/?couponAdded=wrong&quantity=${req.query.quantity}`);
@@ -2439,7 +2453,17 @@ const loadCartCheckout = async (req, res) => {
 
                                 if(req.query.couponAdded) {
 
-                                    if(req.query.couponAdded !== 'wrong') {
+                                    if (req.query.couponAdded == 'expired') {
+
+                                        res.render('cart-checkout', { products: array, sum: sumOfProducts, USEr, resAddress,quantity,couponEmessage:'The entered coupon is expired' });
+
+
+                                    } else if (req.query.couponAdded == 'minimumAmt') {
+
+                                        res.render('cart-checkout', { products: array, sum: sumOfProducts, USEr, resAddress,quantity,couponEmessage:'The entered coupon only for above '+req.query.amount+' purchase.' });
+
+
+                                    } else if(req.query.couponAdded !== 'wrong') {
 
                                         let couponCode = req.query.couponAdded
                                         console.log('this is of zero : ',couponCode )

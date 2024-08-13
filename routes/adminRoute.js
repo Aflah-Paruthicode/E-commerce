@@ -83,6 +83,9 @@ adminRoute.post('/addBannerToSlide',auth.isLogin, bannerStorageUpload.single('im
 
 adminRoute.get('/couponManagement',auth.isLogin,adminController.loadcouponManagement)
 adminRoute.post('/addCoupon', auth.isLogin,adminController.addCoupon)
+adminRoute.get('/editCoupon',auth.isLogin, adminController.editCoupon)
+adminRoute.post('/updateCoupon',auth.isLogin,adminController.updateCoupon)
+adminRoute.get('/deleteCoupon/:id',auth.isLogin,adminController.deleteCoupon)
 
 
 adminRoute.get('/salesReport',auth.isLogin,adminController.loadSalesReport)

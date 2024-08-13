@@ -84,7 +84,10 @@
 
               <th scope="col">Code</th>
               <th scope="col">Discount</th>
+              <th scope="col">Purchase ammount</th>
               <th scope="col">Expiry</th>
+              <th scope="col">Update</th>
+
               
 
 
@@ -106,9 +109,21 @@
                     <td><input style="    padding: 15px 30px;
                       " class="btn btn-dark" type="submit" value="₹ <%= coupon.discount %>.00">
                       </td>
+
+                      <td><input style="    padding: 15px 30px;
+                        " class="btn btn-dark" type="submit" value="₹ <%= coupon.amount %>.00">
+                        </td>
                   
                   <td><input style="    padding: 15px 30px;
                     " class="btn btn-dark" type="submit" value="<%= coupon.expiry.toDateString() %>"></td>
+
+                  <td style="width: 115px;"><a style="width: 45px;" href="/admin/editCoupon/?id=<%= coupon._id%>" class="btn btn-success" type="submit"><img style="width: 100%;" src="/adminOptionsImages/edit.png" alt=""></a>
+
+                    <a style="width: 45px;" href="/admin/deleteCoupon/<%= coupon._id%>"
+                      class="btn btn-danger delete-link"
+                      onclick="confirmDelete(event, '<%= coupon._id%>');"
+                      type="button"><img style="width: 100%;" src="/adminOptionsImages/delete.png" alt=""></a>
+                    </td>
 
 
 </tr>
@@ -177,7 +192,7 @@
                             <input style="    border: none;
                             padding: 15px;
                             margin: 5px 32px;
-                            width: 325px;
+                            width: 280px;
                             border-radius: 8px;
                             font-size: 17px;
                             outline-color: #9d9d9d;" type="text" name="code" placeholder="Code..">
@@ -186,10 +201,19 @@
                             <input style="    border: none;
                             padding: 15px;
                             margin: 5px 32px;
-                            width: 325px;
+                            width: 185px;
                             border-radius: 8px;
                             font-size: 17px;
                             outline-color: #9d9d9d;" type="number" name="discount" placeholder="Discount..">
+                  </td>
+                          <td> <label style="color: red; font-size: 14px;" for="">*Minumum purchase amount :</label>
+                            <input style="    border: none;
+                            padding: 15px;
+                            margin: 5px 32px;
+                            width: 185px;
+                            border-radius: 8px;
+                            font-size: 17px;
+                            outline-color: #9d9d9d;" type="number" name="amount" placeholder="Amount..">
                   </td>
                         <td> <label for="">Expiry :</label>
                             <input style="    border: none;
@@ -200,10 +224,8 @@
                             font-size: 17px;
                             outline-color: #9d9d9d;" type="date" name="expiry" >
                   </td>
+                  
                 </tr>
-                
-                    
-      
                     
                   
                 </tbody>
@@ -217,3 +239,26 @@
     </div>
   </div>
 </div>
+
+
+
+<script>
+  function confirmDelete(event, couponId) {
+      event.preventDefault(); // Prevent the default action of the anchor tag
+  
+      Swal.fire({
+          title: 'Are you sure?',
+          text: 'You want to remove this Coupon!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Delete it!'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              // Redirect to the href of the anchor tag if the user confirms
+              window.location.href = '/admin/deleteCoupon/' + couponId;
+          }
+      });
+  }
+  </script>

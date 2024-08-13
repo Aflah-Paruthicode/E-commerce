@@ -890,14 +890,11 @@ const submitEditedProduct = async (req, res) => {
             const updateIMG = await Product.findByIdAndUpdate({ _id: id }, { $push: { images:req.file.filename}});
 
         }
-        console.log('id is here ',id)
-        console.log('ellam here : ',req.body);
         const { name, company,product_desc,price,original_price,quantity,category } = req.body;
         const productData = await Product.findById({ _id: id });
         let categorys = await CAtegory.find()
         
         if (name.trim() == "" || product_desc.trim() == ""|| company.trim() =="" || price.trim() == "" || original_price.trim() == "" || quantity.trim() == "") {
-            console.log('eeeeeeeettttthhhhhhhiiii')
             res.render('productEdit', { emessage: "fields cant be empty",category:categorys, product: productData });
 
         } else if (price <1 || original_price <1) {
@@ -906,8 +903,8 @@ const submitEditedProduct = async (req, res) => {
         } else if (quantity <0) {
             res.render('productEdit', { emessage: "Do not accept minus value on quantity",category:categorys, product: productData });
 
-        } else if (price <= original_price) {
-            res.render('productEdit', { emessage: "Please set prize amount greater than og prize",category:categorys, product: productData });
+        } else if (parseFloat(price)  >= parseFloat(original_price)) {
+            res.render('productEdit', { emessage: "Please set the original price amount greater than price amount",category:categorys, product: productData });
 
         } else {
             
@@ -1070,7 +1067,7 @@ const submitNewProduct = async(req,res) => {
  
             } else if (price >= original_price) {
 
-                res.render('addProduct',{emessage:'Set original price greater than price amount',category:GotProducts,
+                res.render('addProduct',{emessage:'Set the original price greater than price amount',category:GotProducts,
                 details:{
                     name,
                     company,
@@ -1222,6 +1219,16 @@ const loadcouponManagement = async(req,res) => {
                 hasPrevPage: page > 1,
             },i });
 
+        } else if (req.query.creation) {
+
+            res.render('addCoupon', { coupons, message:'Coupon updated successful',pagination: {
+                totalCoupons,
+                totalPages,
+                currentPage: page,
+                hasNextPage: page < totalPages,
+                hasPrevPage: page > 1,
+            },i });
+            
         } else {
 
             res.render('addCoupon', { coupons,pagination: {
@@ -1251,7 +1258,7 @@ const addCoupon = async(req,res) => {
         console.log('yeah coupon body is here : ',req.body);
         
         
-        const { code, discount, expiry } = req.body;
+        const { code, discount, expiry, amount } = req.body;
         let couponCapiteled = code.toUpperCase()
         const coupons = await Coupon.find({code:couponCapiteled});
         
@@ -1260,7 +1267,7 @@ const addCoupon = async(req,res) => {
         console.log('inn : ',today,"ith expiry : ")
 
 
-        if(code.trim() == '' || discount.trim() == '' || expiry.trim() == '') {
+        if(code.trim() == '' || discount.trim() == '' || expiry.trim() == '' || amount.trim() == '') {
 
             res.redirect('/admin/couponManagement/?err=Enter full details properly');
 
@@ -1276,6 +1283,11 @@ const addCoupon = async(req,res) => {
             res.redirect('/admin/couponManagement/?err=Use unique coupon id');
 
 
+        } else if (parseInt(discount) >= parseInt(amount)) {
+
+            res.redirect('/admin/couponManagement/?err=Please set the purchase amount greater than discount');
+
+
         } else {
 
        
@@ -1283,6 +1295,7 @@ const addCoupon = async(req,res) => {
         const coupon = new Coupon({
             code:code.toUpperCase(),
             discount:parseInt(discount),
+            amount:parseInt(amount),
             expiry:expiry,
             
          });
@@ -1299,6 +1312,102 @@ const addCoupon = async(req,res) => {
 
     } catch (error) {
 
+        console.log(error.message)
+    }
+}
+
+
+
+const editCoupon = async (req,res) => {
+
+    try {
+
+        console.log('yeasss')
+        let coupon = await Coupon.findById({_id:req.query.id})
+        if(req.query.err) {
+
+            res.render('couponEdit',{coupon,emessage:req.query.err})
+
+
+        } else {
+            
+            res.render('couponEdit',{coupon})
+        }
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+
+const updateCoupon = async (req,res) => {
+
+    try {
+
+        let today = new Date();
+
+
+        console.log('yeah coupon body is here : ',req.body);
+        
+        
+        const { code, discount, expiry, amount,id } = req.body;
+        const coupons = await Coupon.findOne({code:code.toUpperCase()});
+        const currentCoupon = await Coupon.findById({_id:id});
+        
+        const gotExpiry = new Date(expiry)
+
+        console.log('inn : ',today,"ith expiry : ")
+
+
+        if(code.trim() == '' || discount.trim() == '' || expiry.trim() == '' || amount.trim() =='') {
+
+            res.redirect(`/admin/editCoupon/?id=${id}&err=Enter full details properly`);
+
+
+        } else if (gotExpiry < today) { 
+
+            console.log('nop date is past')
+            res.redirect(`/admin/editCoupon/?id=${id}&err=please enter a proper expiry date(after today)`);
+
+
+        } else if (coupons&& coupons.code !== currentCoupon.code) {
+
+            res.redirect(`/admin/editCoupon/?id=${id}&err=Use unique coupon id`);
+
+
+        } else if (parseInt(discount) >= parseInt(amount)) {
+
+            res.redirect(`/admin/editCoupon/?id=${id}&err=Please set the purchase amount greater than discount`);
+
+
+        } else {
+
+       
+            const coupons = await Coupon.findByIdAndUpdate({_id:id},{$set:{code:code.toUpperCase(),discount:discount,expiry:expiry,amount:amount}});
+
+         
+        res.redirect('/admin/couponManagement/?creation=true');
+
+     
+    }
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+const deleteCoupon = async (req,res) => {
+
+    try {
+
+        let deleteCoupon = await Coupon.findOneAndDelete({_id:req.params.id})
+        console.log('coupon deleted',req.params)
+
+        res.redirect('/admin/couponManagement')
+
+    } catch (error) {
         console.log(error.message)
     }
 }
@@ -1645,6 +1754,9 @@ module.exports = {
     loadProductEdit,
     logout,
     addCoupon,
+    editCoupon,
+    updateCoupon,
+    deleteCoupon,
     loadcouponManagement,
     loadSalesReport
     // resultOfSearch

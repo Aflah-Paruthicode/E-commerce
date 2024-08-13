@@ -391,12 +391,17 @@
                         </div>
                         <hr>
 
+
                         <% if (typeof emessage !== 'undefined') { %>
-
-
-                            <p   style="color: red;"><%= emessage %></p>
-
-                      <%  } %>
+                            <script>
+                                Swal.fire({
+                                    title: 'Failed!',
+                                    text: '<%= emessage %>',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                })
+                            </script>
+                        <% } %>
 
 
                         
@@ -480,7 +485,6 @@
 
                  
                 
-                
                 <% if(typeof coupon !== 'undefined') { %>
                     <input type="hidden" id="theCoupon" value="<%= coupon.code %>" name="coupon">
                     <p style="    color: rgb(26, 166, 26);
@@ -515,9 +519,15 @@
                 </div>
                 <%  if(typeof couponEmessage !== 'undefined') { %>
 
-                <p id="coupon-emessage" style="text-align: center;
-                margin: 0;
-                font-size: 16px;color: rgb(193, 30, 30);font-weight: 500;"><%= couponEmessage %></p>
+                        <script>
+                            Swal.fire({
+                                title: 'Failed!',
+                                text: '<%= couponEmessage %>',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            })
+                        </script>
+
                 <%  }  %>
 
                 <% } %> 
@@ -527,6 +537,7 @@
         </div>
     </div>
     <input type="hidden" value="₹&nbsp;<%= sumAll %>.00" name="sumofAmmount">
+    <input id="theSumAmount" type="hidden" value="<%= sumAll %>" name="sumofAmmount">
 
     
 </form>
@@ -575,8 +586,9 @@ document.getElementById('coupon-code').addEventListener('keydown', function(even
 
             let couponCode = document.getElementById('coupon-code').value
             let quantityOfProducts = document.getElementById('quantityOfProducts').value
+            let sumAmount =  document.getElementById('theSumAmount').value
 
-            window.location.href = `/couponAdding/?code=${couponCode}&quantity=${quantityOfProducts}`
+            window.location.href = `/couponAdding/?code=${couponCode}&quantity=${quantityOfProducts}&sumAmount=${sumAmount}`
 
 
 

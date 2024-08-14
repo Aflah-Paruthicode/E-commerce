@@ -18,9 +18,10 @@ passport.deserializeUser(function(user, done) {
 passport.use(new GoogleStrategy({
     clientID:CLIENT_ID,
     clientSecret:CLIENT_SECRET,
-    callbackURL:"http://localhost:8080/auth/google/callback",
+    callbackURL:"https://dashfootwares.shop/auth/google/callback",
     passReqToCallback:true
 },
+
 function(request, accessToken, refreshToken, profile, done) {
     return done(null, profile);
 }

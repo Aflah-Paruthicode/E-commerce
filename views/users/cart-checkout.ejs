@@ -538,7 +538,7 @@
         </div>
     </div>
     <input type="hidden" value="₹&nbsp;<%= sumAll %>.00" name="sumofAmmount">
-    <input id="theSumAmount" type="hidden" value="<%= sumAll %>" name="sumofAmmount">
+    <input id="theSumAmount" type="hidden" value="<%= sumAll %>" name="totelAmmount">
 
     
 </form>
@@ -589,7 +589,7 @@ document.getElementById('coupon-code').addEventListener('keydown', function(even
             let quantityOfProducts = document.getElementById('quantityOfProducts').value
             let sumAmount =  document.getElementById('theSumAmount').value
 
-            window.location.href = `/couponAdding/?code=${couponCode}&quantity=${quantityOfProducts}&sumAmount=${sumAmount}`
+            window.location.href = `/couponAdding/?code=${couponCode}&quantity=${quantityOfProducts}&totelAmmount=${sumAmount}`
 
 
 

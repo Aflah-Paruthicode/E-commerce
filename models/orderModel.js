@@ -37,6 +37,11 @@ const OrderSchema = mongoose.Schema({
         required:true,
         default:'no'
     },
+    is_multi:{
+        type:Number,
+        required:true,
+        default:1
+    },
     status:{
         type:String,
         required:true

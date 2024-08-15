@@ -63,7 +63,7 @@ adminRoute.get('/deleteUser/:id',auth.isLogin, adminController.deleteUser)
 
 adminRoute.get('/product', auth.isLogin, adminController.loadProductList);
 adminRoute.get('/add-product', auth.isLogin, adminController.loadAddProduct);
-adminRoute.post('/add-product', auth.isLogin,upload.array('images',12), adminController.submitNewProduct);
+adminRoute.post('/add-product', auth.isLogin, upload.array('images',12), adminController.submitNewProduct);
 adminRoute.get('/DeleteProduct/:id', auth.isLogin, adminController.deleteProduct);
 adminRoute.get('/EditProduct', auth.isLogin, adminController.loadProductEdit);
 adminRoute.get('/productDelete/:position/:id', auth.isLogin,adminController.productImageEdit);

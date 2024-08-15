@@ -106,7 +106,7 @@
         <div class="filter">
           <label for="startDate">Custom Date: </label>
           <input type="date" id="startDate" class="form-control">
-          <button id="filterButton" class="btn btn-primary">Filter</button>
+          <button id="filterButton" class="btn btn-primary" onclick="filterForm(this.value)">Filter</button>
         </div>
 
 
@@ -127,6 +127,11 @@
           </tr>
         </thead>
         <tbody class="table-group-divider" id="salesReportTable">
+
+          <% if(orders.length >0 ) { %>
+
+          
+
           <% let k = 0 %>
           
           <% orders.forEach((order)=> { %>
@@ -173,6 +178,8 @@
             <% k++ %>
             <% i++ %>
               <% }) %>
+
+              <% } %>
                 <!-- Data will be inserted here by JavaScript -->
         </tbody>
       </table>
@@ -180,19 +187,18 @@
       
       
       <% if (pagination.totalPages > 1) { %>
-        <div class="pagination">
+        <div class="pagination" style="align-self: flex-end; margin: 20px;">
             <% if (pagination.hasPrevPage) { %>
-                <a class="btn" href="?page=<%= pagination.currentPage - 1 %>&limit=<%= pagination.limit %>">Previous</a>
+                <a class="btn" href="?page=<%= pagination.currentPage - 1 %>&limit=<%= pagination.limit %><%= queryString %>">Previous</a>
             <% } %>
             <% for (let i = 1; i <= pagination.totalPages; i++) { %>
-                <a href="?page=<%= i %>&limit=<%= pagination.limit %>" class="btn <%= pagination.currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <a href="?page=<%= i %>&limit=<%= pagination.limit %><%= queryString %>" class="btn <%= pagination.currentPage === i ? 'active' : '' %>"><%= i %></a>
             <% } %>
             <% if (pagination.hasNextPage) { %>
-                <a class="btn" href="?page=<%= pagination.currentPage + 1 %>&limit=<%= pagination.limit %>">Next</a>
+                <a class="btn" href="?page=<%= pagination.currentPage + 1 %>&limit=<%= pagination.limit %><%= queryString %>">Next</a>
             <% } %>
         </div>
     <% } %>
-
 
 
     </div>
@@ -211,6 +217,14 @@
       window.location.href = `/admin/salesReport/?period=${data}`;
 
     }
+
+
+    function filterForm() {
+      let data = document.getElementById('startDate').value
+      window.location.href = `/admin/salesReport/?period=${data}`;
+
+    }
+
   </script>
 </body>
 

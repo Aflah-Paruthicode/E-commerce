@@ -334,17 +334,17 @@
 
 
     <script>
-
+        let zoom1
         let options1 = {
-            width: 400,
-            zoomWidth: 500,
-            offset: {vertical: 0, horizontal: 5}
+            width: 350,
+            zoomWidth: 375,
+            offset: {vertical: 0, horizontal: 1}
         };
         
         // If the width and height of the image are not known or to adjust the image to the container of it
         
         
-        let zoom1 = new ImageZoom(document.getElementById("img-container"), options1);
+          zoom1 = ImageZoom(document.getElementById("img-container"), options1);
         
        
        
@@ -357,7 +357,7 @@
             mainIMG.src = index;
             clicked = temp
 
-            zoom1 = await ImageZoom(document.getElementById("img-container"), options1);
+            zoom1 = ImageZoom(document.getElementById("img-container"), options1);
 
         }
        

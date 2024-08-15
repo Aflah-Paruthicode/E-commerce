@@ -28,7 +28,6 @@ const loadLogin = async (req, res) => {
 const verifyLogin = async (req, res) => {
 
     try {
-        console.log('email here',req.body.email);
         const { email, password } = req.body;
 
         const adminData = await Admin.findOne({ email: email });
@@ -151,49 +150,194 @@ const loadDashboard = async (req, res) => {
 
 
 
-        console.log('aaha',topBrands)
 
-        console.log('Rendering home with data:', { userData, topProducts, topCategories, topBrands, totelOrders, visitors, totalAmmount, productCount, categoryCount });
 
         const filter = req.query.filter;
     let salesData;
         if(filter) {
-            console.log('verthe keri')
         
     if (filter === 'yearly') {
         const { startDate, endDate } = getDateRange(filter);
 
-        salesData = await Order.aggregate([{$match:{status:'Delivered'}},{$addFields: {orderDate: {$dateFromString: {dateString: "$date",format: "%d/%m/%Y"}}}},{$group: {_id: { $year: "$orderDate" },totalSales: { $sum: "$totelAmmount" }}}]);
-        console.log('yearly : ',salesData)
+
+        const oneYearAgo = new Date();
+        oneYearAgo.setDate(oneYearAgo.getDate() - 365); // Calculate the date 365 days ago
+        
+        salesData = await Order.aggregate([
+          {
+            $match: {
+              status: 'Delivered'
+            }
+          },
+          {
+            // Step 1: Convert the 'date' field from 'DD/MM/YYYY' to a Date object
+            $addFields: {
+              orderDate: {
+                $dateFromString: {
+                  dateString: "$date",
+                  format: "%d/%m/%Y"
+                }
+              }
+            }
+          },
+          {
+            // Step 2: Match documents where 'orderDate' is within the last 365 days
+            $match: {
+              orderDate: {
+                $gte: oneYearAgo, // Only include dates from one year ago to now
+                $lte: new Date()  // Up to the current date
+              }
+            }
+          },
+          {
+            // Step 3: Group the results by year and calculate total sales
+            $group: {
+              _id: { $year: "$orderDate" }, // Group by year
+              totalSales: { $sum: "$totelAmmount" }
+            }
+          }
+        ]);
+        
+
+
+
         res.json(salesData);
     } else if (filter === 'monthly') {
         const { startDate, endDate } = getDateRange(filter);
 
-        salesData = await Order.aggregate([{$match:{status:'Delivered'}},{$addFields: {orderDate: {$dateFromString: {dateString: "$date",format: "%d/%m/%Y"}}}},{$group: {_id: {year: { $year: "$orderDate" },month: { $month: "$orderDate" }},totalSales: { $sum: "$totelAmmount" }}}]);
-        console.log('monthly : ',salesData);
+
+
+        const oneYearAgo = new Date();
+        oneYearAgo.setDate(oneYearAgo.getDate() - 30); // Calculate the date 365 days ago
+        
+        salesData = await Order.aggregate([
+          {
+            $match: {
+              status: 'Delivered'
+            }
+          },
+          {
+            // Step 1: Convert the 'date' field from 'DD/MM/YYYY' to a Date object
+            $addFields: {
+              orderDate: {
+                $dateFromString: {
+                  dateString: "$date",
+                  format: "%d/%m/%Y"
+                }
+              }
+            }
+          },
+          {
+            // Step 2: Match documents where 'orderDate' is within the last 365 days
+            $match: {
+              orderDate: {
+                $gte: oneYearAgo, // Only include dates from one year ago to now
+                $lte: new Date()  // Up to the current date
+              }
+            }
+          },
+          {
+            // Step 3: Group the results by year and calculate total sales
+            $group: {
+              _id: { $year: "$orderDate" }, // Group by year
+              totalSales: { $sum: "$totelAmmount" }
+            }
+          }
+        ]);
+
+
         res.json(salesData);
     } else if (filter === 'weekly') {
         const { startDate, endDate } = getDateRange(filter);
 
-        salesData = await Order.aggregate([{$match:{status:'Delivered'}},{$addFields: {orderDate: {$dateFromString: {dateString: "$date",format: "%d/%m/%Y"}}}},{$group: {_id: {year: { $year: "$orderDate" },week: { $week: "$orderDate" }},totalSales: { $sum: "$totelAmmount" }}}]);
-        console.log('yeah from weekly')
+
+        const oneYearAgo = new Date();
+        oneYearAgo.setDate(oneYearAgo.getDate() - 7); // Calculate the date 365 days ago
+        
+        salesData = await Order.aggregate([
+          {
+            $match: {
+              status: 'Delivered'
+            }
+          },
+          {
+            // Step 1: Convert the 'date' field from 'DD/MM/YYYY' to a Date object
+            $addFields: {
+              orderDate: {
+                $dateFromString: {
+                  dateString: "$date",
+                  format: "%d/%m/%Y"
+                }
+              }
+            }
+          },
+          {
+            // Step 2: Match documents where 'orderDate' is within the last 365 days
+            $match: {
+              orderDate: {
+                $gte: oneYearAgo, // Only include dates from one year ago to now
+                $lte: new Date()  // Up to the current date
+              }
+            }
+          },
+          {
+            // Step 3: Group the results by year and calculate total sales
+            $group: {
+              _id: { $year: "$orderDate" }, // Group by year
+              totalSales: { $sum: "$totelAmmount" }
+            }
+          }
+        ]);
+
+
         res.json(salesData);
     } else if (filter === 'daily') { 
-        const { startDate, endDate } = getDateRange(filter);
 
+
+
+        const oneYearAgo = new Date();
+        oneYearAgo.setDate(oneYearAgo.getDate() - 1);
+        
         salesData = await Order.aggregate([
-            { $match: { status: 'Delivered', date: { $gte: startDate, $lte: endDate } } },
-            { $addFields: { orderDate: { $dateFromString: { dateString: "$date", format: "%d/%m/%Y" } } } },
-            { $group: { _id: { year: { $year: "$orderDate" }, month: { $month: "$orderDate" }, day: { $dayOfMonth: "$orderDate" } }, totalSales: { $sum: "$totalAmount" } } }
+          {
+            $match: {
+              status: 'Delivered'
+            }
+          },
+          {
+            $addFields: {
+              orderDate: {
+                $dateFromString: {
+                  dateString: "$date",
+                  format: "%d/%m/%Y"
+                }
+              }
+            }
+          },
+          {
+            $match: {
+              orderDate: {
+                $gte: oneYearAgo, // Only include dates from one year ago to now
+                $lte: new Date()  // Up to the current date
+              }
+            }
+          },
+          {
+            // Step 3: Group the results by year and calculate total sales
+            $group: {
+              _id: { $year: "$orderDate" }, // Group by year
+              totalSales: { $sum: "$totelAmmount" }
+            }
+          }
         ]);
-        console.log('yeah from daily')
+
+        
         res.json(salesData);
 
     }
 
         
     } else {
-        console.log('illaah kerittilla')
     res.render('home', { userData,topProducts,topCategories,topBrands,totelOrders,visitors,totalAmmount,productCount,categoryCount });
 
 }
@@ -360,7 +504,6 @@ const loadProductList = async (req,res) => {
             .map(key => `&${key}=${req.query[key]}`)
             .join('');
 
-            console.log('query string : ',queryString)
 
 
         if(req.query.newProduct) {
@@ -490,7 +633,6 @@ const loadEditOrder = async(req,res) => {
 
 
 
-        console.log('ithaan load order edit nte _id : ',product,order,user );
 
         res.render('orderEdit',{product,order,user});
 
@@ -508,7 +650,6 @@ const updateOrder = async(req,res) => {
 
         let status = req.body.status;
         let id = req.query.order_id;
-        console.log('yeah ivdeind status : ',status,id);
 
         let updateOrderStatus = await Order.findOneAndUpdate({_id:id},{$set:{status:status}})
 
@@ -543,13 +684,10 @@ const changeCurrentBanner = async(req,res) => {
 
     try {
 
-        console.log('file here ',req.body)
-        console.log('query here ',req.query)
         let banner = await Banner.findById({_id:req.query.bannerId})
         let startDate = new Date(banner.startDate).toLocaleDateString()
         let endDate = new Date(banner.endDate).toLocaleDateString()
 
-        console.log('haaaai kitty :',banner);
         res.render('editBanner',{banner,startDate,endDate});
 
     } catch (error) {
@@ -582,8 +720,7 @@ const updateBanner = async(req,res) => {
         let path = require('path');
         let fs = require('fs');
 
-        console.log('query :',req.query);
-        console.log('body :',req);
+       
 
         let banner = await Banner.findOne({_id:req.body.id})
 
@@ -597,7 +734,6 @@ const updateBanner = async(req,res) => {
                 console.error('Error deleting file:', err);
                 return;
             }
-            console.log('File deleted successfully');
             });
 
             let updateBanner = await Banner.findByIdAndUpdate({_id:req.body.id},{$set:{url:url,startDate:startDate,endDate:endDate,image:req.file.filename}})
@@ -620,7 +756,6 @@ const loadAddBannerToSlide = async(req,res) => {
 
     try {
             let today = new Date().toLocaleDateString(  )
-            console.log('date is : ',today)
             res.render('addBanner',{today})
 
     } catch (error) {
@@ -632,8 +767,7 @@ const addBannerToSlide = async(req,res) => {
 
     try {
 
-        console.log('yeaah banner etthiii : ',req.body)
-        console.log('file here : ',req.file.filename)
+    
 
         let {startDate,endDate,url} = req.body
 
@@ -648,7 +782,6 @@ const addBannerToSlide = async(req,res) => {
         const bannersaved = await banner.save();
 
         if(bannersaved) {
-            console.log('saaaved')
             res.redirect('/admin/banner')
         }
 
@@ -702,11 +835,9 @@ const submitNewCategory = async (req, res) => {
     try {
 
         const { category } = req.body;
-        console.log('cate : ',category.toUpperCase())
         let checker = category.toUpperCase().trim()
         const categories = await CAtegory.find();
         const isAvailable = await CAtegory.findOne({category:checker});
-        console.log("indooo",isAvailable)
         if(isAvailable) {
             res.redirect('/admin/category/?emessage=This category is already available',)
 
@@ -723,7 +854,7 @@ const submitNewCategory = async (req, res) => {
                 });
     
                 const cat_data = await categorY.save();
-                res.redirect('/admin/category/?message=Coupon was created')
+                res.redirect('/admin/category/?message=Category was created')
     
             }
 
@@ -742,7 +873,6 @@ const toUnlistCategory = async(req,res) => {
 
     try {
 
-        console.log(req.query.id)
         let setCategoryToUnlisted = await CAtegory.findByIdAndUpdate({_id:req.query.id},{$set:{isListed:false}})
 
         res.redirect('/admin/category');
@@ -775,7 +905,6 @@ const loadProductEdit = async (req, res) => {
 
         
         if (productData) {
-            console.log('yeeeeeeeee')
             res.render('productEdit', { product: productData,category,emessage });
         } else {
             res.redirect('/admin/home');
@@ -797,10 +926,8 @@ const productImageEdit = async (req,res) => {
 
         let {position,id} = req.params;
 
-        console.log('dont worry ethii',req.params)
 
 
-        console.log('this is alt : ',position)
         let product = await Product.findOne({_id:id})
         if(product.images.length < 4) {
 
@@ -813,7 +940,6 @@ const productImageEdit = async (req,res) => {
         for(let i = 0;i<product.images.length;i++) {
 
             if(position == i) {
-                console.log('hoohhhahahha',i)
 
                 let removeIMG = await Product.findOneAndUpdate({_id:id},{$pull : {images:product.images[i]}})
 
@@ -824,7 +950,6 @@ const productImageEdit = async (req,res) => {
                 console.error('Error deleting file:', err);
                 return;
             }
-            console.log('File deleted successfully');
             });
 
 
@@ -837,7 +962,6 @@ const productImageEdit = async (req,res) => {
 
 
 
-        console.log('haaaaaaah')
 
         res.redirect(`/admin/EditProduct/?id=${id}`)
 
@@ -855,9 +979,7 @@ const productIMGChange = async (req,res) => {
         let path = require('path')
         let fs = require('fs')
 
-        console.log('yeeah ivddeee ind' ,req.query);
-        console.log('yeeah ivddeee ind' ,req.body.id);
-        console.log('yeeah ivddeee ind photo : ' ,req.file.filename);
+        
         let product = await Product.findOne({_id:req.body.id})
         let i = req.query.id
         let changeIMG = await Product.findByIdAndUpdate({_id:req.body.id},{ $set: { [`images.${i}`] : req.file.filename}})
@@ -867,7 +989,6 @@ const productIMGChange = async (req,res) => {
                 console.error('Error deleting file:', err);
                 return;
             }
-            console.log('File deleted successfully');
             });
 
 
@@ -884,7 +1005,6 @@ const submitEditedProduct = async (req, res) => {
     
     try {
         const { id } = req.query;
-        console.log('caaateee',req.body.category);
 
         if(req.file) {
             const updateIMG = await Product.findByIdAndUpdate({ _id: id }, { $push: { images:req.file.filename}});
@@ -909,9 +1029,7 @@ const submitEditedProduct = async (req, res) => {
         } else {
             
             const update = await Product.findByIdAndUpdate({ _id: id }, { $set: { name: name, category:category, company: company, product_desc:product_desc, price:price, og_price:original_price, quantity:quantity} });
-            console.log(update);
             if (update) {
-                console.log('success kuttaaaa')
                 res.redirect('/admin/product/?edited=true');
             } else {
             res.render('productEdit', { emessage: "Updation failed" ,category:categorys, product: productData });
@@ -931,11 +1049,8 @@ const blockUser = async (req, res) => {
         
 
 
-        console.log('paraaams',req.query);
         let id = req.query.id
-        console.log('ivde etththiii toooo',req.body)
         const block_User = await User.findByIdAndUpdate({ _id: id },{$set:{block:true}});
-        console.log(block_User)
         res.redirect('/admin/customers/?userblockUnblock=User has been blocked'); 
 
             
@@ -965,7 +1080,6 @@ const deleteUser = async(req,res) => {
     try {
 
         let customer = await User.findOneAndDelete({_id:req.params.id})
-        console.log('hahahaahhhaha : ',req.params.id)
         res.redirect('/admin/customers/?userDeleted=User has been deleted')
 
 
@@ -1005,10 +1119,7 @@ const submitNewProduct = async(req,res) => {
 
     try {
 
-        console.log('ivde aan images verndath : ',req.files)
 
-        console.log('ivde aan boadysss verndath : ',req.body)
-        console.log('category is here : ',req.body.category);
         const GotProducts = await CAtegory.find();
 
 
@@ -1163,7 +1274,6 @@ const deleteProduct = async(req,res) => {
 
 const deleteCategory = async(req,res) => {
     try {
-        console.log('haa eetthhnd')
         const { id } = req.params;
         const deleteCate = await CAtegory.deleteOne({ _id: id });
         if (deleteCate) {
@@ -1255,7 +1365,6 @@ const addCoupon = async(req,res) => {
         let today = new Date();
 
 
-        console.log('yeah coupon body is here : ',req.body);
         
         
         const { code, discount, expiry, amount } = req.body;
@@ -1264,7 +1373,6 @@ const addCoupon = async(req,res) => {
         
         const gotExpiry = new Date(expiry)
 
-        console.log('inn : ',today,"ith expiry : ")
 
 
         if(code.trim() == '' || discount.trim() == '' || expiry.trim() == '' || amount.trim() == '') {
@@ -1274,7 +1382,6 @@ const addCoupon = async(req,res) => {
 
         } else if (gotExpiry < today) { 
 
-            console.log('nop date is past')
             res.redirect('/admin/couponManagement/?err=please enter a proper expiry date(after today)');
 
 
@@ -1322,7 +1429,6 @@ const editCoupon = async (req,res) => {
 
     try {
 
-        console.log('yeasss')
         let coupon = await Coupon.findById({_id:req.query.id})
         if(req.query.err) {
 
@@ -1349,7 +1455,6 @@ const updateCoupon = async (req,res) => {
         let today = new Date();
 
 
-        console.log('yeah coupon body is here : ',req.body);
         
         
         const { code, discount, expiry, amount,id } = req.body;
@@ -1358,7 +1463,6 @@ const updateCoupon = async (req,res) => {
         
         const gotExpiry = new Date(expiry)
 
-        console.log('inn : ',today,"ith expiry : ")
 
 
         if(code.trim() == '' || discount.trim() == '' || expiry.trim() == '' || amount.trim() =='') {
@@ -1368,7 +1472,6 @@ const updateCoupon = async (req,res) => {
 
         } else if (gotExpiry < today) { 
 
-            console.log('nop date is past')
             res.redirect(`/admin/editCoupon/?id=${id}&err=please enter a proper expiry date(after today)`);
 
 
@@ -1403,7 +1506,6 @@ const deleteCoupon = async (req,res) => {
     try {
 
         let deleteCoupon = await Coupon.findOneAndDelete({_id:req.params.id})
-        console.log('coupon deleted',req.params)
 
         res.redirect('/admin/couponManagement')
 
@@ -1417,7 +1519,6 @@ const deleteCoupon = async (req,res) => {
 const loadSalesReport = async(req,res) => {
 
     try {
-        console.log('period: ',req.query.period)
         
 
 
@@ -1427,26 +1528,147 @@ const loadSalesReport = async(req,res) => {
         // Calculate the number of items to skip
         const skip = (page - 1) * limit;
         // Get total number of products for pagination information
-        const totalOrders = await Order.countDocuments({status:'Delivered'});
+        let totalOrders = await Order.countDocuments({status:'Delivered'});
             
         // Calculate total number of pages
-        const totalPages = Math.ceil(totalOrders / limit);
+       
             
             
         let orders = await Order.find({status:'Delivered'}).sort({_id:-1}).skip(skip).limit(limit)
-        // if(req.query.period) {
-        //     const today = new Date();
-        //     const sevenDaysAgo = new Date(today);
-        //     sevenDaysAgo.setDate(today.getDate() - 7);
+        
+        if(req.query.period) {
 
-        //     orders = await Order.find({
-        //     dateField: {
-        //         $gte: sevenDaysAgo,
-        //         $lt: today
-        //     }
-        // }).sort({_id:-1}).skip(skip).limit(limit)
+            if (req.query.period !== 'day' && req.query.period !== 'week' && req.query.period !== 'month' && req.query.period !== 'year') {
+                let wholeOrders = await Order.find({status:'Delivered'}).sort({_id:-1}).skip(skip).limit(limit)
+                
 
-        // }
+
+ // User-provided date in YYYY/MM/DD format
+const userDate = req.query.period;
+
+// Convert the userDate to a Date object directly
+const startDateObj = new Date(userDate); // This creates a Date object from the string
+
+orders = await Order.aggregate([
+  {
+    // Step 1: Convert the 'date' field in the schema from 'DD/MM/YYYY' to a Date object
+    $addFields: {
+      dateObj: {
+        $dateFromString: {
+          dateString: "$date", // Converts the string date in the schema to Date object
+          format: "%d/%m/%Y"   // Format of the date strings in your schema
+        }
+      }
+    }
+  },
+  {
+    // Step 2: Match documents where 'dateObj' is between 'startDateObj' and now
+    $match: {
+      dateObj: {
+        $gte: startDateObj, // Use the Date object created from the user input
+        $lte: new Date() // Compare with the current date
+      }
+    }
+  },
+  {
+    // Step 3: Optionally remove the temporary 'dateObj' field
+    $project: {
+      dateObj: 0
+    }
+  }
+]);
+
+
+                  totalOrders = wholeOrders.length
+
+
+            } else if (req.query.period == 'day') {
+                let today = createDateString();
+                orders = await Order.find({status:'Delivered',date:today}).sort({_id:-1}).skip(skip).limit(limit)
+                totalOrders = orders.length
+
+
+            } else if (req.query.period == 'week') {
+
+                
+                let wholeOrders = await Order.find({status:'Delivered'}).sort({_id:-1}).skip(skip).limit(limit)
+
+                function parseDate(dateStr) {
+                    const [day, month, year] = dateStr.split('/');
+                    return new Date(`${year}-${month}-${day}`);
+                  }
+                  
+                  // Get today's date
+                  const today = new Date();
+                  
+                  
+                  // Calculate the date 6 days ago
+                  const sixDaysAgo = new Date(today);
+                  sixDaysAgo.setDate(today.getDate() - 6);
+                  
+                  // Filter the documents based on the date range
+                orders = wholeOrders.filter(doc => {
+                    const docDate = parseDate(doc.date);
+                    return docDate >= sixDaysAgo && docDate <= today;
+                  });
+                  totalOrders = wholeOrders.length
+
+
+
+            } else if (req.query.period == 'month') {
+
+                let wholeOrders = await Order.find({status:'Delivered'}).sort({_id:-1}).skip(skip).limit()
+
+                function parseDateTODate(dateStr) {
+                    const [day, month, year] = dateStr.split('/');
+                    return new Date(`${year}-${month}-${day}`);
+                  }
+                  
+                  // Get today's date
+                  const today = new Date();
+                  
+                  
+                  // Calculate the date 6 days ago
+                  const thirtyDaysAgo = new Date(today);
+                  thirtyDaysAgo.setDate(today.getDate() - 30);
+                  
+                  // Filter the documents based on the date range
+                orders = wholeOrders.filter(doc => {
+                    const docDate = parseDateTODate(doc.date);
+                    return docDate >= thirtyDaysAgo && docDate <= today;
+                  });
+                  totalOrders = wholeOrders.length
+
+            } else if (req.query.period == 'year') {
+
+                let wholeOrders = await Order.find({status:'Delivered'}).sort({_id:-1}).skip(skip).limit()
+
+                function parseDateTODate(dateStr) {
+                    const [day, month, year] = dateStr.split('/');
+                    return new Date(`${year}-${month}-${day}`);
+                  }
+                  
+                  // Get today's date
+                  const today = new Date();
+                  
+                  
+                  const yearAgo = new Date(today);
+                  yearAgo.setDate(today.getDate() - 365);
+                  
+                  // Filter the documents based on the date range
+                orders = wholeOrders.filter(doc => {
+                    const docDate = parseDateTODate(doc.date);
+                    return docDate >= yearAgo && docDate <= today;
+                  });
+                  totalOrders = wholeOrders.length
+
+            }
+
+
+        }
+
+        const totalPages = Math.ceil(totalOrders / limit);
+
         let FindordersSum = await Order.aggregate([{ $match: {status:'Delivered'}},
         {
             $group: {
@@ -1476,10 +1698,8 @@ const loadSalesReport = async(req,res) => {
            }
         }
 
-                console.log('ithaaaaa : ',orders, 'ith users : ',users, 'ith products : ',products);
-                console.log('week or month or day ? : ',req.body,req.query);
+                
 
-        console.log('the coupons here : ',coupon)
                 if(req.query.format) {
                     let orders = await Order.find({status:'Delivered'})
                     let users = []
@@ -1507,6 +1727,11 @@ const loadSalesReport = async(req,res) => {
 
                     
                     let i = skip
+
+                    const queryString = Object.keys(req.query)
+            .filter(key => key !== 'page' && key !== 'limit')
+            .map(key => `&${key}=${req.query[key]}`)
+            .join('');
                     
             
                     res.render('salesReport', { orders,coupon,users,products,orderTotel,pagination: {
@@ -1515,7 +1740,7 @@ const loadSalesReport = async(req,res) => {
                         currentPage: page,
                         hasNextPage: page < totalPages,
                         hasPrevPage: page > 1,
-                    },i });
+                    },i,queryString });
                     
 
 
@@ -1533,6 +1758,22 @@ const loadSalesReport = async(req,res) => {
 }
 
 
+
+
+function createDateString() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const year = today.getFullYear();
+    const todayString = `${day}/${month}/${year}`;
+    return todayString;
+  }
+
+
+  function parseDateTOWeek(dateStr) {
+    const [day, month, year] = dateStr.split('/');
+    return new Date(`${year}-${month}-${day}`);
+  }
 
 
 

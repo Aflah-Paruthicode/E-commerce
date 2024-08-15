@@ -75,10 +75,10 @@
                     <td><a href="/admin/toUnlist/?id=<%= category._id %>" class="btn btn-dark">click here to Unlist</a></td>
 
                  <% } else { %>
-                  <td><a href="/admin/toList/?id=<%= category._id %>" class="btn btn-dark" >click here to list</a></td>
+                  <td><a href="/admin/toList/?id=<%= category._id %>" class="btn btn-danger" >click here to list</a></td>
 
                 <% }  %>
-                  <td><a style="width: 45px;" href="" class="btn btn-success" type="submit"><img style="width: 100%;" src="/adminOptionsImages/edit.png" alt=""></a>
+                  <td>
                     <a style="width: 45px;" href="/admin/deleteCategory/<%= category._id%>"
                       class="btn btn-danger delete-link"
                       onclick="confirmDelete(event, '<%= category._id%>');"

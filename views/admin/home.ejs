@@ -122,6 +122,7 @@
   </div>
 
   <script>
+    const date = new Date()
     const ctx = document.getElementById('salesChart').getContext('2d');
     const chart = new Chart(ctx, {
       type: 'bar',
@@ -147,13 +148,13 @@
         .then(response => response.json())
         .then(data => {
           if (filter === 'yearly') {
-            chart.data.labels = data.map(d => d._id);
+            chart.data.labels = data.map(d => `This year`);
           } else if (filter === 'monthly') {
-            chart.data.labels = data.map(d => `${d._id.month}/${d._id.year}`);
+            chart.data.labels = data.map(d => `This month`);
           } else if (filter === 'daily') {
-            chart.data.labels = data.map(d => `${d._id.day}/${d._id.month}/${d._id.year}`);
+            chart.data.labels = data.map(d => `Todays`);
           } else if (filter === 'weekly') {
-            chart.data.labels = data.map(d => `Week ${d._id.week}, ${d._id.year}`);
+            chart.data.labels = data.map(d => `This Week`);
           }
           chart.data.datasets[0].data = data.map(d => d.totalSales);
           chart.update();

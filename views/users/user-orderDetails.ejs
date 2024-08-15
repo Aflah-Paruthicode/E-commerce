@@ -173,14 +173,21 @@
                 <p><span style="font-weight: 500;">Product price : </span> ₹ <%= product.price %>.00</p>
                 <% if(coupon !== 'no') { %>
                 <p style="color: green;font-weight: 500;"><span style="font-weight: 500;color: black;">Coupon applied : </span> <%= coupon.code %></p>
-                <p style="color: green;font-weight: 500;"><span style="font-weight: 500;color: green;"></span><%= product.price %> - <%= coupon.discount %> = ₹ <%= product.price - coupon.discount %>.00</p>
-                <% product.price = product.price - coupon.discount %>
+                <p style="color: green;font-weight: 500;"><span style="font-weight: 500;color: green;"></span><%= order.totelAmmount + coupon.discount %> - <%= coupon.discount %> = ₹ <%= order.totelAmmount %>.00</p>
              <%  }  %>
-                <% let tax = Math.floor(order.totelAmmount - product.price*order.quantity -50 )  %>
-                <p><span style="font-weight: 500;">Tax : </span> ₹ <%= tax %>.00</p>
+
+             
+                <p><span style="font-weight: 500;">Tax : </span> ₹ <%= taxAmount %>.00</p>
                 <p><span style="font-weight: 500;">Shipping : </span> ₹ <%= order.deliveryChaerge %>.00</p>
                 <hr>
-                <p><span style="font-weight: 500;">Order totel : </span> <span style="color: green; font-weight: 500;">₹ <%= order.totelAmmount %>.00</span></p>
+             <% if(coupon !== 'no') { %>
+                      <p><span style="font-weight: 500;">Order totel : </span> <span style="color: green; font-weight: 500;">₹ <%= order.totelAmmount %>.00</span> &nbsp;&nbsp; <span style="color: rgba(0, 0, 0, 0.645); text-decoration: line-through; font-weight: 500;"><%= order.totelAmmount + coupon.discount%></span></p>
+      
+                  <%  } else {  %>
+                      
+                      <p><span style="font-weight: 500;">Order totel : </span> <span style="color: green; font-weight: 500;">₹ <%= order.totelAmmount %>.00</span></p>
+                  <%  }  %>
+
 
 
                 

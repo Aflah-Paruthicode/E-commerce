@@ -207,10 +207,9 @@
 
             <div class="pImages in">
               <label for="">Upload Images :</label>
-              <input type="file" id="productImages" accept="image/*" multiple>
+              <input type="file" name="images" id="productImages" accept="image/*" multiple>
             
             </div>
-            <div id="image-preview-container" style="width: 100px;display: flex;flex-wrap: wrap;"></div>
             
 
             <div class="in">
@@ -223,6 +222,8 @@
             
 
           </div>
+          <div id="image-preview-container" style="width: 100%;display: flex;flex-wrap: wrap;"></div>
+
       </div>
     </div>
   </div>
@@ -260,7 +261,7 @@ productImagesInput.addEventListener('change', (event) => {
         imageContainer.appendChild(image);
 
         const cropper = new Cropper(image, {
-          aspectRatio: 75 / 54, // Set aspect ratio
+          aspectRatio: 60 / 75, // Set aspect ratio
           viewMode: 1,
           autoCropArea: 1,
           dragMode: 'crop',
@@ -279,9 +280,24 @@ productImagesInput.addEventListener('change', (event) => {
         cropButton.addEventListener('click', () => {
           event.preventDefault(); // Prevent the default form submission
           const croppedCanvas = cropper.getCroppedCanvas();
-          const croppedImageBlob = croppedCanvas.toBlob((blob) => {
-            // Implement logic to store the cropped image data (e.g., using localStorage)
-            console.log('Cropped image data:', blob);
+
+          croppedCanvas.toBlob((blob) => {
+            const fileName = `cropped-${file.name}`;
+            const croppedFile = new File([blob], fileName, { type: 'image/jpeg' });
+
+            // Use DataTransfer to append the cropped file to the input field
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(croppedFile);
+
+            // Add the existing files to the DataTransfer object
+            for (let j = 0; j < productImagesInput.files.length; j++) {
+              dataTransfer.items.add(productImagesInput.files[j]);
+            }
+
+            // Update the input field with the new files
+            productImagesInput.files = dataTransfer.files;
+            cropButton.style.display = 'none'; // Hide button
+
           }, 'image/jpeg');   // Adjust image type as needed
         });
       };
@@ -290,6 +306,12 @@ productImagesInput.addEventListener('change', (event) => {
     reader.readAsDataURL(file);
   }
 });
+
+
+
+
+
+
 
 
 

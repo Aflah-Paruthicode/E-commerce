@@ -88,6 +88,8 @@
         <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon Management</a></button>
         <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
         <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
+        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
+
   
   
   
@@ -236,7 +238,6 @@
 
 
   <script>
-
 const productImagesInput = document.getElementById('productImages');
 const imagePreviewContainer = document.getElementById('image-preview-container');
 
@@ -285,18 +286,25 @@ productImagesInput.addEventListener('change', (event) => {
             const fileName = `cropped-${file.name}`;
             const croppedFile = new File([blob], fileName, { type: 'image/jpeg' });
 
-            // Use DataTransfer to append the cropped file to the input field
+            // Use DataTransfer to manage the input files
             const dataTransfer = new DataTransfer();
+
+            // Add the cropped file to the DataTransfer object
             dataTransfer.items.add(croppedFile);
 
-            // Add the existing files to the DataTransfer object
-            for (let j = 0; j < productImagesInput.files.length; j++) {
-              dataTransfer.items.add(productImagesInput.files[j]);
+            // Add the other files except the current one
+            for (let j = 0; j < files.length; j++) {
+              if (j !== i) { // Skip the current file
+                dataTransfer.items.add(files[j]);
+              }
             }
 
             // Update the input field with the new files
             productImagesInput.files = dataTransfer.files;
-            cropButton.style.display = 'none'; // Hide button
+
+            // Hide the crop button and remove the original image
+            cropButton.style.display = 'none';
+            imagePreviewContainer.removeChild(imageContainer);  // Optionally remove the image preview
 
           }, 'image/jpeg');   // Adjust image type as needed
         });
@@ -306,7 +314,6 @@ productImagesInput.addEventListener('change', (event) => {
     reader.readAsDataURL(file);
   }
 });
-
 
 
 

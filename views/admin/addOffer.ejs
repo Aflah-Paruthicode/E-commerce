@@ -54,7 +54,7 @@
       </div>
   
       <div class="ad-home-dashboard-optionsDetailPage">
-          <h3>EDIT BANNER PAGE</h3>
+          <h3>ADD OFFER PAGE</h3>
 
           <% if (typeof emessage !== 'undefined') { %>
             <script>
@@ -70,10 +70,53 @@
           
   
           <div class="adProduct-formDiv">
-            <form action="/admin/updateBanner" id="uploadForm" method="post" enctype="multipart/form-data">
+            <form action="" method="post">
+
+                <div class="pName in">
+
+                   <%  if(typeof products !== 'undefined' ) {  %>
+
+                    
+                    <label for="">Product :</label>
+                    <select name="product_Id" id="">
+                        <option value="">choose one...</option>
+
+                        <% products.forEach((product) => { %>
+
+                          <% if(product.product_OfferDetails) {  %>
+
+                            <option style="color: white;background-color: black;" disabled  value="<%= product._id %>"><%= product.name %></option>
+
+                            <hr style="background-color: #fff;height: 4px;">
+                            <%} else { %>
+
+                            <option value="<%= product._id %>"><%= product.name %></option>
+                              <% } %>
+
+
+
+                      <%   }) %>
+                    </select>
+                   <%  } else { %>
+
+                    <label for="">Category :</label>
+                    <select name="category_name" id="">
+                        <option value="">choose one...</option>
+
+                        <% categories.forEach((category) => { %>
+
+                          <option value="<%= category.category %>"><%= category.category %></option>
+                          
+                      <%   }) %>
+                    </select>
+
+              <%  } %>
+                  </div>
+
+
             <div class="pName in">
-              <label for="">Banner Discription :</label>
-              <input type="text" value="<%= banner.description %>" readonly>
+              <label for="">Offer name :</label>
+              <input type="text" name="offerName" >
             </div>
 
               
@@ -82,32 +125,25 @@
             
 
             <div class="pDescription in">
-              <label for="">Redirect Url :</label>
-              <input type="hidden" name="id" value="<%= banner._id %>" >
+              <label for="">Discount Percentage :</label>
+              <input type="number" name="DiscountPercentage" >
 
-              <input type="text" name="url" value="<%= banner.url %>" placeholder="ex.(to a product) /viewProduct/?id=665db43ef1b842ae241628fa">
             </div>
 
             <div class="pPrice in">
-              <label for="">Start date :</label>
-              <input style="width: 30%;" type="text" id="startDate" name="startDate" value="<%= startDate %>">
+              <label for="">Offer Start Date :</label>
+              <input style="width: 30%;" type="date" name="offerStartDate" >
 
-              <label style="margin: 30px;margin-left: 55px;" for="">End date :</label>
-              <input style="width: 30%;" type="text" id="endDate"   required value="<%= endDate %>" name="endDate">
+              <label style="margin: 30px;margin-left: 55px;" for=""> Offer End Date :</label>
+              <input style="width: 30%;" id="date" type="date" required  name="offerEndDate">
             </div>
 
             
-            <div class="pImages in">
-              <label for="">Edit banner :</label>
-              <div style="padding: 5px; border: 1px solid rgba(0, 0, 0, 0.64);">
-                <img src="/banners/<%= banner.image %>" alt="" style="width: 100px; height: 80px;">
-              </div>
-              <input type="file" id="productImages" accept="image/*" name="image" accept=".jpg, .jpeg, .png">
-            </div>
-
+            
             <div class="in">
 
-            <input style="margin-top: 7px;background-color: green;outline: none;border: none;color: #fff;width: 190px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="ADD BANNER">
+            <input style="    margin-top: 25px;
+            margin-left: 170px;background-color: green;outline: none;border: none;color: #fff;width: 210px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="Add A New Offer">
           </div>
 
                   </form>
@@ -120,49 +156,3 @@
     </div>
   </div>
 
-
-
-
-  <script>
-    document.getElementById('uploadForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const fileInput = document.getElementById('productImages');
-      const file = fileInput.files[0];
-      const errorElement = document.getElementById('error');
-  
-      if (file) {
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        img.onload = function() {
-          if (img.width === 1429 && img.height === 781) {
-            // Proceed with the form submission
-            errorElement.textContent = '';
-
-            
-            document.getElementById('uploadForm').submit()
-
-          } else {
-
-            Swal.fire({
-                    title: 'Failed!',
-                    text: 'Image dimensions must be 1429 × 781 pixels.',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-            errorElement.textContent = 'Image dimensions must be 1429 × 781 pixels.';
-          }
-          URL.revokeObjectURL(img.src); // Clean up the object URL
-        };
-        img.onerror = function() {
-          errorElement.textContent = 'Invalid image file.';
-        };
-      } else {
-        document.getElementById('uploadForm').submit()
-      }
-    });
-  </script>
-
-
-
-
-</script>

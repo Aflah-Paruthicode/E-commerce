@@ -29,7 +29,7 @@
 
 .view-product-section .view-product-container .productImage-buy .product-buy .orgRS-RS-shipping {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     padding: 10px;
 }
 

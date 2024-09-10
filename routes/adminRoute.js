@@ -96,6 +96,23 @@ adminRoute.get('/toUnlist',auth.isLogin,adminController.toUnlistCategory);
 adminRoute.get('/toList',auth.isLogin,adminController.toListCategory);
 adminRoute.get('/deleteCategory/:id', auth.isLogin, adminController.deleteCategory);
 
+
+adminRoute.get('/offerManagement',auth.isLogin,adminController.loadOfferManagement);
+adminRoute.get('/addProductOffer',auth.isLogin,adminController.loadAddProductOffer);
+adminRoute.post('/addProductOffer',auth.isLogin,adminController.submitProductOffer)
+adminRoute.get('/editProductOffer',auth.isLogin,adminController.loadEditProductOffer)
+adminRoute.post('/editProductOffer',auth.isLogin,adminController.submitEditProductOffer)
+
+adminRoute.get('/deleteProductOffer/:id',auth.isLogin,adminController.loadDeleteProductOffer)
+
+
+adminRoute.get('/addCategoryOffer',auth.isLogin,adminController.loadAddCategoryOffer);
+adminRoute.post('/addCategoryOffer',auth.isLogin,adminController.submitCategoryOffer)
+adminRoute.get('/editCategoryOffer',auth.isLogin,adminController.loadEditCategoryOffer)
+adminRoute.post('/editCategoryOffer',auth.isLogin,adminController.submitEditCategoryOffer)
+
+adminRoute.get('/deleteCategoryOffer/:category',auth.isLogin,adminController.loadDeleteCategoryOffer)
+
 adminRoute.get('/logout', auth.isLogin, adminController.logout);
 
 

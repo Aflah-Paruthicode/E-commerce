@@ -36,7 +36,29 @@ const productSchema = mongoose.Schema({
     images:{
         type:Array,
         required:true
-    }
+    },
+    product_OfferDetails: {
+        type: {
+          discountPercentage: Number,
+          offerName: String,
+          offerStartDate: Date,
+          offerEndDate: Date
+
+        },
+       
+      },
+      category_OfferDetails: {
+        type: {
+          discountPercentage: Number,
+          offerName: String,
+          offerStartDate: Date,
+          offerEndDate: Date
+
+        },
+       
+      },
+
+
 });
 
 

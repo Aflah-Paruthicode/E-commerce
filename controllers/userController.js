@@ -430,17 +430,6 @@ const loginSubmit = async (req, res) => {
     }
 }
 
-// otp verification here.
-
-// const otpVerification = async (req, res) => {
-//     try {
-
-//         res.render('otpVerification');
-
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-// }
 
 
 const loadHome = async (req, res) => {
@@ -453,10 +442,10 @@ const loadHome = async (req, res) => {
         product_desc:"$productDetails.product_desc",
         company:"$productDetails.company",
         quantity:"$productDetails.quantity",
-        og_price:"$productDetails.og_price"}}]);
-
-        const producTs = await Product.find();
-        const categoryForListUnList = await Category.find({isListed:true});
+        og_price:"$productDetails.og_price",
+        product_OfferDetails:"$productDetails.product_OfferDetails",
+        category_OfferDetails:"$productDetails.category_OfferDetails"
+    }}]);
 
         const productss = await Product.aggregate([
             {
@@ -484,6 +473,8 @@ const loadHome = async (req, res) => {
                 company:1,
                 quantity:1,
                 og_price:1,
+                product_OfferDetails:1,
+                category_OfferDetails:1,
                 // Include other fields you want to retrieve from the product document
                 category: '$categoryDetails.name'
               }
@@ -1252,6 +1243,8 @@ const loadAddAddress = async (req, res) => {
 const loadmyOrders = async (req, res) => {
 
     try {
+
+
         const retrySuccess = req.query.retrySuccess
         const page = parseInt(req.query.page) || 1; // Default to page 1
         const limit = parseInt(req.query.limit) || 5; // Default to 10 items per page
@@ -1331,7 +1324,6 @@ const orderDetails = async (req,res) => {
         let order = await Order.findById({_id:orderId});
         let user = await User.findById({_id:req.session.user_id});
         let product = await Product.findById({_id:order.product});
-        let coupon = await Coupon.findOne({code:order.coupon_applied});
         // for delivery date
         let dateParts = order.date.split('/');
         let dateObject = new Date(dateParts[2], dateParts[1] - 1, dateParts[0]);
@@ -1341,14 +1333,36 @@ const orderDetails = async (req,res) => {
         date7DaysLater.setDate(dateObject.getDate() + 7);
 
 
-        if(coupon !== null) {
             
-            res.render('user-orderDetails',{user,product,order,delivery:date7DaysLater.toDateString(),coupon,taxAmount});
-        } else {
+            if(order.coupon_applied !== 'no') {
+                
+                res.render('user-orderDetails',{user,product,order,delivery:date7DaysLater.toDateString(),coupon:order.coupon_Discount,taxAmount});
+            } else {
+    
+                res.render('user-orderDetails',{user,product,order,delivery:date7DaysLater.toDateString(),coupon:'no',taxAmount});
+    
+            }
 
-            res.render('user-orderDetails',{user,product,order,delivery:date7DaysLater.toDateString(),coupon:'no',taxAmount});
 
-        }
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
+
+const orderReturn = async (req,res) => {
+
+    try {
+
+        console.log('choosed one is : ',req.query.choosed)
+        console.log('order id is : ',req.query.orderId)
+        let order = await Order.findOne({_id:req.query.orderId})
+
+        let orderStatus_Update = await Order.findOneAndUpdate({_id:req.query.orderId},{$set:{status:'Return Requested',reasonForReturn:req.query.choosed}});
+
+        res.redirect('/orderDetails/?orderId='+order._id)
+
 
 
     } catch (error) {
@@ -1787,10 +1801,41 @@ const loadCart = async (req, res) => {
             
 
             let sumOfProducts = array.reduce((accumulator, element) => {
-                accumulator += element.price;
-                return accumulator;
-            }, 0);
 
+                 let today = new Date()
+                 if(element.product_OfferDetails && element.product_OfferDetails.offerStartDate <= today && element.product_OfferDetails.offerEndDate >= today  || element.category_OfferDetails && element.category_OfferDetails.offerStartDate <= today && element.category_OfferDetails.offerEndDate >= today ) {
+                
+
+                if(element.category_OfferDetails) {
+                    console.log('category offer')
+
+                    const price = element.price; 
+                    const discountPercentage = element.category_OfferDetails ? element.category_OfferDetails.discountPercentage : 0; // Example: 20%
+                    const discountAmount = (price * discountPercentage) / 100;
+                    const finalPrice = price - discountAmount
+
+                        accumulator += Math.floor(finalPrice);
+                         return accumulator;
+
+                } else {
+                    console.log('product offer')
+
+                    const price = element.price; 
+                    const discountPercentage = element.product_OfferDetails ? element.product_OfferDetails.discountPercentage : 0; // Example: 20%
+                    const discountAmount = (price * discountPercentage) / 100;
+                    const finalPrice = price - discountAmount
+
+                        accumulator += Math.floor(finalPrice);
+                         return accumulator;
+                }
+
+            } else {
+
+                    accumulator += element.price;
+                    return accumulator;
+                }
+
+            }, 0);
 
 
 
@@ -1839,6 +1884,7 @@ const loadCart = async (req, res) => {
 }
 
 
+
 const updateCartQuantity = async (req,res) => {
 
     try {
@@ -1861,15 +1907,42 @@ const updateCartQuantity = async (req,res) => {
 
             for (let i = 0; i < findcartProducts.length; i++) {
 
-                array.push(await Product.findOne({ _id: findcartProducts[i].products_id }))
+                array.push( await Product.findOne({ _id: findcartProducts[i].products_id }))
             }
 
         }
 
-            let sumOfProducts = array.reduce((accumulator, element) => {
+            let today = new Date();
+        let sumOfProducts = array.reduce((accumulator, element) => {
+
+            if(element.category_OfferDetails && element.category_OfferDetails.offerStartDate <= today && element.category_OfferDetails.offerEndDate >= today) {
+                console.log('category offer')
+
+                const price = element.price; 
+                const discountPercentage = element.category_OfferDetails ? element.category_OfferDetails.discountPercentage : 0; // Example: 20%
+                const discountAmount = (price * discountPercentage) / 100;
+                const finalPrice = price - discountAmount
+
+                    accumulator += Math.floor(finalPrice);
+                     return accumulator;
+
+                    } else if (element.product_OfferDetails && element.product_OfferDetails.offerStartDate <= today && element.product_OfferDetails.offerEndDate >= today) {
+                        console.log('product offer')
+
+                const price = element.price; 
+                const discountPercentage = element.product_OfferDetails ? element.product_OfferDetails.discountPercentage : 0; // Example: 20%
+                const discountAmount = (price * discountPercentage) / 100;
+                const finalPrice = price - discountAmount
+
+                    accumulator += Math.floor(finalPrice);
+                     return accumulator;
+            } else {
+
                 accumulator += element.price;
                 return accumulator;
-            }, 0);
+            }
+
+        }, 0);
 
 
             let Qchecker = 0
@@ -1882,12 +1955,60 @@ const updateCartQuantity = async (req,res) => {
 
                     if(array[i].quantity - productQuantitys[i] < 0) {
                         productQuantitys[i] = productQuantitys[i] -1
-                        sumOfProducts = sumOfProducts - array[i].price + array[i].price * productQuantitys[i]
+
+                        if(array[i].category_OfferDetails && array[i].category_OfferDetails.offerStartDate <= today && array[i].category_OfferDetails.offerEndDate >= today) {
+
+                            const price = array[i].price; 
+                            const discountPercentage = array[i].category_OfferDetails ? array[i].category_OfferDetails.discountPercentage : 0; // Example: 20%
+                            const discountAmount = (price * discountPercentage) / 100;
+                              const finalPrice = price - discountAmount
+
+                              sumOfProducts = sumOfProducts - Math.floor(finalPrice) + Math.floor(finalPrice) * productQuantitys[i]
+
+
+                            } else if (array[i].product_OfferDetails && array[i].product_OfferDetails.offerStartDate <= today && array[i].product_OfferDetails.offerEndDate >= today) {
+
+                            const price = array[i].price; 
+                            const discountPercentage = array[i].product_OfferDetails ? array[i].product_OfferDetails.discountPercentage : 0; // Example: 20%
+                            const discountAmount = (price * discountPercentage) / 100;
+                              const finalPrice = price - discountAmount
+
+                              sumOfProducts = sumOfProducts - Math.floor(finalPrice) + Math.floor(finalPrice) * productQuantitys[i]
+
+                            
+                        } else {
+
+                            sumOfProducts = sumOfProducts - array[i].price + array[i].price * productQuantitys[i]
+                        }
 
                         Qchecker ++
                         positionForQcheck = i
                     } else {
-                        sumOfProducts = sumOfProducts - array[i].price + array[i].price * productQuantitys[i]
+
+                        if(array[i].category_OfferDetails && array[i].category_OfferDetails.offerStartDate <= today && array[i].category_OfferDetails.offerEndDate >= today) {
+
+                            const price = array[i].price; 
+                            const discountPercentage = array[i].category_OfferDetails ? array[i].category_OfferDetails.discountPercentage : 0; // Example: 20%
+                            const discountAmount = (price * discountPercentage) / 100;
+                              const finalPrice = price - discountAmount
+
+                              sumOfProducts = sumOfProducts - Math.floor(finalPrice) + Math.floor(finalPrice) * productQuantitys[i]
+
+
+                            } else if (array[i].product_OfferDetails && array[i].product_OfferDetails.offerStartDate <= today && array[i].product_OfferDetails.offerEndDate >= today) {
+
+                            const price = array[i].price; 
+                            const discountPercentage = array[i].product_OfferDetails ? array[i].product_OfferDetails.discountPercentage : 0; // Example: 20%
+                            const discountAmount = (price * discountPercentage) / 100;
+                              const finalPrice = price - discountAmount
+
+                              sumOfProducts = sumOfProducts - Math.floor(finalPrice) + Math.floor(finalPrice) * productQuantitys[i]
+
+
+                        } else {
+
+                            sumOfProducts = sumOfProducts - array[i].price + array[i].price * productQuantitys[i]
+                        }
 
                     }
 
@@ -2278,7 +2399,6 @@ const loadCartCheckout = async (req, res) => {
             } else {
             
 
-
             if (findcartProducts.length > 0) {
 
                 for (let i = 0; i < findcartProducts.length; i++) {
@@ -2286,9 +2406,38 @@ const loadCartCheckout = async (req, res) => {
                     array.push(await Product.findOne({ _id: findcartProducts[i].products_id }))
                 }
 
+                let today = new Date()
+
                 let sumOfProducts = array.reduce((accumulator, element) => {
-                    accumulator += element.price;
+
+                    if(element.category_OfferDetails && element.category_OfferDetails.offerStartDate <= today && element.category_OfferDetails.offerEndDate >= today) {
+
+                        const price = element.price; 
+                        const discountPercentage = element.category_OfferDetails ? element.category_OfferDetails.discountPercentage : 0; // Example: 20%
+                        const discountAmount = (price * discountPercentage) / 100;
+                        const finalPrice = price - discountAmount
+
+                     accumulator += Math.floor(finalPrice);
                     return accumulator;
+
+
+                    } else if (element.product_OfferDetails && element.product_OfferDetails.offerStartDate <= today && element.product_OfferDetails.offerEndDate >= today) {
+
+                            const price = element.price; 
+                            const discountPercentage = element.product_OfferDetails ? element.product_OfferDetails.discountPercentage : 0; // Example: 20%
+                            const discountAmount = (price * discountPercentage) / 100;
+                            const finalPrice = price - discountAmount
+
+                        accumulator += Math.floor(finalPrice);
+                        return accumulator;
+
+                    } else {
+
+                        accumulator += element.price;
+                    return accumulator;
+
+                    }
+                    
                 }, 0);
 
 
@@ -2321,10 +2470,38 @@ const loadCartCheckout = async (req, res) => {
                         for(let i = 0;i<array.length;i++) {
                             let integerQty = parseInt(quantity[i])
                             if(quantity[i] !== '1') {
+                                console.log('haa')
 
-                                sumOfProducts = sumOfProducts - array[i].price
+                                if(array[i].category_OfferDetails) {
 
-                                sumOfProducts += array[i].price*integerQty;
+                                    const price = array[i].price; 
+                                    const discountPercentage = array[i].category_OfferDetails ? array[i].category_OfferDetails.discountPercentage : 0; // Example: 20%
+                                    const discountAmount = (price * discountPercentage) / 100;
+                                    const finalPrice = price - discountAmount
+
+                                    sumOfProducts = sumOfProducts - Math.floor(finalPrice);
+    
+                                    sumOfProducts +=   Math.floor(finalPrice)*integerQty;
+
+                                } else if (array[i].product_OfferDetails) {
+
+                                    const price = array[i].price; 
+                                    const discountPercentage = array[i].product_OfferDetails ? array[i].product_OfferDetails.discountPercentage : 0; // Example: 20%
+                                    const discountAmount = (price * discountPercentage) / 100;
+                                    const finalPrice = price - discountAmount
+
+                                    sumOfProducts = sumOfProducts - Math.floor(finalPrice);
+    
+                                    sumOfProducts +=   Math.floor(finalPrice)*integerQty;
+
+                                    
+                                } else {
+
+                                    sumOfProducts = sumOfProducts - array[i].price
+    
+                                    sumOfProducts += array[i].price*integerQty;
+                                }
+
 
                             }
                                 let calc = array[i].quantity - integerQty
@@ -2434,16 +2611,9 @@ const placeOrder = async (req, res) => {
 
         const formattedDate = `${day}/${month}/${year}`;
 
-
-        // ordered date settings ends here 
-
-
-
-
-
-        // ithil ind ellaaa product idsum
         let ids = typeof req.body.product__Id
 
+        console.log('totel : ',req.body.totelAmmount)
 
         if (typeof req.body.product__Id == 'string') {
 
@@ -2478,6 +2648,8 @@ const placeOrder = async (req, res) => {
                 
                 if(req.body.coupon) {
 
+                    let coupon = await Coupon.findOne({code:req.body.coupon})
+
                      order = new Order({
                         product: product_id,
                         paymentMethod: payment_method,
@@ -2485,7 +2657,8 @@ const placeOrder = async (req, res) => {
                         deliveryChaerge: deliveryCarge,
                         totelAmmount: totelAmmount,
                         user: user_id,
-                        coupon_applied:req.body.coupon,
+                        coupon_applied:coupon.code,
+                        coupon_Discount:coupon.discount,
                         date: date,
                         status: 'Order Placed'
                     })
@@ -2505,6 +2678,16 @@ const placeOrder = async (req, res) => {
                             date: date,
                             status: 'Order Placed'
                         })
+                }
+
+                if(findProdcut.product_OfferDetails) {
+
+                    order.product_OfferDetails = findProdcut.product_OfferDetails;
+                    
+                } else if (findProdcut.category_OfferDetails) {
+
+                    order.category_OfferDetails = findProdcut.category_OfferDetails;
+
                 }
 
                 if (req.body.method == 'Wallet') {
@@ -2658,7 +2841,10 @@ const placeOrder = async (req, res) => {
                 
                 
                     if(req.body.coupon) {
-    
+
+                        let isCouponApplied = await Coupon.findOne({code:req.body.coupon})
+                        totelAmmount = totelAmmount - isCouponApplied.discount / req.body.product__Id.length
+                        
                          order = new Order({
                             product: product_id,
                             paymentMethod: payment_method,
@@ -2666,8 +2852,9 @@ const placeOrder = async (req, res) => {
                             deliveryChaerge: deliveryCarge,
                             totelAmmount: Math.floor(totelAmmount + (findProdcut.price*quantity/10)),
                             user: user_id,
-                            coupon_applied:req.body.coupon,
-                            is_multi: req.body.product__Id.length ,
+                            coupon_applied:isCouponApplied.code,
+                            coupon_Discount:isCouponApplied.discount,
+                            is_multi: req.body.product__Id.length,
                             date: date,
                             status: 'Order Placed'
                         })
@@ -2692,7 +2879,7 @@ const placeOrder = async (req, res) => {
                     }
 
 
-
+                    console.log('totel aammmmooounttt : ',totelAmmount)
 
                     // 
                     if (req.body.method == 'Wallet') {
@@ -2854,6 +3041,8 @@ const onlinePaymentController = async (req,res) => {
 
                 if(req.body.coupon) {
 
+                    let coupon = await Coupon.findOne({code:req.body.coupon})
+
                     if(isFailed) {
 
                         order = new Order({
@@ -2862,7 +3051,8 @@ const onlinePaymentController = async (req,res) => {
                             quantity: quantity,
                             deliveryChaerge: deliveryCarge,
                             totelAmmount: totelAmmount,
-                            coupon_applied:req.body.coupon,
+                            coupon_applied:coupon.code,
+                            coupon_Discount:coupon.discount,
                             user: user_id,
                             date: date,
                             status: 'Pending'
@@ -2877,7 +3067,8 @@ const onlinePaymentController = async (req,res) => {
                             quantity: quantity,
                             deliveryChaerge: deliveryCarge,
                             totelAmmount: totelAmmount,
-                            coupon_applied:req.body.coupon,
+                            coupon_applied:coupon.code,
+                            coupon_Discount:coupon.discount,
                             user: user_id,
                             date: date,
                             status: 'Order Placed'
@@ -3005,6 +3196,10 @@ const onlinePaymentController = async (req,res) => {
 
                         if(req.body.coupon) {
 
+                            let coupon = await Coupon.findOne({code:req.body.coupon})
+
+                            let sumAmmount = totelAmmount - coupon.discount/req.body.product__Id.length
+
                             if(isFailed) {
 
                                 order = new Order({
@@ -3012,7 +3207,7 @@ const onlinePaymentController = async (req,res) => {
                                     paymentMethod: payment_method,
                                     quantity: quantity,
                                     deliveryChaerge: deliveryCarge,
-                                    totelAmmount: totelAmmount + (totelAmmount/10) + 50,
+                                    totelAmmount: Math.floor( sumAmmount + (totelAmmount/10) + 50),
                                     coupon_applied:req.body.coupon,
                                     is_multi: req.body.product__Id.length ,
                                     user: user_id,
@@ -3027,7 +3222,7 @@ const onlinePaymentController = async (req,res) => {
                                     paymentMethod: payment_method,
                                     quantity: quantity,
                                     deliveryChaerge: deliveryCarge,
-                                    totelAmmount: totelAmmount + (totelAmmount/10) + 50,
+                                    totelAmmount: Math.floor( sumAmmount + (totelAmmount/10) + 50),
                                     coupon_applied:req.body.coupon,
                                     is_multi: req.body.product__Id.length ,
                                     user: user_id,
@@ -3121,6 +3316,7 @@ const downloadOrderInvoice = async(req,res) => {
     try {
         
 
+        // throw new Error('This is a simulated error for testing purposes.');
 
         const easyinvoice = require('easyinvoice');
 const fs = require('fs');
@@ -3170,7 +3366,7 @@ let data = {
     },
     'images': {
         // The logo on top of your invoice
-        'logo': "https://public.budgetinvoice.com/img/logo_en_original.png",
+        'logo': "https://dashfootwares.shop/logo/DashFootwares.png",
     },
     "sender": {
         "company": "DASH FOOTWARES",
@@ -3209,16 +3405,68 @@ let data = {
 
     if(order.coupon_applied !== 'no') {
 
-            let coupon = await Coupon.findOne({code:order.coupon_applied})
 
-        data.products.push({
-            'quantity': 1, // Set quantity to 1
-            'description': `${coupon.code}`,
-            'price': `${-coupon.discount}`,
-            'total': `${-coupon.discount}`
-        })
+            if(order.is_multi >1) {
+
+
+                
+                data.products.push({
+                    'quantity': 1, // Set quantity to 1
+                    'description': `${order.coupon_applied}`,
+                    'price': `${-order.coupon_Discount/order.is_multi}`,
+                    'total': `${-order.coupon_Discount/order.is_multi}`
+                })
+
+            } else {
+
+                data.products.push({
+                    'quantity': 1, // Set quantity to 1
+                    'description': `${order.coupon_applied}`,
+                    'price': `${-order.coupon_Discount}`,
+                    'total': `${-order.coupon_Discount}`
+                })
+            }
+
         
     }
+
+
+
+
+        if (order.product_OfferDetails) {
+
+
+            const price = product.price; // Example: 1000
+            const discountPercentage = order.product_OfferDetails ? order.product_OfferDetails.discountPercentage : 0; // Example: 20%
+            const discountAmount = (price * discountPercentage) / 100;
+
+
+     
+            data.products.push({
+                'quantity': 1, // Set quantity to 1
+                'description': `${order.product_OfferDetails.offerName}`,
+                'price': `${-discountAmount}`,
+                'total': `${-discountAmount}`
+            })
+
+        } else if (order.category_OfferDetails) {
+
+
+            const price = product.price; // Example: 1000
+            const discountPercentage = order.category_OfferDetails ? order.category_OfferDetails.discountPercentage : 0; // Example: 20%
+            const discountAmount = (price * discountPercentage) / 100;
+
+
+
+
+            data.products.push({
+                'quantity': 1, // Set quantity to 1
+                'description': `${order.category_OfferDetails.offerName}`,
+                'price': `${-discountAmount}`,
+                'total': `${-discountAmount}`
+            })
+            
+        }
 
 
 
@@ -3242,15 +3490,25 @@ try {
         fs.unlinkSync('invoice.pdf');
     });
 } catch (error) {
-    console.error('Error creating invoice:', error);
+
+    let user = await User.findById({_id: req.session.user_id});
+    let order = await Order.findById({_id: req.query.orderId});
+
+    
+    res.status(500).render('user-orderDetails', { errorMessage: "An unexpected error occurred. Please try again later.", user,order })
 }
 
         
 
+
     } catch (error) {
 
-        console.log(error.message);
-    }
+        let user = await User.findById({_id: req.session.user_id});
+        let order = await Order.findById({_id: req.query.orderId});
+    
+        
+        res.status(500).render('user-orderDetails', { errorMessage: "An unexpected error occurred. Please try again later.", user,order })
+        }
 }
 
 
@@ -3415,6 +3673,7 @@ module.exports = {
     loadProfile,
     loadmyOrders,
     orderDetails,
+    orderReturn,
     cancelOrder,
     loadWallet,
     editUser,

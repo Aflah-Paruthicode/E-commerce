@@ -37,6 +37,9 @@ const OrderSchema = mongoose.Schema({
         required:true,
         default:'no'
     },
+    coupon_Discount:{
+        type:Number
+    },
     is_multi:{
         type:Number,
         required:true,
@@ -45,7 +48,28 @@ const OrderSchema = mongoose.Schema({
     status:{
         type:String,
         required:true
-    }
+    },
+    reasonForReturn:{
+        type:String,
+    },
+    product_OfferDetails: {
+        type: {
+          discountPercentage: Number,
+          offerName: String,
+          
+
+        },
+       
+      },
+      category_OfferDetails: {
+        type: {
+          discountPercentage: Number,
+          offerName: String,
+          
+
+        },
+       
+      },
 });
 
 module.exports = mongoose.model("Order",OrderSchema);

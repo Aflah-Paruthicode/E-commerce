@@ -68,7 +68,8 @@
                     <div class="order-items">
                         <form action="/cartCheckout" method="post" id="subbForm">
                             <div class="heading texts">
-                                <h3 style="color: black;">Your cart</h3>
+                                <h3 style="    color: black;
+                                margin: 20px;">Your cart</h3>
 
                                 <% if (typeof emessage !=='undefined' ) { %>
 
@@ -176,8 +177,71 @@
                             font-weight: 600;color: #6c6c6c;">₹&nbsp;<del>
                                                                                         <%= product.og_price %>
                                                                                     </del>.00</p>
-                                                                                <p style="    margin: 0;
-                            font-weight: 600;">₹&nbsp;<%= product.price %>.00</p>
+
+
+
+
+
+                                                                                    <% let today = new Date() %>
+                                                                                    <% if(product.product_OfferDetails && product.product_OfferDetails.offerStartDate <= today && product.product_OfferDetails.offerEndDate >= today  || product.category_OfferDetails && product.category_OfferDetails.offerStartDate <= today && product.category_OfferDetails.offerEndDate >= today ) { %>
+                                                             
+
+                                                                                        <% if(product.product_OfferDetails) { %>
+                                                                                             
+                                                                                         <% 
+                                                                    const price = product.price; // Example: 1000
+                                                                    const discountPercentage = product.product_OfferDetails ? product.product_OfferDetails.discountPercentage : 0; // Example: 20%
+                                                                    const discountAmount = (price * discountPercentage) / 100;
+                                                                    const finalPrice = price - discountAmount;
+                                                                    %>
+                                                                    <div style="display: flex; align-items: center;">
+                                                                    
+                                                                     <p><del style="font-size: 12px;">₹<%= price %>.00</del></p>
+                                                                     <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+                                                                    
+                                                                         <%= discountPercentage %>% off
+                                                                       </span></p>
+                                                                       <p><span style="color: black; font-size: 17px;margin-left: 10px;">
+                                                                         ₹<%= finalPrice.toFixed(2) %>
+                                                                       </span></p>
+                                                                       
+                                                                    
+                                                                    </div>
+                                                                                       <%  } else {  %>
+                                                                 
+                                                                 
+                                                                                         <% 
+                                                                                         const price = product.price; // Example: 1000
+                                                                                         const discountPercentage = product.category_OfferDetails ? product.category_OfferDetails.discountPercentage : 0; // Example: 20%
+                                                                                         const discountAmount = (price * discountPercentage) / 100;
+                                                                                         const finalPrice = price - discountAmount;
+                                                                                         %>
+                                                                                         <div style="display: flex; align-items: center;">
+                                                                                         
+                                                                                          <p><del style="font-size: 12px;">₹<%= price %>.00</del></p>
+                                                                                          <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+                                                                                         
+                                                                                              <%= discountPercentage %>% off
+                                                                                            </span></p>
+                                                                                            <p><span style="color: black; font-size: 17px;margin-left: 10px;">
+                                                                                              ₹<%= finalPrice.toFixed(2) %>
+                                                                                            </span></p>
+                                                                                            
+                                                                                         
+                                                                                         </div>
+                                                                 
+                                                                                      <%   }  %>
+                                                                 
+                                                                 
+                                                                                        <% } else { %>
+                                                                 
+                                                                                             <p class="card-text">₹<%= product.price %> .00</p>
+                                                                                        <%  } %>
+
+
+
+
+
                                                                         </div>
                                                                         <div
                                                                             class="cart-itemDetails-theQuantityAndDelete-div">

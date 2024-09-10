@@ -83,7 +83,8 @@ userRoute.get('/DeleteAddress/:id', auth.isLogin, userController.deleteAddress);
 userRoute.get('/selectAddress', auth.isLogin, userController.selectAddresss);
 
 userRoute.get('/myOrders', auth.isLogin,userController.loadmyOrders);
-userRoute.get('/orderDetails',auth.isLogin,userController.orderDetails)
+userRoute.get('/orderDetails',auth.isLogin,userController.orderDetails);
+userRoute.get('/orderReturn',auth.isLogin,userController.orderReturn)
 userRoute.get('/downloadOrderInvoice',auth.isLogin,userController.downloadOrderInvoice)
 userRoute.get('/cancelOrder',auth.isLogin, userController.cancelOrder);
 

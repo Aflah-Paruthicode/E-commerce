@@ -141,7 +141,7 @@
                     
 
 
-                     <div id="img-container" style="width: 400px;">
+                     <div id="img-container" style="width: 350px;">
                         <img src="/productImages/<%= produCt.images[0] %>" id="IMAGE" alt="Card image cap">
                     </div>
                     
@@ -176,20 +176,87 @@
                             <h3 style="font-size: 21px;font-weight: 600;"><%= produCt.name %></h3>
                         </div>
 
-                        <div class="productRatings"><img
+                        <div class="productRatings">
+                            <!-- <img
                                 src="https://media.istockphoto.com/id/1140391316/vector/five-yellow-stars-customer-product-rating-icon-fow-web-applications-and-websites.jpg?s=612x612&w=0&k=20&c=K_VInFNDXNAQ-BIkog1Joaxa1kfq1sbnHfC2gqh3Vb0="
-                                alt=""></div>
+                                alt=""> -->
+                            </div>
                     </div>
                     <div class="orgRS-RS-shipping">
                         <div class="orgRS">
                             <h5><del style="color: #747474;font-size: 19px;font-weight: 500;">₹<%= produCt.og_price %> .00</del></h5>
                         </div>
                         <div class="RS">
-                            <h5 style="font-size: 19px;font-weight: 600;">₹<%= produCt.price %> .00</h5>
+
+
+
+
+
+                            <% let today = new Date() %>
+                            <% if(produCt.product_OfferDetails && produCt.product_OfferDetails.offerStartDate <= today && produCt.product_OfferDetails.offerEndDate >= today  || produCt.category_OfferDetails && produCt.category_OfferDetails.offerStartDate <= today && produCt.category_OfferDetails.offerEndDate >= today ) { %>
+     
+
+                                <% if(produCt.product_OfferDetails) { %>
+                                     
+                                 <% 
+            const price = produCt.price; // Example: 1000
+            const discountPercentage = produCt.product_OfferDetails ? produCt.product_OfferDetails.discountPercentage : 0; // Example: 20%
+            const discountAmount = (price * discountPercentage) / 100;
+            const finalPrice = price - discountAmount;
+            %>
+            <div style="display: flex;justify-content: center; align-items: center;">
+            
+             <p><del style="font-size: 12px;">₹<%= price %>.00</del></p>
+             <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+            
+                 <%= discountPercentage %>% off
+               </span></p>
+               <p><span style="color: black; font-size: 17px;margin-left: 10px;">
+                 ₹<%= finalPrice.toFixed(2) %>
+               </span></p>
+               
+            
+            </div>
+                               <%  } else {  %>
+         
+         
+                                 <% 
+                                 const price = produCt.price; // Example: 1000
+                                 const discountPercentage = produCt.category_OfferDetails ? produCt.category_OfferDetails.discountPercentage : 0; // Example: 20%
+                                 const discountAmount = (price * discountPercentage) / 100;
+                                 const finalPrice = price - discountAmount;
+                                 %>
+                                 <div style="display: flex;justify-content: center; align-items: center;">
+                                 
+                                  <p><del style="font-size: 12px;">₹<%= price %>.00</del></p>
+                                  <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+                                 
+                                      <%= discountPercentage %>% off
+                                    </span></p>
+                                    <p><span style="color: black; font-size: 17px;margin-left: 10px;">
+                                      ₹<%= finalPrice.toFixed(2) %>
+                                    </span></p>
+                                    
+                                 
+                                 </div>
+         
+                              <%   }  %>
+         
+         
+                                <% } else { %>
+         
+                                    <h5 style="font-size: 19px;font-weight: 600;">₹<%= produCt.price %> .00</h5>
+                                    <%  } %>
+
+
+
+
+
+
+
+
                         </div>
-                        <div class="shipping">
-                            <h5 style="color: #747474;">& Free Shipping</h5>
-                        </div>
+                        
                     </div>
 
                     <div class="desc">

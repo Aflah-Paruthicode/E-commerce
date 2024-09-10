@@ -352,8 +352,60 @@
                       justify-content: space-between;
                       align-items: end;">
       
-                          <h3>₹ <%= product.price %>.00</h3>
+      <% let today = new Date() %>
+      <% if(product.product_OfferDetails && product.product_OfferDetails.offerStartDate <= today && product.product_OfferDetails.offerEndDate >= today  || product.category_OfferDetails && product.category_OfferDetails.offerStartDate <= today && product.category_OfferDetails.offerEndDate >= today ) { %>
 
+      <% if(product.product_OfferDetails) { %>
+           
+       <% 
+        const price = product.price; // Example: 1000
+        const discountPercentage = product.product_OfferDetails ? product.product_OfferDetails.discountPercentage : 0; // Example: 20%
+        const discountAmount = (price * discountPercentage) / 100;
+        const finalPrice = price - discountAmount;
+        %>
+        <div style="display: flex;justify-content: center; align-items: center;">
+
+        <p><del style="font-size: 15px;">₹<%= price %>.00</del></p>
+        <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+
+        <%= discountPercentage %>% off
+        </span></p>
+        <p><span style="color: black; font-size: 20px;margin-left: 10px;">
+        ₹<%= finalPrice.toFixed(2) %>
+        </span></p>
+
+
+        </div>
+     <%  } else {  %>
+
+
+       <% 
+       const price = product.price; // Example: 1000
+       const discountPercentage = product.category_OfferDetails ? product.category_OfferDetails.discountPercentage : 0; // Example: 20%
+       const discountAmount = (price * discountPercentage) / 100;
+       const finalPrice = price - discountAmount;
+       %>
+       <div style="display: flex;justify-content: center; align-items: center;">
+       
+        <p><del style="font-size: 15px;">₹<%= price %>.00</del></p>
+        <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+       
+            <%= discountPercentage %>% off
+          </span></p>
+          <p><span style="color: black; font-size: 20px;margin-left: 10px;">
+            ₹<%= finalPrice.toFixed(2) %>
+          </span></p>
+          
+       
+       </div>
+
+    <%   }  %>
+
+
+      <% } else { %>
+
+           <p class="card-text">₹<%= product.price %> .00</p>
+      <%  } %>
                           <% if(product.quantity <1) { %>
 
                             <p style="    text-decoration: none;

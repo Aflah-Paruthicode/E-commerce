@@ -44,6 +44,8 @@
         <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon Management</a></button>
         <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
         <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
+        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
+
   
   
   
@@ -80,6 +82,22 @@
               
               <select name="status">
                 <option value="<%= order.status %>"><%= order.status %></option>
+                <% if(order.status == 'Return Requested') { %>
+
+                  <option value="Return Requested" selected >Return Requested( <%= order.reasonForReturn %> )</option>
+
+                  <option value="Return Rejected">Return Rejected</option>
+                <option value="Return Approved">Return Approved</option>
+                <option value="Return Completed">Return Completed</option>
+
+
+               <%   } else if(order.status == 'Return Approved') { %>
+                <option value="Return Approved" selected >Return Approved( <%= order.reasonForReturn %> )</option>
+
+                <option value="Return Completed">Return Completed ( <%= order.reasonForReturn %> )</option>
+
+
+               <% } %> 
                 <option value="Order Placed">Order Placed</option>
                 <option value="Packed">Packed</option>
                 <option value="Shipped">Shipped</option>
@@ -109,8 +127,15 @@
               <label for="">Totel Ammount :</label>
               <input style="width: 30%;" type="number" name="" value="<%= order.totelAmmount %>" readonly>
 
-              <label style="margin: 30px;margin-left: 55px;" for="">Discount :</label>
-              <input style="width: 30%;"  name="" value="10%" readonly>
+             <%  if(order.coupon_applied !== 'no') { %>
+                <label style="margin: 30px;margin-left: 55px;" for="">Discount :</label>
+              <input style="width: 30%;"  name="" value="<%= order.coupon_applied %>" readonly>
+
+              <% } else { %>
+
+                <label style="margin: 30px;margin-left: 55px;" for="">Discount :</label>
+                <input style="width: 30%;"  name="" value="" readonly>
+               <% } %>
             </div>
 
               <div class="pName in">

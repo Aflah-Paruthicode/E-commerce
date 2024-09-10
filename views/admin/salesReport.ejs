@@ -58,6 +58,8 @@
             Management</a></button>
         <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
         <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
+        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
+
       </div>
       <div class="ad-home-dashboard-optionsDetailPage">
         <div style="    width: 100%; display: flex; justify-content: space-evenly;
@@ -70,7 +72,7 @@
           color: white;
           padding: 20px;
           border-radius: 10px;text-align: center;">Overall sales count <br>
-                 <%= pagination.totalOrders %> </h5>
+                 <%= totel_orders %> </h5>
 
                 <h5 style="background-color: #000000c7;
                 color: white;
@@ -159,7 +161,15 @@
               </td>
 
               <% if(orders[k].coupon_applied !== 'no') { %>
-                <td scope="col" style="color: green;font-weight: 600;"> ₹&nbsp;-<%= coupon[k].discount %>.00 </td>
+
+               <% if(order.is_multi > 1) { %>
+                    <% let discount =  order.coupon_Discount  /  order.is_multi %>
+                <td scope="col" style="color: green;font-weight: 600;"> ₹&nbsp;-<%= discount %>.00 </td>
+
+                <% } else { %>
+                  <td scope="col" style="color: green;font-weight: 600;"> ₹&nbsp;-<%= order.coupon_Discount %>.00 </td>
+
+                  <% }  %>
 
              <% } else { %>
               <td scope="col"> ₹&nbsp;00.00 </td>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashFootwares</title>
+  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/registration.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+
+
+    <!-- navbar section starts -->
+
+    <header style="margin-bottom: 10px;">
+        <div class="container">
+            <nav>
+                <div style="display: flex;align-items: center;" class="logo">
+                    <img src="/logo/DashFootwares.png" alt="">
+                    <h3 style="color: black;font-weight: 400;">DASH FOOTWARES </h3>
+
+                </div>
+
+                <ul class="navbar">
+                    <li><a href="/login">Login</a></li>
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- navbar section ends -->
+
+
+    <!-- login form section starts -->
+
+    <main>
+        <div class="login-form-section">
+            <div class="container">
+
+                <div class="text-div">
+                    <h2>Dash</h2>
+                    <p style="line-height: 25px;"> Welcome to dashFootwares, we have the hard copy products of company's like, nike, adidas, puma, new balance, oagi. <br>
+                        Quality never goes out.</p>
+                </div>
+                <div class="form-div">
+                    <form action="/register" method="post">
+                        <h2>Register here</h2>
+                        <div class="login-with">
+
+                            <a href="/auth/google"><img style="width: 32px;padding-top: 10px;" src="/signupWith/google (1).png" alt=""></a>
+                        </div>
+                        <input class="field" type="text" name="name" placeholder="Enter name" required>
+                        <input class="field" type="email" name="email" placeholder="Enter email" required>
+                        <input class="field" type="number" name="mno" placeholder="Enter mobile" required>
+                        <input class="field" type="password" name="password" placeholder="Enter password " required>
+                        <input class="l-btn" type="submit" value="register">
+
+                
+                        <% if (typeof message !== 'undefined') { %>
+                            <script>
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: '<%= message %>',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                })
+                            </script>
+                        <% } %>
+
+                            
+                                <% if (typeof emessage !== 'undefined') { %>
+                                    <script>
+                                        Swal.fire({
+                                            title: 'Failed!',
+                                            text: '<%= emessage %>',
+                                            icon: 'error',
+                                            confirmButtonText: 'OK'
+                                        })
+                                    </script>
+                                <% } %>
+
+                            <p>Do you have an account?<a style="    margin: 8px;
+                                " href="/login">Click here</a> to login</p>
+                
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- login form section ends -->
+    
+
+
+    <%- include('../layouts/footer.ejs') %>

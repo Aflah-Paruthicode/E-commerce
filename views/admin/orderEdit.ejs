@@ -1,0 +1,175 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+  rel="stylesheet">
+  <title>DashFootwares</title>
+  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
+<link rel="stylesheet" href="/css/adminCss/adminHome.css">
+<link rel="stylesheet" href="/css/adminCss/adminListCus.css">
+
+
+
+
+
+<div class="ad-home-header-section">
+    <div class="ad-home-header-container">
+      <nav>
+        <div class="logo">
+          <img src="/logo/DashFootwares.png" alt="">
+          <h3 style="color: black;font-size: 16px;font-weight: 400;margin: 0;"> DASH FOOTWARES </h3>
+  
+        </div>
+        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/bell (1).png" alt="">
+        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/user (1).png" alt="">
+        <h3 style="color: black;font-size: 16px;font-weight: 400;margin-right: 25px;margin-bottom: 0;">Aflah</h3>
+        <form action="/admin/logout">
+          <input type="submit" value="Logout">
+        </form>
+  
+  
+      </nav>
+    </div>
+  </div>
+
+
+
+  <div class="ad-home-dashboard-section">
+    <div class="ad-home-dashboard-container">
+      <div class="ad-home-dashboard-options">
+  
+        <button><img src="/adminOptionsImages/dashboard.png" alt=""><a href="/admin/dashboard">Dashboard</a></button>
+        <button><img src="/adminOptionsImages/customer.png" alt=""><a href="/admin/customers">Customers</a></button>
+        <button><img src="/adminOptionsImages/product.png" alt=""><a href="/admin/product">Products</a></button>
+        <button><img src="/adminOptionsImages/checkout.png" alt=""><a href="/admin/orders">Orders</a></button>
+        <button><img src="/adminOptionsImages/slider.png" alt=""><a href="/admin/banner">Banner Management</a></button>
+        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon Management</a></button>
+        <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
+        <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
+        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
+
+  
+  
+  
+      </div>
+  
+      <div class="ad-home-dashboard-optionsDetailPage">
+          <h3> EDIT ORDER DETIALS</h3>
+
+          <% if(typeof emessage !=='undefined' ) { %>
+                
+            <h2 style="font-weight: 500;font-size: 14px;color: rgb(192, 20, 20);
+            ">
+                <%= emessage %>
+            </h2>
+            <% } %>
+          
+  
+          <div class="adProduct-formDiv">
+            <form action="/admin/editOrder/?order_id=<%= order._id %>" method="post">
+            <div class="pName in">
+              <label for="">Customer Name :</label>
+              <input type="text" name="" readonly value="<%= user.name %>">
+            </div>
+
+              
+              <div class="pName in">
+                <label for="">Shipping Address :</label>
+                <input type="text" name="" value="<%= user.address %>" readonly>
+              </div>
+
+            <div class="pCategory in">
+              <label for="">Status :</label>
+
+              
+              <select name="status">
+                <option value="<%= order.status %>"><%= order.status %></option>
+                <% if(order.status == 'Return Requested') { %>
+
+                  <option value="Return Requested" selected >Return Requested( <%= order.reasonForReturn %> )</option>
+
+                  <option value="Return Rejected">Return Rejected</option>
+                <option value="Return Approved">Return Approved</option>
+                <option value="Return Completed">Return Completed</option>
+
+
+               <%   } else if(order.status == 'Return Approved') { %>
+                <option value="Return Approved" selected >Return Approved( <%= order.reasonForReturn %> )</option>
+
+                <option value="Return Completed">Return Completed ( <%= order.reasonForReturn %> )</option>
+
+
+               <% } %> 
+                <option value="Order Placed">Order Placed</option>
+                <option value="Packed">Packed</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+                <% if (order.status !== 'Delivered') { %>
+
+
+                  <option value="Cancelled">Cancelled</option>
+
+               <% } %>
+
+                  
+                
+              </select>
+
+            </div>
+
+            <div class="pPrice in">
+                <label for="">Delivery Charge :</label>
+                <input style="width: 30%;" type="number" name="" readonly value="<%= order.deliveryChaerge %>">
+  
+                <label style="margin: 30px;margin-left: 55px;" for="">Delivery Date :</label>
+                <input style="width: 30%;" name="" readonly value="<%= order.date %>">
+              </div>
+
+            <div class="pPrice in">
+              <label for="">Totel Ammount :</label>
+              <input style="width: 30%;" type="number" name="" value="<%= order.totelAmmount %>" readonly>
+
+             <%  if(order.coupon_applied !== 'no') { %>
+                <label style="margin: 30px;margin-left: 55px;" for="">Discount :</label>
+              <input style="width: 30%;"  name="" value="<%= order.coupon_applied %>" readonly>
+
+              <% } else { %>
+
+                <label style="margin: 30px;margin-left: 55px;" for="">Discount :</label>
+                <input style="width: 30%;"  name="" value="" readonly>
+               <% } %>
+            </div>
+
+              <div class="pName in">
+                <label for="">Item :</label>
+                <input type="text" name="" value="<%= product.name %>" readonly>
+              </div>
+              
+              <div class="pName in">
+                <label for="">Quantity :</label>
+                <input type="text" name="" value="<%= order.quantity %>" readonly>
+              </div>
+
+
+            <div class="pPrice in">
+                <label for="">Payment Method :</label>
+                <input style="width: 30%;"  name="" value="<%= order.paymentMethod %>" readonly>
+  
+                <label style="margin: 30px;margin-left: 55px;" for="">Mobile :</label>
+                <input style="width: 30%;" type="number" name="" value="<%= user.mobile %>" readonly>
+              </div>
+            
+
+            <div class="in">
+
+            <input style="margin-top: 7px;background-color: green;outline: none;border: none;color: #fff;width: 190px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="CHANGE STATUS">
+          </div>
+
+                  </form>
+            
+            
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+

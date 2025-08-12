@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashFootwares</title>
+  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/headerFooter.css">
+    <link rel="stylesheet" href="/css/viewProducts.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+</head>
+
+<style>
+
+
+
+.search-container {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  height: 100px;
+}
+  
+  .search-input {
+    font-family: 'Inconsolata', monospace;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    height: 50px;
+    outline: none;
+    border: solid black 1px;
+    color: rgb(0, 0, 0);
+    padding: 0 80px 0 20px;
+    border-radius: 30px;
+    font-weight: bolder;
+    z-index: 5;
+    letter-spacing: 0.1em;
+  
+}
+ 
+
+</style>
+
+
+
+<header style="margin-bottom: 10px;">
+    <div class="container">
+        <nav>
+            <div style="display: flex;align-items: center;" class="logo">
+                <img src="/logo/DashFootwares.png" alt="">
+                <h3 style="color: black;font-weight: 600;">DASH FOOTWARES </h3>
+
+            </div>
+
+            
+
+            <div class="search-container">
+                <form action="/search" method="post" id="formofseach">
+                  <%  if(typeof searchData !== 'undefined') {  %>
+
+                        <input class="search-input" id="searchInputField" type="text" name="search" placeholder="search products.." value="<%= searchData %>">
+                   <%  } else {   %>
+                        <input class="search-input" id="searchInputField" type="text" name="search" placeholder="search products..">
+ 
+                  <%  } %>
+                </form>
+                <div class="search"></div>
+              </div>
+
+
+            <ul class="navbar">
+                
+                <li><a href="/register">HOME</a></li>
+                <li><a href="aboutUs">ABOUT US</a></li>
+                <li><a href="contactUs">CONTACT</a></li>
+                <li><a href="/whishlist"><i class="fa-regular fa-heart"></i></a></li>
+                <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a href="/profile"><i class="fa-regular fa-circle-user"></i></a></li>
+
+
+
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<body>
+
+
+<!-- header ends here  -->
+
+
+
+<!-- the view all products section starts here  -->
+
+<div class="view-all-productsSection">
+    <div class="view-all-productsContainer">
+
+        
+        
+        <div class="brands-price-rating-discount">
+               
+            <div class="brands">
+                <h2>Brands</h2>
+                <% if (typeof filteredAs !== 'undefined') { %>
+                    <% if (filteredAs == 'all') { %>
+
+                <input type="checkbox" checked name="brand" value="" onchange="filterNow(this.value)">
+                <label for="">all products</label>
+                <br>
+                   <% } else { %>
+                    <input type="checkbox" name="brand" value="all" onchange="filterNow(this.value)">
+                    <label for="">all products</label>
+                    <br>
+                  <% }  %>
+
+
+                  <% if (filteredAs == 'puma') { %>
+                        <input type="checkbox" checked name="brand" value="" onchange="filterNow(this.value)">
+                        <label for="">Puma</label>
+                        <br>
+                    <% } else { %>
+
+                        <input type="checkbox" name="brand" value="puma" onchange="filterNow(this.value)">
+                        <label for="">Puma</label>
+                        <br>
+                        <% } %>
+
+                 <% if (filteredAs == 'adidas') { %>
+
+                    <input type="checkbox" checked name="brand" value="" onchange="filterNow(this.value)">
+                    <label for="">Adidas</label>
+                    <br>
+
+                    <% } else { %>
+
+                        <input type="checkbox" name="brand" value="adidas" onchange="filterNow(this.value)">
+                        <label for="">Adidas</label>
+                        <br>
+
+                    <% } %>
+
+                    <% if (filteredAs == 'New Balance') { %>
+                        <input type="checkbox" checked name="brand" value="" onchange="filterNow(this.value)">
+                        <label for="">New Balance</label>
+                        <br>
+                        <% } else { %>
+                            <input type="checkbox" name="brand" value="New Balance" onchange="filterNow(this.value)">
+                            <label for="">New Balance</label>
+                            <br>
+                            <% } %>
+
+                            <% if (filteredAs == 'Nike') { %>
+
+                                <input type="checkbox" checked name="brand" value="" onchange="filterNow(this.value)">
+                                <label for="">Nike</label>
+                                <% } else { %>
+                                    <input type="checkbox" name="brand" value="Nike" onchange="filterNow(this.value)">
+                                    <label for="">Nike</label>
+                                    <% } %>
+                        
+
+                <% } else { %>
+
+                    <input type="checkbox" name="brand" value="all" onchange="filterNow(this.value)">
+                    <label for="">all products</label>
+                    <br>
+    
+                    <input type="checkbox" name="brand" value="puma" onchange="filterNow(this.value)">
+                    <label for="">Puma</label>
+                    <br>
+                    <input type="checkbox" name="brand" value="adidas" onchange="filterNow(this.value)">
+                    <label for="">Adidas</label>
+                    <br>
+                    <input type="checkbox" name="brand" value="New Balance" onchange="filterNow(this.value)">
+                    <label for="">New Balance</label>
+                    <br>
+                    <input type="checkbox" name="brand" value="Nike" onchange="filterNow(this.value)">
+                    <label for="">Nike</label>
+
+                <% } %>
+               
+                
+           
+            </div>
+            <div class="price">
+                <h2>Pricing</h2>
+               <% if(typeof pricefilteredAs !== 'undefined') { %>
+
+                <% if(pricefilteredAs == 'under rs 999') { %>
+                    <input type="checkbox" checked value="" onchange="priceFilterNow(this.value)">
+                    <label for="">under rs 999</label>
+                    <br>
+               <% } else { %>
+                <input type="checkbox" value="under rs 999" onchange="priceFilterNow(this.value)">
+                <label for="">under rs 999</label>
+                <br>
+                <% } %>
+                
+                <% if(pricefilteredAs == 'rs 1000 to rs 2999') { %>
+                    <input type="checkbox" checked value="" onchange="priceFilterNow(this.value)">
+                    <label for="">rs 1000 to rs 2999</label>
+                    <br>
+                    <% } else { %>
+                        <input type="checkbox" value="rs 1000 to rs 2999" onchange="priceFilterNow(this.value)">
+                        <label for="">rs 1000 to rs 2999</label>
+                        <br>
+                        <% } %>
+
+                <% if(pricefilteredAs == 'rs 3000 to rs 5000') { %>
+                        <input type="checkbox" checked value="" onchange="priceFilterNow(this.value)">
+                        <label for="">rs 3000 to rs 5000</label>
+                        <br>
+                    <% } else { %>
+                        <input type="checkbox" value="rs 3000 to rs 5000" onchange="priceFilterNow(this.value)">
+                        <label for="">rs 3000 to rs 5000</label>
+                        <br>
+                        <% } %>
+
+
+                <% if(pricefilteredAs == 'rs 5000 to rs 10000') { %>
+                    <input type="checkbox" checked value="" onchange="priceFilterNow(this.value)">
+                    <label for="">rs 5000 to rs 10000</label>
+                    <br>
+                    <% } else { %>
+                        <input type="checkbox" value="rs 5000 to rs 10000" onchange="priceFilterNow(this.value)">
+                        <label for="">rs 5000 to rs 10000</label>
+                        <br>
+                    <% } %>
+                
+                <% if(pricefilteredAs == 'rs 10000 to rs 20000') { %>
+                    <input type="checkbox" checked value="" onchange="priceFilterNow(this.value)">
+                     <label for="">rs 10000 to rs 20000</label>
+
+                    <% } else { %>
+                        <input type="checkbox" value="rs 10000 to rs 20000" onchange="priceFilterNow(this.value)">
+                        <label for="">rs 10000 to rs 20000</label>
+
+                        <% } %>
+                
+               <% } else { %>
+                <input type="checkbox" value="under rs 999" onchange="priceFilterNow(this.value)">
+                <label for="">under rs 999</label>
+                <br>
+                <input type="checkbox" value="rs 1000 to rs 2999" onchange="priceFilterNow(this.value)">
+                <label for="">rs 1000 to rs 2999</label>
+                <br>
+                <input type="checkbox" value="rs 3000 to rs 5000" onchange="priceFilterNow(this.value)">
+                <label for="">rs 3000 to rs 5000</label>
+                <br>
+                <input type="checkbox" value="rs 5000 to rs 10000" onchange="priceFilterNow(this.value)">
+                <label for="">rs 5000 to rs 10000</label>
+                <br>
+                <input type="checkbox" value="rs 10000 to rs 20000" onchange="priceFilterNow(this.value)">
+                <label for="">rs 10000 to rs 20000</label>
+                <% } %>
+
+            </div>
+            
+            
+            
+        </div>
+        <div class="the-products">
+            
+            
+            
+            <div class="">
+                <label for="dateFilter">Sort: </label>
+                <select id="dateFilter" class="form-select" name="dura" onchange="loadSorted(this.value)">
+                   <% if(typeof sortedAs !== 'undefined') { %>
+
+                        <option value="<%= sortedAs %>"><%= sortedAs %></option>
+                        <option value="">All</option>
+
+                  <%  } else { %>
+                        <option value="">Choose one...</option>
+
+                   <% } %>
+                  <option value="Price Low To High">Price Low To High</option>
+                  <option value="Price High To Low">Price High To Low</option>
+                  <option value="A to Z">A to Z</option>
+                  <option value="Z to A">Z to A</option>
+                </select>
+          </div>
+
+
+
+
+            <% if (products) { %>
+
+
+       
+                <%  products.forEach((product) => { %>
+      
+                  <a style="    text-decoration: none;
+                  color: black;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-around;
+                  width: 75%;" href="/viewProduct/?id=<%= product._id %>">
+                  
+                   <div class="product" id="shoesContainer">
+      
+                      <div class="image">
+                          
+                          <img style="     width: 167px;
+                          height: 200px
+                          ;border-radius: 6px;" src="/productImages/<%= product.images[0] %>" alt="">
+                      </div>
+                      <div class="details">
+                        <h2>
+                      <%  if(product.name.length > 40) {  %>
+                            <% const first40Characters = product.name.slice(0, 35) %>
+
+                            <%= first40Characters %>...
+
+                          <%  } else { %>
+
+                            <%= product.name %>
+
+                         <% }  %>
+                            
+                            
+                            
+                            </h2>
+                          <h3>&#9733;&#9733;&#9733;&#9734;&#9734;</h3>
+                          <p><%= product.product_desc %></p>
+                      </div>
+                  </a>
+                      <div class="price-button" style="    height: 50%;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: space-between;
+                      align-items: end;">
+      
+      <% let today = new Date() %>
+      <% if(product.product_OfferDetails && product.product_OfferDetails.offerStartDate <= today && product.product_OfferDetails.offerEndDate >= today  || product.category_OfferDetails && product.category_OfferDetails.offerStartDate <= today && product.category_OfferDetails.offerEndDate >= today ) { %>
+
+      <% if(product.product_OfferDetails) { %>
+           
+       <% 
+        const price = product.price; // Example: 1000
+        const discountPercentage = product.product_OfferDetails ? product.product_OfferDetails.discountPercentage : 0; // Example: 20%
+        const discountAmount = (price * discountPercentage) / 100;
+        const finalPrice = price - discountAmount;
+        %>
+        <div style="display: flex;justify-content: center; align-items: center;">
+
+        <p><del style="font-size: 15px;">₹<%= price %>.00</del></p>
+        <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+
+        <%= discountPercentage %>% off
+        </span></p>
+        <p><span style="color: black; font-size: 20px;margin-left: 10px;">
+        ₹<%= finalPrice.toFixed(2) %>
+        </span></p>
+
+
+        </div>
+     <%  } else {  %>
+
+
+       <% 
+       const price = product.price; // Example: 1000
+       const discountPercentage = product.category_OfferDetails ? product.category_OfferDetails.discountPercentage : 0; // Example: 20%
+       const discountAmount = (price * discountPercentage) / 100;
+       const finalPrice = price - discountAmount;
+       %>
+       <div style="display: flex;justify-content: center; align-items: center;">
+       
+        <p><del style="font-size: 15px;">₹<%= price %>.00</del></p>
+        <p><span style="font-size: 12px; margin-left: 4px ; color: green; ">
+       
+            <%= discountPercentage %>% off
+          </span></p>
+          <p><span style="color: black; font-size: 20px;margin-left: 10px;">
+            ₹<%= finalPrice.toFixed(2) %>
+          </span></p>
+          
+       
+       </div>
+
+    <%   }  %>
+
+
+      <% } else { %>
+
+           <p class="card-text">₹<%= product.price %> .00</p>
+      <%  } %>
+                          <% if(product.quantity <1) { %>
+
+                            <p style="    text-decoration: none;
+                            font-weight: 500;
+                            font-size: 21px;
+                            color: #a91c1c;
+                            margin: 12px 0px;
+                            border-radius: 5px;">Out of stock </p>
+
+                     <%   } else {  %>
+
+                          <a style="text-decoration: none;font-weight: 500;font-size: 12px;color: #fff;background: #3a3a3a;padding: 13px;    margin: 12px 0px;
+                                  ;border-radius: 5px;" href="/addToCart/?id=<%= product._id %>">ADD TO CART</a>
+                     <%    }  %>
+      <a href="/addToWhishlist/?id=<%= product._id %>&from=home" style="text-decoration: none;color: rgb(0, 0, 0);"> add to whishlist  <i style="
+          font-size: 20px;
+          color: #8f8f8f;
+      ;" class="fa-regular fa-heart"></i></a>                </div>
+      
+      
+                   </div>
+      <% i ++ %>
+                <%  })  %>
+         <%   } else {  %>
+
+            <h3 style="     position: absolute;
+            left: 1113px;
+            top: 394px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #000000;
+            background-color: white;
+            padding: 15px;
+            border-radius: 15px;">PRODUCT NOT FOUND...</h3>
+
+     <%   }  %>
+
+     
+    
+
+     <% if (pagination.totalPages > 1) { %>
+        <div class="pagination" style="align-self: flex-end; margin: 20px;">
+            <% if (pagination.hasPrevPage) { %>
+                <a class="btn" href="?page=<%= pagination.currentPage - 1 %>&limit=<%= pagination.limit %><%= queryString %>">Previous</a>
+            <% } %>
+            <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                <a href="?page=<%= i %>&limit=<%= pagination.limit %><%= queryString %>" class="btn <%= pagination.currentPage === i ? 'active' : '' %>"><%= i %></a>
+            <% } %>
+            <% if (pagination.hasNextPage) { %>
+                <a class="btn" href="?page=<%= pagination.currentPage + 1 %>&limit=<%= pagination.limit %><%= queryString %>">Next</a>
+            <% } %>
+        </div>
+    <% } %>
+
+
+
+    </div>
+
+
+        
+    </div>
+
+
+
+    <script>
+        // Function to update URL parameters
+    function updateURLParameter(url, param, paramVal) {
+    let newAdditionalURL = "";
+    let tempArray = url.split("?");
+    let baseURL = tempArray[0];
+    let additionalURL = tempArray[1];
+    let temp = "";
+
+    if (additionalURL) {
+        tempArray = additionalURL.split("&");
+        for (let i = 0; i < tempArray.length; i++) {
+            if (tempArray[i].split('=')[0] !== param) {
+                newAdditionalURL += temp + tempArray[i];
+                temp = "&";
+            }
+        }
+    }
+
+    const rows_txt = temp + "" + param + "=" + paramVal;
+    return baseURL + "?" + newAdditionalURL + rows_txt;
+}
+
+// Function for price filtering
+function priceFilterNow(value) {
+    const newURL = updateURLParameter(window.location.href, 'Pricefiltered', value);
+    window.location.href = newURL;
+}
+
+// Function for filtering by company
+function filterNow(value) {
+    const newURL = updateURLParameter(window.location.href, 'filtered', value);
+    window.location.href = newURL;
+}
+
+// Function for sorting
+function loadSorted(value) {
+    const newURL = updateURLParameter(window.location.href, 'sorted', value);
+    window.location.href = newURL;
+}
+
+// Function for search input
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById('searchInputField');
+    const searchForm = document.getElementById('formofseach');
+
+    searchInput.addEventListener('input', function() {
+        const newURL = updateURLParameter(window.location.href, 'searchData', searchInput.value);
+        window.location.href = newURL;
+    });
+});
+
+    </script>
+        
+
+
+
+
+<script>
+
+////////////
+// function loadSoted (val) {
+
+//     window.location.href = `/viewAllBestProducts/?sorted=${val}`
+// }
+
+
+    // $(document).ready(function() {
+    //         $('#searchInputField').on('input', function() {
+    //             // Serialize the form data
+    //             var formData = $('#formofseach').serialize();
+
+    //             $.ajax({
+    //                 url: $('#formofseach').attr('action'), // Use the form's action attribute as the URL
+    //                 type: 'POST',
+    //                 data: formData,
+    //                 success: function(response) {viewAllBestProducts
+    //                     console.log('Success:', response);
+    //                 },
+    //                 error: function(error) {
+    //                     console.error('Error:', error);
+    //                 }
+    //             });
+    //         });
+    //     });
+
+
+    // search things
+// //////////////////
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     const searchInput = document.getElementById('searchInputField');
+        //     const searchForm = document.getElementById('formofseach');
+            
+        //     searchInput.addEventListener('input', function() {
+        //         searchForm.submit();
+        //     });
+        // });
+
+        // search things ends here.
+
+
+
+
+        
+
+
+//  the filtering things starts here 
+
+// //////////////////////
+//  function filterNow (value) {
+
+//     window.location.href = `/viewAllBestProducts/?filtered=${value}`
+
+//  }
+ 
+//////////////////////
+//  function priceFilterNow (value) {
+
+// window.location.href = `/viewAllBestProducts/?Pricefiltered=${value}`
+
+// }
+
+
+</script>
+
+
+
+
+
+
+

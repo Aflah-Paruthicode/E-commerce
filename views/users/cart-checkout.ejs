@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashFootwares</title>
+    <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/headerFooter.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="/css/cart-checkout.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</head>
+
+
+
+
+<style>
+    .search-container {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 300px;
+        height: 100px;
+    }
+
+    .search {
+        position: absolute;
+        margin: auto;
+        padding: 25px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 25px;
+        height: 25px;
+        background: rgb(0, 0, 0);
+        border-radius: 50%;
+        transition: all 0.5s;
+        z-index: 4;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            margin: auto;
+            top: 16px;
+            right: 0;
+            bottom: 0;
+            left: 17px;
+            width: 13px;
+            height: 2px;
+            background: white;
+            transform: rotate(45deg);
+            transition: all .5s;
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            margin: auto;
+            top: -5px;
+            right: 0;
+            bottom: 0;
+            left: -5px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            border: 2px solid white;
+            transition: all .5s;
+        }
+    }
+
+    .search-input {
+        font-family: 'Inconsolata', monospace;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+        outline: none;
+        border: solid black 1px;
+        color: rgb(0, 0, 0);
+        padding: 0 80px 0 20px;
+        border-radius: 30px;
+        transition: all 0.5s;
+        opacity: 0;
+        font-weight: bolder;
+        z-index: 5;
+        letter-spacing: 0.1em;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:focus {
+            width: 300px;
+            opacity: 1;
+            cursor: text;
+        }
+
+        &:focus~.search {
+            right: -250px;
+            background: #151515;
+            z-index: 6;
+        }
+    }
+</style>
+
+
+
+
+<header style="margin-bottom: 10px;">
+    <div class="container">
+        <nav>
+            <div style="display: flex;align-items: center;" class="logo">
+                <img src="/logo/DashFootwares.png" alt="">
+                <h3 style="color: black;font-weight: 600;">DASH FOOTWARES </h3>
+
+            </div>
+
+            <div class="search-container">
+                <form action="">
+                    <input class="search-input" id="searchInputField" type="text" name="search"
+                        placeholder="search products..">
+                </form>
+                <div class="search"></div>
+            </div>
+
+            <ul class="navbar">
+
+                <li><a href="/register">HOME</a></li>
+                <li><a href="aboutUs">ABOUT US</a></li>
+                <li><a href="contactUs">CONTACT</a></li>
+                <li><a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a></li>
+                <li><a href="/profile"><i class="fa-regular fa-circle-user"></i></a></li>
+
+
+
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<style>
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 17% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 25%;
+    }
+
+    /* The Close Button */
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        align-self: self-start;
+
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+
+
+    <div class="cart-section">
+        <div class="cart-container">
+
+            <div class="order-items">
+                <div class="heading texts">
+                    <h3 style="    color: black;
+                    margin: 20px;">Checkout</h3>
+                </div>
+
+                <hr>
+
+
+
+                <% let ogTotel=0 %>
+                    <div class="cart-item">
+                        <div class="cart-itemImage-div" style="    display: flex;
+                    gap: 25px;
+                    flex-wrap: wrap; width: 100%;">
+                            <% let product_ids=[] %>
+                                <% let i=0 %>
+                                    <% distance=170 %>
+                                        <% HIGHTdistance=0 %>
+                                            <input type="hidden" id="quantityOfProducts" value="<%= quantity %>">
+                                            <% products.forEach((product)=> { %>
+
+                                                <% product_ids.push(product._id) %>
+
+                                                    <% if(HIGHTdistance> 0) { %>
+                                                        <p style="    position: absolute; left: <%= distance %>px; top: <%= HIGHTdistance %>px;
+                                    background: #ffffffbf;
+                                    color: black;
+                                    padding: 7px 15px;
+                                    margin: 7px;
+                                    border-radius: 50%;
+                                    font-weight: 700;">
+                                                            <%= quantity[i] %>
+                                                        </p>
+                                                        <img src="/productImages/<%= product.images[0] %>" style="width: 150px;    border-radius: 5px;
+                                
+                            " alt="">
+                                                        <% } else { %>
+
+                                                            <p style="    position: absolute; left: <%= distance %>px; 
+                                background: #ffffffbf;
+                                color: black;
+                                padding: 7px 15px;
+                                margin: 7px;
+                                border-radius: 50%;
+                                font-weight: 700;">
+                                                                <%= quantity[i] %>
+                                                            </p>
+                                                            <img src="/productImages/<%= product.images[0] %>" style="width: 150px;    border-radius: 5px;
+                            
+                        " alt="">
+                                                            <% } %>
+
+                                                                <% ogTotel +=product.og_price %>
+                                                                    <% if(distance> 519) { %>
+                                                                        <% distance=170 %>
+                                                                            <% if (HIGHTdistance==0) { %>
+
+                                                                                <% HIGHTdistance=425 %>
+                                                                                    <% } else { %>
+                                                                                        <% HIGHTdistance +=225 %>
+
+                                                                                            <% } %>
+
+                                                                                                <% } else { %>
+                                                                                                    <% distance +=175 %>
+
+                                                                                                        <% } %>
+                                                                                                            <% i++ %>
+                                                                                                                <% }) %>
+                        </div>
+
+
+                        <div class="cart-itemDetails-div">
+
+                            <h3 style="    color: green;
+                            display: flex;
+                            align-items: center;
+                        ">Will be deliveried by mon, may 2024</h3>
+                        </div>
+                    </div>
+                    <hr>
+
+
+
+
+
+                    <div class="cart-item">
+                        <div class="cart-itemImage-div" style="    display: flex;
+                           gap: 10px;
+
+                        flex-wrap: wrap;     width: 50%;
+">
+                            <h2>Delivery Address</h2>
+
+                            <% USEr.address.forEach((element)=> { %>
+
+                                <p style="font-size: 20px;
+                        letter-spacing: 1px;
+                        line-height: 25px;">
+                                    <%= element %>,
+                                </p>
+                                <% }) %>
+
+
+                                    <p>Mobile : <%= USEr.mobile %>
+                                    </p>
+
+                        </div>
+
+
+                        <div class="cart-itemDetails-div">
+
+
+                            <div class="cart-itemDetails-theQuantityAndDelete-div">
+
+                                <br><br><br>
+
+                                <a href="/EditAddress/?id=<%= resAddress[0]._id%>&from=checkout" class="btn btn-success"
+                                    type="submit">Edit</a>
+
+                                <a href="/manageAddress/?from=checkout" class="btn btn-dark" type="submit">Change</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <hr>
+
+                    <div class="cart-item">
+                        <div class="cart-itemImage-div" style="    display: flex;
+                           gap: 10px;
+
+                        flex-wrap: wrap;     width: 50%;
+">
+                            <h2>Payment Method</h2>
+                            <p>Select any payment method</p>
+
+
+
+                            <form action="/placeOrder" id="placeOrderForm" method="post">
+
+                                <input type="hidden" name="Quantity" value="<%= quantity %>">
+                                <% for(let i=0;i<product_ids.length;i++) { %>
+
+
+                                    <input type="hidden" value="<%= product_ids[i] %>" name="product__Id<% +i %>">
+
+
+                                    <% } %>
+
+
+                                        <input type="radio" name="method" value="Wallet">
+                                        <label for="">Wallet</label>
+                                        <br><br>
+                                        <input type="radio" name="method" value="UPI">
+                                        <label for="">UPI</label>
+                                        <br><br>
+                                        <input type="radio" name="method" value="Ineternet Banking">
+                                        <label for="">Ineternet Banking <span style="    font-size: small;
+                            color: red;">*internet charges may apply</span></label>
+                                        <br><br>
+                                        <input type="radio" name="method" value="Cash On Delivery" checked>
+                                        <label for="">Cash On Delivery</label>
+
+
+
+                        </div>
+
+
+
+                    </div>
+                    <hr>
+
+
+                    <% if (typeof emessage !=='undefined' ) { %>
+                        <script>
+                            Swal.fire({
+                                title: 'Failed!',
+                                text: '<%= emessage %>',
+                                icon: 'error',
+                                confirmButtonText: 'OK'
+                            })
+                        </script>
+                        <% } %>
+
+
+
+
+
+
+
+            </div>
+            <div class="order-summury" style=" 
+
+            height: 360px;
+            padding: 20px;
+
+            ">
+
+                <h2 style="text-align: center;
+        margin-top: 10px;
+        font-size: 23px;font-weight: 300;">Order Summery</h2>
+
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">
+                                <%= products.length %>&nbsp;ITEMS
+                            </th>
+                            <th scope="col">₹&nbsp;<%= sum %>.00</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Delivery Charge</td>
+                            <% let delCharge=50*products.length %>
+
+
+                                <td>₹&nbsp;<%= delCharge %>.00
+
+                        </tr>
+                        <tr>
+                            <td>GST Ammount</td>
+
+                            <% let gst=Math.floor(sum/10) %>
+                                <td>₹&nbsp;<%= gst %>.00</td>
+
+                        </tr>
+                        <% let sumAll %>
+
+
+                            <% sumAll=sum + gst + delCharge %>
+
+                                <% if(typeof coupon !=='undefined' ) { %>
+
+                                    <tr>
+                                        <td style="font-weight: 600; color: green;">Coupon added</td>
+
+
+
+                                        <td style="font-weight: 600;    font-size: 18px; color: green;
+                            ">
+                                            <%= sumAll %> - <%= coupon.discount %>
+                                        </td>
+
+                                    </tr>
+                                    <% } %>
+
+                                        <tr>
+                                            <td style="font-weight: 600;">TOTEL</td>
+                                            <% let og_totel=ogTotel + gst + delCharge %>
+                                                <td style="font-weight: 600; color: #6c6c6c;"><del>₹&nbsp;<%= og_totel
+                                                            %>.00</del></td>
+
+                                        </tr>
+
+
+                                        <tr>
+                                            <td style="font-weight: 600;"></td>
+                                            <% if(typeof coupon !=='undefined' ) { %>
+                                                <% sumAll=sumAll - coupon.discount %>
+                                                    <% } %>
+                                                        <td style="font-weight: 600;    font-size: 18px;
+                            ">₹&nbsp;<%= sumAll %>.00</td>
+
+                                        </tr>
+                    </tbody>
+                </table>
+
+
+
+                <% if(typeof coupon !=='undefined' ) { %>
+                    <input type="hidden" id="theCoupon" value="<%= coupon.code %>" name="coupon">
+                    <p style="    color: rgb(26, 166, 26);
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: 20px;
+                ">
+                        <%= coupon.code %> ✅ <a class="" style="text-decoration: none;font-size: 16px;margin-left: 5px;border: solid black 1px;
+                color: white;padding: 2px 10px;border-radius: 5px;background: black;" href=""
+                                onclick="restart()">remove X</a>
+                    </p>
+
+                    <% } else { %>
+
+
+
+                        <div class="coupon-container" style="display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 20px 0;    margin-bottom: 0;
+                ">
+                            <input type="text" id="coupon-code" placeholder="Enter coupon code" style="padding: 10px;
+                    font-size: 16px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    width: 200px;
+                    margin-right: 10px;">
+                            <a id="apply-coupon" style="padding: 10px 20px;
+                    font-size: 16px;
+                    background-color: #28a745;
+                    color: #fff;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;" onclick="submitcoupon()">Apply Coupon</a>
+                        </div>
+                        <% if(typeof couponEmessage !=='undefined' ) { %>
+
+                            <script>
+                                Swal.fire({
+                                    title: 'Failed!',
+                                    text: '<%= couponEmessage %>',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                })
+                            </script>
+
+                            <% } %>
+
+                                <% } %>
+
+            </div>
+
+        </div>
+    </div>
+    <input type="hidden" value="₹&nbsp;<%= sumAll %>.00" name="sumofAmmount">
+    <input id="theSumAmount" type="hidden" value="<%= sumAll %>" name="totelAmmount">
+
+
+    </form>
+
+
+    <div class="sub-button" style="    width: 67%;
+    align-items: center;
+    height: 120px;
+    display: flex;
+    justify-content: end; margin-bottom: 100px;">
+        <input class="btn btn-dark" style="padding: 11px;
+    width: 12%;
+    font-size: 19px;" id="placeOrderBtn" type="submit" value="Place order"></input>
+    </div>
+
+
+    <div id="confirmationDialog" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <p style="        margin-bottom: 40px;
+    ">Are you sure you want to place the order?</p>
+            <div style="        display: flex;
+    gap: 10px;">
+
+                <button id="confirmOrderBtn" style="width: 50%;" class="btn btn-outline-dark">Order Now</button>
+                <button id="cancelOrderBtn" style="width: 50%;" class="btn btn-outline-danger">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <%- include('../layouts/footer.ejs') %>
+
+
+        <script>
+
+            document.getElementById('coupon-code').addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent the default behavior (submitting the form)
+                    document.getElementById('apply-coupon').click(); // Optionally, trigger the coupon application
+                }
+            });
+
+            function submitcoupon() {
+
+                let couponCode = document.getElementById('coupon-code').value
+                let quantityOfProducts = document.getElementById('quantityOfProducts').value
+                let sumAmount = document.getElementById('theSumAmount').value
+
+                window.location.href = `/couponAdding/?code=${couponCode}&quantity=${quantityOfProducts}&totelAmmount=${sumAmount}`
+
+
+
+            }
+        </script>
+
+
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+
+            function restart() {
+                const url = new URL(window.location.href);
+
+                // Remove the query parameter
+                url.searchParams.delete('couponAdded');
+
+                // Update the URL
+                window.history.replaceState({}, '', url);
+            }
+        </script>
+
+        <script>
+
+
+            // Show the confirmation dialog when the "Place Order" button is clicked
+            document.getElementById('placeOrderBtn').addEventListener('click', function () {
+                document.getElementById('confirmationDialog').style.display = 'block';
+            });
+
+            // Close the confirmation dialog when the "Close" button is clicked
+            document.getElementsByClassName('close-btn')[0].addEventListener('click', function () {
+                document.getElementById('confirmationDialog').style.display = 'none';
+            });
+
+            // Confirm the order when the "Confirm Order" button is clicked
+            document.getElementById('confirmOrderBtn').addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default form submission
+
+
+                if (document.querySelector('input[name="method"]:checked').value === 'Cash On Delivery' || document.querySelector('input[name="method"]:checked').value === 'Wallet') {
+                    document.getElementById('placeOrderForm').submit(); // Submit the form
+                } else {
+                    $('#placeOrderForm').submit(); // Trigger the AJAX form submission using jQuery
+                }
+
+                // $('#placeOrderForm').submit();  // Trigger the form submission using jQuery
+            });
+
+            // Close the confirmation dialog when the "Cancel Order" button is clicked
+            document.getElementById('cancelOrderBtn').addEventListener('click', function () {
+                document.getElementById('confirmationDialog').style.display = 'none';
+            });
+
+            // Close the modal if the user clicks anywhere outside of the modal content
+            window.addEventListener('click', function (event) {
+                if (event.target == document.getElementById('confirmationDialog')) {
+                    document.getElementById('confirmationDialog').style.display = 'none';
+                }
+            });
+
+            // Wait until the document is ready before attaching the form submit handler
+            $(document).ready(function () {
+                console.log('Hello');
+
+                $('#placeOrderForm').submit(function (e) {
+                    e.preventDefault();
+
+                    let formData = $(this).serialize();
+
+                    $.ajax({
+                        url: '/placeOrder',
+                        method: 'POST',
+                        data: formData,
+                        success: function (res) {
+
+                            if (res.success) {
+                                console.log('hey what is the status', res)
+                                var options = {
+                                    key: res.key_id,
+                                    amount: res.amount, // Amount in paise
+                                    currency: 'INR',
+                                    name: res.product_name,
+                                    description: res.description || 'Payment',
+                                    image: '/logo/DashFootwares.png',
+                                    order_id: res.order_id,
+                                    handler: function (response) {
+                                        console.log('frontend');
+
+
+                                        onlineSubmit()
+
+                                        // window.location.href = '/onlinePaymentOrder';
+                                        // Handle success response here, maybe redirect to a success page
+                                    },
+                                    prefill: {
+                                        contact: res.contact,
+                                        name: res.name,
+                                        email: res.email
+                                    },
+                                    notes: {
+                                        description: res.description || 'Payment'
+                                    },
+                                    theme: {
+                                        color: '#2300a3'
+                                    }
+                                };
+
+                                let razorpayObject = new Razorpay(options);
+
+                                razorpayObject.on('payment.failed', function (response) {
+
+                                    // Close the Razorpay popup
+
+                                    // Show SweetAlert modal after closing the Razorpay popup
+
+                                    Swal.fire({
+                                        title: 'Failed!',
+                                        text: 'Payment Failed',
+                                        icon: 'error',
+                                        confirmButtonText: 'OK',
+                                        allowOutsideClick: false,
+                                        allowEscapeKey: false
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            console.log('SweetAlert confirmed');
+                                            // Redirect to the onlineFailedOrder function if the user confirms
+                                            onlineFailedOrder();
+                                        }
+                                    });
+
+
+                                });
+
+                                razorpayObject.open();
+                            } else {
+
+
+
+                                alert(res.msg);
+
+                            }
+                        },
+                        error: function (err) {
+                            console.error('AJAX error:', err);
+
+
+
+
+                            alert('Something went wrong with the order creation.', res.msg);
+
+
+
+
+
+                        }
+                    });
+                });
+            });
+
+
+
+
+
+
+
+            function onlineSubmit() {
+
+                var newAction = '/onlinePaymentOrder'; // New action URL
+                document.getElementById('placeOrderForm').action = newAction;
+                document.getElementById('placeOrderForm').submit();
+            }
+
+
+
+            function onlineFailedOrder() {
+
+                var newAction = '/onlinePaymentOrder/?failed=true'; // New action URL
+                document.getElementById('placeOrderForm').action = newAction;
+                document.getElementById('placeOrderForm').submit();
+
+            }
+
+
+
+
+
+        </script>

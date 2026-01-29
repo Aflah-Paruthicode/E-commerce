@@ -1,20 +1,14 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-  rel="stylesheet">
-  <title>DashFootwares</title>
-  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
-<link rel="stylesheet" href="/css/adminCss/adminHome.css">
-<link rel="stylesheet" href="/css/adminCss/adminListCus.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+<title>DashFootwares</title>
+<link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png" />
+<link rel="stylesheet" href="/css/adminCss/adminHome.css" />
+<link rel="stylesheet" href="/css/adminCss/adminListCus.css" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-
-
-
 <style>
-
-/* The Modal (background) */
-.modal {
+  /* The Modal (background) */
+  .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -23,180 +17,142 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  }
 
-/* Modal Content/Box */
-.modal-content {
+  /* Modal Content/Box */
+  .modal-content {
     background-color: #fefefe;
     margin: 17% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 25%;
-}
+  }
 
-/* The Close Button */
-.close-btn {
+  /* The Close Button */
+  .close-btn {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
     align-self: self-start;
+  }
 
-}
-
-.close-btn:hover,
-.close-btn:focus {
+  .close-btn:hover,
+  .close-btn:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
-}
-
-
+  }
 </style>
 
-
-
 <div class="ad-home-header-section">
-    <div class="ad-home-header-container">
-      <nav>
-        <div class="logo">
-          <img src="/logo/DashFootwares.png" alt="">
-          <h3 style="color: black;font-size: 16px;font-weight: 400;margin: 0;"> DASH FOOTWARES </h3>
-  
-        </div>
-        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/bell (1).png" alt="">
-        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/user (1).png" alt="">
-        <h3 style="color: black;font-size: 16px;font-weight: 400;margin-right: 25px;margin-bottom: 0;">Aflah</h3>
-        <form action="/admin/logout">
-          <input type="submit" value="Logout">
-        </form>
-  
-  
-      </nav>
-    </div>
-  </div>
-
-
-
-  <div class="ad-home-dashboard-section">
-    <div class="ad-home-dashboard-container">
-      <div class="ad-home-dashboard-options">
-  
-        <button><img src="/adminOptionsImages/dashboard.png" alt=""><a href="/admin/dashboard">Dashboard</a></button>
-        <button><img src="/adminOptionsImages/customer.png" alt=""><a href="/admin/customers">Customers</a></button>
-        <button><img src="/adminOptionsImages/product.png" alt=""><a href="/admin/product">Products</a></button>
-        <button><img src="/adminOptionsImages/checkout.png" alt=""><a href="/admin/orders">Orders</a></button>
-        <button><img src="/adminOptionsImages/slider.png" alt=""><a href="/admin/banner">Banner Management</a></button>
-        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon Management</a></button>
-        <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
-        <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
-        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
-
-  
-  
-  
+  <div class="ad-home-header-container">
+    <nav>
+      <div class="logo">
+        <img src="/logo/DashFootwares.png" alt="" />
+        <h3 style="color: black; font-size: 16px; font-weight: 400; margin: 0">DASH FOOTWARES</h3>
       </div>
-  
-      <div class="ad-home-dashboard-optionsDetailPage">
-        <% if (typeof emessage !== 'undefined') { %>
-          <script>
-              Swal.fire({
-                  title: 'Failed!',
-                  text: '<%= emessage %>',
-                  icon: 'error',
-                  confirmButtonText: 'OK'
-              })
-          </script>
+      <img style="width: 2.5%; margin: 10px" src="/userProfileImages/bell (1).png" alt="" />
+      <img style="width: 2.5%; margin: 10px" src="/userProfileImages/user (1).png" alt="" />
+      <h3 style="color: black; font-size: 16px; font-weight: 400; margin-right: 25px; margin-bottom: 0">Aflah</h3>
+      <form action="/admin/logout">
+        <input type="submit" value="Logout" />
+      </form>
+    </nav>
+  </div>
+</div>
+
+<div class="ad-home-dashboard-section">
+  <div class="ad-home-dashboard-container">
+    <div class="ad-home-dashboard-options">
+      <button><img src="/adminOptionsImages/dashboard.png" alt="" /><a href="/admin/dashboard">Dashboard</a></button>
+      <button><img src="/adminOptionsImages/customer.png" alt="" /><a href="/admin/customers">Customers</a></button>
+      <button><img src="/adminOptionsImages/product.png" alt="" /><a href="/admin/product">Products</a></button>
+      <button><img src="/adminOptionsImages/checkout.png" alt="" /><a href="/admin/orders">Orders</a></button>
+      <button><img src="/adminOptionsImages/slider.png" alt="" /><a href="/admin/banner">Banner Management</a></button>
+      <button><img src="/adminOptionsImages/promo-code.png" alt="" /><a href="/admin/couponManagement">Coupon Management</a></button>
+      <button><img src="/adminOptionsImages/sales.png" alt="" /><a href="/admin/salesReport">Sales Report</a></button>
+      <button><img src="/adminOptionsImages/list.png" alt="" /><a href="/admin/category">Category</a></button>
+      <button><img src="/adminOptionsImages/promo-code.png" alt="" /><a href="/admin/offerManagement">Offer Management</a></button>
+    </div>
+
+    <div class="ad-home-dashboard-optionsDetailPage">
+      <% if (typeof emessage !== 'undefined') { %>
+      <script>
+        Swal.fire({
+          title: "Failed!",
+          text: "<%= emessage %>",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      </script>
       <% } %>
-          <h3>EDIT PRODUCT PAGE</h3>
+      <h3>EDIT PRODUCT PAGE</h3>
 
+      <div class="adProduct-formDiv">
+        <form action="/admin/EditProduct?id=<%= product._id %>" id="uploadForm" method="post" enctype="multipart/form-data">
+          <div class="pName in">
+            <label for="">Product Name :</label>
+            <input type="text" name="name" value="<%= product.name %>" />
+          </div>
 
-          
-  
-          <div class="adProduct-formDiv">
-            <form action="/admin/EditProduct?id=<%= product._id %>" id="uploadForm" method="post" enctype="multipart/form-data">
-            <div class="pName in">
-              <label for="">Product Name :</label>
-              <input type="text" name="name" value="<%= product.name %>">
-            </div>
+          <div class="pName in">
+            <label for="">Company Name :</label>
+            <input type="text" name="company" value="<%= product.company %>" />
+          </div>
 
-              
-              <div class="pName in">
-                <label for="">Company Name :</label>
-                <input type="text" name="company" value="<%= product.company %>">
+          <div class="pCategory in">
+            <label for="">Category :</label>
+            <select id="cars" name="category">
+              <option value="<%= product.category %>"><%= product.category %></option>
+
+              <% category.forEach((cate) => { %>
+
+              <option><%= cate.category %></option>
+              <% }) %>
+            </select>
+          </div>
+
+          <div class="pDescription in">
+            <label for="">Description :</label>
+            <input type="text" name="product_desc" value="<%= product.product_desc %>" />
+          </div>
+
+          <div class="pPrice in">
+            <label for="">Product Price :</label>
+            <input style="width: 30%" type="number" name="price" value="<%= product.price %>" />
+
+            <label style="margin: 30px; margin-left: 55px" for="">Product Original Price :</label>
+            <input style="width: 30%" type="number" name="original_price" value="<%= product.og_price %>" />
+          </div>
+
+          <div class="pQuantity in">
+            <label for="">Quantity :</label>
+            <input type="number" name="quantity" value="<%= product.quantity %>" />
+          </div>
+
+          <div class="pImages in">
+            <label for="">Upload Images :</label>
+
+            <div style="width: 100%; display: flex">
+              <% let i = 0 %> <% let id = product._id %> <% product.images.forEach((image) => { %>
+
+              <input type="hidden" name="image" value="<%= image %>" />
+
+              <div style="">
+                <img
+                  style="width: 75px; height: 75px; border: solid black 1px; margin: 3px; padding: 3px; cursor: pointer"
+                  src="/productImages/<%= image %>"
+                  onclick="hello(<%= i %>,this.alt)"
+                  class="imaageA"
+                  alt="<%= id %>"
+                />
               </div>
 
-            <div class="pCategory in">
-              <label for="">Category :</label>
-              <select id="cars" name="category">
-                <option value="<%= product.category %>"><%= product.category %></option>
-
-                <%  category.forEach((cate) => {  %>
-
-                  <option><%= cate.category %></option>
-              <%  })  %>
-                
-              </select>
-            </div>
-
-            <div class="pDescription in">
-              <label for="">Description :</label>
-              <input type="text" name="product_desc" value="<%= product.product_desc %>">
-            </div>
-
-            <div class="pPrice in">
-              <label for="">Product Price :</label>
-              <input style="width: 30%;" type="number" name="price" value="<%= product.price %>">
-
-              <label style="margin: 30px;margin-left: 55px;" for="">Product Original Price :</label>
-              <input style="width: 30%;" type="number" name="original_price" value="<%= product.og_price %>">
-            </div>
-
-            <div class="pQuantity in">
-              <label for="">Quantity :</label>
-              <input type="number" name="quantity" value="<%= product.quantity %>">
-            </div>
-
-            <div class="pImages in">
-              <label for="">Upload Images :</label>
-
-
-              <div style="width: 100%; display: flex;">
-
-
-
-                    
-                      
-                    
-                  
-                      
-                  
-
-
-                  <%  let i = 0 %>
-                  <% let id = product._id %>
-
-                    <%  product.images.forEach((image) => { %>
-
-                 
-                    <input type="hidden" name="image" value="<%= image %>" >
-
-                    <div style="">
-
-                      <img style="      width: 75px;
-                      height: 75px;
-                      border: solid black 1px;
-                      margin: 3px;
-                      padding: 3px;
-                      cursor: pointer;
-                      " src="/productImages/<%= image %>" onclick="hello(<%= i %>,this.alt)" class="imaageA"  alt="<%= id %>">
-                      
-                    </div>
-
-                    <!-- <a id="deleteLink<%= i %>" onclick="hello(<%= i %>)" href="/admin/productDelete/?image=<%= product._id %>&position=<%= image %>"></a> -->
-                  <!-- <div style="display: flex;align-items: center;gap: 5px;">
+              <!-- <a id="deleteLink<%= i %>" onclick="hello(<%= i %>)" href="/admin/productDelete/?image=<%= product._id %>&position=<%= image %>"></a> -->
+              <!-- <div style="display: flex;align-items: center;gap: 5px;">
                      <a href="/admin/productEdit/?image=<%= product._id %>&position=<%= i %>" style="display: flex;
                       align-items: center;
                       justify-content: space-between;" class="btn btn-dark"> Change&nbsp;&nbsp;&nbsp; <input style="    outline: none;
@@ -206,184 +162,136 @@
     padding: 0;
     margin: 0;"
      type="file"></a> -->
-                    <!-- <a href="/admin/productDelete/image=<%= product._id %>" class="btn btn-danger">Remove</a> -->
+              <!-- <a href="/admin/productDelete/image=<%= product._id %>" class="btn btn-danger">Remove</a> -->
 
-                  <!-- </div> --> 
+              <!-- </div> -->
 
-                  
-
-                  <% i++ %>
-
-                <%    })    %>
-           
-
-              </div>
-
-              
-
-
-              <input type="file" id="productImages" accept="image/*" name="images" accept=".jpg, .jpeg, .png">
+              <% i++ %> <% }) %>
             </div>
 
-            
-
-            <div class="in">
-
-            <input style="margin-top: 7px;background-color: green;outline: none;border: none;color: #fff;width: 190px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="SAVE  CHANGES">
+            <input type="file" id="productImages" accept="image/*" name="images" accept=".jpg, .jpeg, .png" />
           </div>
 
-          
-
-                  </form>
-            
-            
-
+          <div class="in">
+            <input
+              style="
+                margin-top: 7px;
+                background-color: green;
+                outline: none;
+                border: none;
+                color: #fff;
+                width: 190px;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 10px;
+              "
+              type="submit"
+              value="SAVE  CHANGES"
+            />
           </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
-
-
-
-
-  <div id="confirmationDialog" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <p style="        margin-bottom: 40px;
-        ">Choose one of these?</p>
-        <div style="        display: flex;
-        gap: 10px;">
-    
-            <button id="confirmOrderBtn" style="width: 50%;" class="btn btn-outline-dark">Edit</button>
-            <button id="deletePhotoBtn" style="width: 50%;" class="btn btn-outline-danger">Delete</button>
-            <form action="/productIMGChange" method="post" id="editIMgForm" enctype="multipart/form-data" >
-            <input type="file" id="fileInput" name="image" accept="image/*" style="display: none;">
-            <input type="hidden" value="<%= product._id %>" name="id">
-          </form>
-        </div>
+<div id="confirmationDialog" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <p style="margin-bottom: 40px">Choose one of these?</p>
+    <div style="display: flex; gap: 10px">
+      <button id="confirmOrderBtn" style="width: 50%" class="btn btn-outline-dark">Edit</button>
+      <button id="deletePhotoBtn" style="width: 50%" class="btn btn-outline-danger">Delete</button>
+      <form action="/productIMGChange" method="post" id="editIMgForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="image" accept="image/*" style="display: none" />
+        <input type="hidden" value="<%= product._id %>" name="id" />
+      </form>
     </div>
-    </div>
+  </div>
+</div>
 
+<script>
+  document.getElementById("uploadForm").addEventListener("submit", function (event) {
+    const fileInput = document.getElementById("productImages");
+    const files = fileInput.files;
+    const maxSize = 10 * 1024 * 1024; // 10 MB
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (!file.type.match("image/jpeg") && !file.type.match("image/png")) {
+        alert("Only JPG and PNG files are allowed.");
+        event.preventDefault();
+        return;
+      }
 
+      if (file.size > maxSize) {
+        alert("Each file must be less than 10 MB.");
+        event.preventDefault();
+        return;
+      }
+    }
+  });
+</script>
 
+<script>
+  function hello(pos, num) {
+    document.getElementById("confirmationDialog").style.display = "block";
 
-
-
-    <script>
-
-document.getElementById('uploadForm').addEventListener('submit', function(event) {
-            const fileInput = document.getElementById('productImages');
-            const files = fileInput.files;
-            const maxSize = 10 * 1024 * 1024; // 10 MB
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                    alert('Only JPG and PNG files are allowed.');
-                    event.preventDefault();
-                    return;
-                }
-
-                if (file.size > maxSize) {
-                    alert('Each file must be less than 10 MB.');
-                    event.preventDefault();
-                    return;
-                }
-            }
-        });
-    </script>
-
-
-
-  <script>
-
-
-function hello (pos,num) {
-                document.getElementById('confirmationDialog').style.display = 'block';
-
-  document.getElementsByClassName('close-btn')[0].addEventListener('click', function() {
-        document.getElementById('confirmationDialog').style.display = 'none';
+    document.getElementsByClassName("close-btn")[0].addEventListener("click", function () {
+      document.getElementById("confirmationDialog").style.display = "none";
     });
 
-
-    document.getElementById('confirmOrderBtn').addEventListener("click", function () {
-
-      document.getElementById('fileInput').click();
-
+    document.getElementById("confirmOrderBtn").addEventListener("click", function () {
+      document.getElementById("fileInput").click();
 
       // window.location.href = `/admin/productIMGChange`;
-      document.getElementById('confirmationDialog').style.display = 'none';
-
-
+      document.getElementById("confirmationDialog").style.display = "none";
     });
 
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+      console.log("ivde ok");
+      document.getElementById("editIMgForm").action = `/admin/productIMGChange/?id=${pos}`;
+      document.getElementById("editIMgForm").submit();
+      // window.location.href = `/admin/productIMGChange/?=${file}&${num}&${file}`;
 
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-      console.log('ivde ok')
-      document.getElementById('editIMgForm').action = `/admin/productIMGChange/?id=${pos}`
-      document.getElementById('editIMgForm').submit();
-          // window.location.href = `/admin/productIMGChange/?=${file}&${num}&${file}`;
-
-    // You can now handle the selected file (e.g., upload it to the server)
-  
-})
-
-
-
-
-
-
-    document.getElementById('deletePhotoBtn').addEventListener('click', function() {
-
-      window.location.href = `/admin/productDelete/${pos}/${num}`;
-
-        document.getElementById('confirmationDialog').style.display = 'none';
+      // You can now handle the selected file (e.g., upload it to the server)
     });
 
+    document.getElementById("deletePhotoBtn").addEventListener("click", function () {
+      window.location.href = `/admin/deleteProductImg/${pos}/${num}`;
 
-
-
-}
-
-
-
-// let i = 0
-// document.querySelectorAll('.imaageA').forEach(function(image) {
-//             image.addEventListener('click', function() {
-//                 document.getElementById('confirmationDialog').style.display = 'block';
-//             });
-//             i++;
-//         });
-
-
-
-//     document.getElementsByClassName('close-btn')[0].addEventListener('click', function() {
-//         document.getElementById('confirmationDialog').style.display = 'none';
-//     });
-
-//     document.getElementById('confirmOrderBtn').addEventListener('click', function() {
-//         // Code to place the order
-//         document.querySelector('#imageEditFrom').submit();  // Submit the form using JavaScript
-//     });
-
-//     document.getElementById('deletePhotoBtn').addEventListener('click', function() {
-
-//       let deleteLink = document.getElementById(`deleteLink${2}`);
-//       window.location.href = deleteLink.href;
-
-//         // document.getElementById('confirmationDialog').style.display = 'none';
-//     });
-
-    // Close the modal if the user clicks anywhere outside of the modal content
-    window.addEventListener('click', function(event) {
-        if (event.target == document.getElementById('confirmationDialog')) {
-            document.getElementById('confirmationDialog').style.display = 'none';
-        }
+      document.getElementById("confirmationDialog").style.display = "none";
     });
+  }
 
+  // let i = 0
+  // document.querySelectorAll('.imaageA').forEach(function(image) {
+  //             image.addEventListener('click', function() {
+  //                 document.getElementById('confirmationDialog').style.display = 'block';
+  //             });
+  //             i++;
+  //         });
 
-  </script>
+  //     document.getElementsByClassName('close-btn')[0].addEventListener('click', function() {
+  //         document.getElementById('confirmationDialog').style.display = 'none';
+  //     });
 
+  //     document.getElementById('confirmOrderBtn').addEventListener('click', function() {
+  //         // Code to place the order
+  //         document.querySelector('#imageEditFrom').submit();  // Submit the form using JavaScript
+  //     });
 
+  //     document.getElementById('deletePhotoBtn').addEventListener('click', function() {
 
+  //       let deleteLink = document.getElementById(`deleteLink${2}`);
+  //       window.location.href = deleteLink.href;
 
+  //         // document.getElementById('confirmationDialog').style.display = 'none';
+  //     });
+
+  // Close the modal if the user clicks anywhere outside of the modal content
+  window.addEventListener("click", function (event) {
+    if (event.target == document.getElementById("confirmationDialog")) {
+      document.getElementById("confirmationDialog").style.display = "none";
+    }
+  });
+</script>

@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
-const port = process.env.PORT
+const PORT = process.env.PORT
 const SecretKey = process.env.SessionSecretKey
 const express = require('express');
 const app = express();
@@ -13,7 +13,7 @@ const nocache = require('nocache');
 // for session management.
 const session = require('express-session');
 app.use(session({
-    secret: SecretKey,
+    secret: SecretKey || "default_fallback_key",
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 50000000000 },
@@ -39,6 +39,6 @@ app.use('/',userRoute);
 // const categoryRoute = require('./routes/categoryRoute');
 // app.use('/category',categoryRoute);
 
-app.listen(port,function() {
+app.listen(PORT,function() {
     console.log('server is running...'); 
 })

@@ -1,24 +1,21 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-  rel="stylesheet">
-  <title>DashFootwares</title>
-  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
-<link rel="stylesheet" href="/css/adminCss/adminHome.css">
-<link rel="stylesheet" href="/css/adminCss/adminListCus.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+<title>DashFootwares</title>
+<link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png" />
+<link rel="stylesheet" href="/css/adminCss/adminHome.css" />
+<link rel="stylesheet" href="/css/adminCss/adminListCus.css" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 
-
 <style>
-
   #image-preview-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 10px;
-}
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 10px;
+  }
 
-/* .image-container {
+  /* .image-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,300 +23,257 @@
   padding: 10px;
 } */
 
+  /* // Add some basic CSS styles for better visualization (optional) */
+  .image-container {
+    display: inline-block; /* Allow side-by-side arrangement */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+  }
 
-/* // Add some basic CSS styles for better visualization (optional) */
-.image-container {
-  display: inline-block; /* Allow side-by-side arrangement */
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 5px;
-}
+  .cropper-image {
+    max-width: 200px; /* Adjust as needed */
+    max-height: 200px; /* Adjust as needed */
+  }
 
-.cropper-image {
-  max-width: 200px; /* Adjust as needed */
-  max-height: 200px; /* Adjust as needed */
-}
-
-.crop-button {
-  margin-top: 5px;
-  padding: 5px 10px;
-  background-color: #ddd;
-  border: none;
-  cursor: pointer;
-}
-
-
-
+  .crop-button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+  }
 </style>
 
-
-
 <div class="ad-home-header-section">
-    <div class="ad-home-header-container">
-      <nav>
-        <div class="logo">
-          <img src="/logo/DashFootwares.png" alt="">
-          <h3 style="color: black;font-size: 16px;font-weight: 400;margin: 0;"> DASH FOOTWARES </h3>
-  
-        </div>
-        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/bell (1).png" alt="">
-        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/user (1).png" alt="">
-        <h3 style="color: black;font-size: 16px;font-weight: 400;margin-right: 25px;margin-bottom: 0;">Aflah</h3>
-        <form action="/admin/logout">
-          <input type="submit" value="Logout">
-        </form>
-  
-  
-      </nav>
-    </div>
-  </div>
-
-
-
-  <div class="ad-home-dashboard-section">
-    <div class="ad-home-dashboard-container">
-      <div class="ad-home-dashboard-options">
-  
-        <button><img src="/adminOptionsImages/dashboard.png" alt=""><a href="/admin/dashboard">Dashboard</a></button>
-        <button><img src="/adminOptionsImages/customer.png" alt=""><a href="/admin/customers">Customers</a></button>
-        <button><img src="/adminOptionsImages/product.png" alt=""><a href="/admin/product">Products</a></button>
-        <button><img src="/adminOptionsImages/checkout.png" alt=""><a href="/admin/orders">Orders</a></button>
-        <button><img src="/adminOptionsImages/slider.png" alt=""><a href="/admin/banner">Banner Management</a></button>
-        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon Management</a></button>
-        <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
-        <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
-        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
-
-  
-  
-  
+  <div class="ad-home-header-container">
+    <nav>
+      <div class="logo">
+        <img src="/logo/DashFootwares.png" alt="" />
+        <h3 style="color: black; font-size: 16px; font-weight: 400; margin: 0">DASH FOOTWARES</h3>
       </div>
-  
-      <div class="ad-home-dashboard-optionsDetailPage">
-          <h3>ADD PRODUCT PAGE</h3>
+      <img style="width: 2.5%; margin: 10px" src="/userProfileImages/bell (1).png" alt="" />
+      <img style="width: 2.5%; margin: 10px" src="/userProfileImages/user (1).png" alt="" />
+      <h3 style="color: black; font-size: 16px; font-weight: 400; margin-right: 25px; margin-bottom: 0">Aflah</h3>
+      <form action="/admin/logout">
+        <input type="submit" value="Logout" />
+      </form>
+    </nav>
+  </div>
+</div>
 
-          <% if (typeof emessage !== 'undefined') { %>
-            <script>
-                Swal.fire({
-                    title: 'Failed!',
-                    text: '<%= emessage %>',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-            </script>
-        <% } %>
-          
-          
-  
-          <div class="adProduct-formDiv">
-            <form action="/admin/add-product" id="uploadForm" method="post" enctype="multipart/form-data">
-            <div class="pName in">
-              <label for="">Product Name :</label>
-             <% if(typeof details !== 'undefined') { %>
+<div class="ad-home-dashboard-section">
+  <div class="ad-home-dashboard-container">
+    <div class="ad-home-dashboard-options">
+      <button><img src="/adminOptionsImages/dashboard.png" alt="" /><a href="/admin/dashboard">Dashboard</a></button>
+      <button><img src="/adminOptionsImages/customer.png" alt="" /><a href="/admin/customers">Customers</a></button>
+      <button><img src="/adminOptionsImages/product.png" alt="" /><a href="/admin/product">Products</a></button>
+      <button><img src="/adminOptionsImages/checkout.png" alt="" /><a href="/admin/orders">Orders</a></button>
+      <button><img src="/adminOptionsImages/slider.png" alt="" /><a href="/admin/banner">Banner Management</a></button>
+      <button><img src="/adminOptionsImages/promo-code.png" alt="" /><a href="/admin/couponManagement">Coupon Management</a></button>
+      <button><img src="/adminOptionsImages/sales.png" alt="" /><a href="/admin/salesReport">Sales Report</a></button>
+      <button><img src="/adminOptionsImages/list.png" alt="" /><a href="/admin/category">Category</a></button>
+      <button><img src="/adminOptionsImages/promo-code.png" alt="" /><a href="/admin/offerManagement">Offer Management</a></button>
+    </div>
 
-                <input type="text" name="name" value="<%= details.name %>">
-             <%  } else {  %>
-                <input type="text" name="name">
+    <div class="ad-home-dashboard-optionsDetailPage">
+      <h3>ADD PRODUCT PAGE</h3>
 
-             <% } %>
+      <% if (typeof emessage !== 'undefined') { %>
+      <script>
+        Swal.fire({
+          title: "Failed!",
+          text: "<%= emessage %>",
+          icon: "error",
+          confirmButtonText: "OK",
+        });
+      </script>
+      <% } %>
+
+      <div class="adProduct-formDiv">
+        <form action="/admin/add-product" id="uploadForm" method="post" enctype="multipart/form-data">
+          <% if(typeof details !== 'undefined') { %>
+          <div class="pName in">
+            <label for="">Product Name :</label>
+              <input type="text" name="name" value="<%= details.name %>" />
             </div>
 
-              
-              <div class="pName in">
-                <label for="">Company Name :</label>
-                <% if(typeof details !== 'undefined') { %>
-
-                  <input type="text" name="company" value="<%= details.company %>">
-               <%  } else {  %>
-                  <input type="text" name="company">
+            <div class="pName in">
+              <label for="">Company Name :</label>
+              <input type="text" name="company" value="<%= details.company %>" />
+            </div>
   
-               <% } %>              
-              </div>
-
             <div class="pCategory in">
               <label for="">Category :</label>
-              
               <select name="category">
-                <% if(typeof details !== 'undefined') { %>
-
-                  <option value="<%= details.category %>"><%= details.category %></option>
-               <%  } else {  %>
-                <option value="chooddd">Choose one ...</option>
-  
-               <% } %>
-                <%   category.forEach((cate) => { %>
-                
+                <option value="<%= details.category %>"><%= details.category %></option>
+                 <% category.forEach((cate) => { %>
                 <option><%= cate.category %></option>
-             
                 <% }) %>
               </select>
-
             </div>
 
             <div class="pDescription in">
               <label for="">Description :</label>
-              <% if(typeof details !== 'undefined') { %>
-
-                <input type="text" name="product_desc" value="<%= details.product_desc %>">
-
-             <%  } else {  %>
-              <input type="text" name="product_desc">
-
-             <% } %>
+              <input type="text" name="product_desc" value="<%= details.product_desc %>" />
             </div>
-
+  
             <div class="pPrice in">
               <label for="">Product Price :</label>
-              <% if(typeof details !== 'undefined') { %>
-
-                <input style="width: 30%;" type="number" name="price" value="<%= details.price %>">
-
-             <%  } else {  %>
-              <input style="width: 30%;" type="number" name="price">
-
-             <% } %>
-
-              <label style="margin: 30px;margin-left: 55px;" for="">Product Original Price :</label>
-              <% if(typeof details !== 'undefined') { %>
-
-                <input style="width: 30%;" type="number" name="original_price" value="<%= details.original_price %>"> 
-
-
-             <%  } else {  %>
-
-              <input style="width: 30%;" type="number" name="original_price">
-
-
-
-              <% } %>
+              <input style="width: 30%" type="number" name="price" value="<%= details.price %>" />
+  
+              <label style="margin: 30px; margin-left: 55px" for="">Product Original Price :</label>
+              <input style="width: 30%" type="number" name="original_price" value="<%= details.original_price %>" />
             </div>
-
+  
             <div class="pQuantity in">
               <label for="">Quantity :</label>
-              <% if(typeof details !== 'undefined') { %>
-
-                <input type="number" name="quantity" value="<%= details.quantity %>">
-
-
-             <%  } else {  %>
-              <input type="number" name="quantity">
-
-              <% } %>
+              <input type="number" name="quantity" value="<%= details.quantity %>" />
+            </div>
+            <% } else { %>
+              <div class="pName in">
+            <label for="">Product Name :</label>
+              <input type="text" name="name" />
             </div>
 
-            <div class="pImages in">
-              <label for="">Upload Images :</label>
-              <input type="file" name="images" id="productImages" accept="image/*" multiple>
-            
+            <div class="pName in">
+              <label for="">Company Name :</label>
+              <input type="text" name="company" />
             </div>
-            
+  
+            <div class="pCategory in">
+              <label for="">Category :</label>
+              <select name="category">
+                <option value="Choose one ...">Choose one ...</option>
+                <% category.forEach((cate) => { %>
+                <option><%= cate.category %></option>
+                <% }) %>
+              </select>
+            </div>
 
-            <div class="in">
+            <div class="pDescription in">
+              <label for="">Description :</label>
+              <input type="text" name="product_desc" />
+            </div>
+  
+            <div class="pPrice in">
+              <label for="">Product Price :</label>
+              <input style="width: 30%" type="number" name="price" />
+  
+              <label style="margin: 30px; margin-left: 55px" for="">Product Original Price :</label>
+              <input style="width: 30%" type="number" name="original_price" />
+            </div>
+  
+            <div class="pQuantity in">
+              <label for="">Quantity :</label>
+              <input type="number" name="quantity" />
+            </div>
+           <% } %>
 
-            <input style="margin-top: 7px;background-color: green;outline: none;border: none;color: #fff;width: 190px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="ADD PRODUCT">
+          <div class="pImages in">
+            <label for="">Upload Images :</label>
+            <input type="file" name="images" id="productImages" accept="image/*" multiple />
           </div>
 
-                  </form>
-            
-            
-
+          <div class="in">
+            <input
+              style="
+                margin-top: 7px;
+                background-color: green;
+                outline: none;
+                border: none;
+                color: #fff;
+                width: 190px;
+                font-size: 16px;
+                font-weight: 600;
+                border-radius: 10px;
+              "
+              type="submit"
+              value="ADD PRODUCT"
+            />
           </div>
-          <div id="image-preview-container" style="width: 100%;display: flex;flex-wrap: wrap;"></div>
-
+        </form>
       </div>
+      <div id="image-preview-container" style="width: 100%; display: flex; flex-wrap: wrap"></div>
     </div>
   </div>
+</div>
 
+<script>
+  const productImagesInput = document.getElementById("productImages");
+  const imagePreviewContainer = document.getElementById("image-preview-container");
 
+  productImagesInput.addEventListener("change", (event) => {
+    const files = event.target.files;
 
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
 
+      reader.onloadend = () => {
+        const image = new Image();
+        image.src = reader.result;
 
+        image.onload = () => {
+          const imageContainer = document.createElement("div");
+          imageContainer.classList.add("image-container");
 
+          imagePreviewContainer.appendChild(imageContainer);
 
+          image.classList.add("cropper-image");
+          imageContainer.appendChild(image);
 
-  <script>
-const productImagesInput = document.getElementById('productImages');
-const imagePreviewContainer = document.getElementById('image-preview-container');
+          const cropper = new Cropper(image, {
+            aspectRatio: 60 / 75,
+            viewMode: 1,
+            autoCropArea: 1,
+            dragMode: "crop",
+            movable: false,
+            resizable: false,
+            rotatable: false,
+            scalable: false,
+            zoomOnWheel: false,
+          });
 
-productImagesInput.addEventListener('change', (event) => {
-  const files = event.target.files;
+          const cropButton = document.createElement("button");
+          cropButton.textContent = "Crop";
+          cropButton.classList.add("crop-button");
+          imageContainer.appendChild(cropButton);
 
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const reader = new FileReader();
+          cropButton.addEventListener("click", () => {
+            event.preventDefault(); // Prevent the default form submission
+            const croppedCanvas = cropper.getCroppedCanvas();
 
-    reader.onloadend = () => {
-      const image = new Image();
-      image.src = reader.result;
+            croppedCanvas.toBlob((blob) => {
+              const fileName = `cropped-${file.name}`;
+              const croppedFile = new File([blob], fileName, { type: "image/jpeg" });
 
-      image.onload = () => {
-        const imageContainer = document.createElement('div');
-        imageContainer.classList.add('image-container');
+              // Use DataTransfer to manage the input files
+              const dataTransfer = new DataTransfer();
 
-        imagePreviewContainer.appendChild(imageContainer);
+              // Add the cropped file to the DataTransfer object
+              dataTransfer.items.add(croppedFile);
 
-        image.classList.add('cropper-image');
-        imageContainer.appendChild(image);
-
-        const cropper = new Cropper(image, {
-          aspectRatio: 60 / 75, // Set aspect ratio
-          viewMode: 1,
-          autoCropArea: 1,
-          dragMode: 'crop',
-          movable: false,
-          resizable: false,
-          rotatable: false,
-          scalable: false,
-          zoomOnWheel: false,
-        });
-
-        const cropButton = document.createElement('button');
-        cropButton.textContent = 'Crop';
-        cropButton.classList.add('crop-button');
-        imageContainer.appendChild(cropButton);
-
-        cropButton.addEventListener('click', () => {
-          event.preventDefault(); // Prevent the default form submission
-          const croppedCanvas = cropper.getCroppedCanvas();
-
-          croppedCanvas.toBlob((blob) => {
-            const fileName = `cropped-${file.name}`;
-            const croppedFile = new File([blob], fileName, { type: 'image/jpeg' });
-
-            // Use DataTransfer to manage the input files
-            const dataTransfer = new DataTransfer();
-
-            // Add the cropped file to the DataTransfer object
-            dataTransfer.items.add(croppedFile);
-
-            // Add the other files except the current one
-            for (let j = 0; j < files.length; j++) {
-              if (j !== i) { // Skip the current file
-                dataTransfer.items.add(files[j]);
+              // Add the other files except the current one
+              for (let j = 0; j < files.length; j++) {
+                if (j !== i) {
+                  // Skip the current file
+                  dataTransfer.items.add(files[j]);
+                }
               }
-            }
 
-            // Update the input field with the new files
-            productImagesInput.files = dataTransfer.files;
+              // Update the input field with the new files
+              productImagesInput.files = dataTransfer.files;
 
-            // Hide the crop button and remove the original image
-            cropButton.style.display = 'none';
-            imagePreviewContainer.removeChild(imageContainer);  // Optionally remove the image preview
-
-          }, 'image/jpeg');   // Adjust image type as needed
-        });
+              // Hide the crop button and remove the original image
+              cropButton.style.display = "none";
+              imagePreviewContainer.removeChild(imageContainer); // Optionally remove the image preview
+            }, "image/jpeg"); // Adjust image type as needed
+          });
+        };
       };
-    };
 
-    reader.readAsDataURL(file);
-  }
-});
-
-
-
-
-
-
-
-
-  </script>
+      reader.readAsDataURL(file);
+    }
+  });
+</script>

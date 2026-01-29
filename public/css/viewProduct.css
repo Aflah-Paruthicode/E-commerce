@@ -1,218 +1,182 @@
 .view-product-section {
-    padding-top: 100px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+  padding-top: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .view-product-section .view-product-container {
-
-    margin-top: 20px;
-    padding: 5% 50px;
-    width: 80%;
-    background-color: rgb(255, 255, 255);
-
-
+  margin-top: 20px;
+  padding: 5% 50px;
+  width: 80%;
+  background-color: rgb(255, 255, 255);
 }
 
 .view-product-section .view-product-container .productImage-buy .product-buy {
-
-    width: 345px;
+  width: 345px;
 }
 
-
 .view-product-section .view-product-container .productImage-buy .product-buy .nameANDratings {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .view-product-section .view-product-container .productImage-buy .product-buy .orgRS-RS-shipping {
-    display: flex;
-    justify-content: space-evenly;
-    padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
 }
 
-.view-product-section .view-product-container .productImage-buy .product-buy .nameANDratings .productRatings img{
-    width: 100px;
+.view-product-section .view-product-container .productImage-buy .product-buy .nameANDratings .productRatings img {
+  width: 100px;
 }
 
 .view-product-section .view-product-container .productImage-buy {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .view-product-section .view-product-container .productImage-buy .product-image img {
-
-    
-    width: 415px;
-    height: 430px;
+  width: 415px;
+  height: 430px;
 }
 
 /* related items starts here */
 
-
 .relatedProducts-card-section {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .relatedProducts-card-section .related-product-card-container {
-    width: 85%;
-
+  width: 85%;
 }
 
 .relatedProducts-card-section .related-product-card-container .relatedProducts-viewAll {
-
-    display: flex;
-    justify-content: space-between;
-    padding: 30px;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
 }
 
 .relatedProducts-card-section .related-product-card-container .cards-container {
-    
-    display: flex;
-    justify-content: center;
-    gap: 13px;
+  display: flex;
+  justify-content: center;
+  gap: 13px;
 }
 
 .relatedProducts-card-section .related-product-card-container .cards-container .card {
-    width: 18rem;
+  width: 18rem;
 }
 
 .relatedProducts-card-section .related-product-card-container .cards-container .card img {
-    width: 100%;
+  width: 100%;
 }
 
-
 .viewProduct-customer-review-section {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 25px;
-    width: 100%;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 25px;
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
 }
 
 .viewProduct-customer-review-section .viewProduct-customer-review-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    width: 75%;
-
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 75%;
 }
 
 .viewProduct-customer-review-section .viewProduct-customer-review-container .customer-review .profile-name {
-
-    display: flex;
-
+  display: flex;
 }
 
-
 .viewProduct-customer-review-section .viewProduct-customer-review-container .ratings-addReviewButton {
-    border-style: solid;
-    padding: 16px;
-    border-color: #e3dfdf73;    
+  border-style: solid;
+  padding: 16px;
+  border-color: #e3dfdf73;
 }
 
 .viewProduct-customer-review-section .viewProduct-customer-review-container .ratings-addReviewButton img {
-
-    width: 5rem;
+  width: 5rem;
 }
-
-
 
 .viewProduct-customer-review-section .viewProduct-customer-review-container .ratings-addReviewButton .rating-stars {
-
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
 
 .card-section {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-
 .card-section .card-container {
-    
-        width: 100%;
-        margin-top: 30px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-bottom: 1rem;
-        gap: 10px;
-        background-color: #fff;
-        padding-bottom: 0;
-    
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+  gap: 10px;
+  background-color: #fff;
+  padding-bottom: 0;
 }
 
 .card-section .card-container .newArrivals-viewAll {
-    padding: 5rem;
-    width: 100%;
-    height: 3rem;
-    display: flex;
-    justify-content: space-between;
+  padding: 5rem;
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-section .card-container .view-product-A {
-    text-decoration: none;
-    font-size: 17px;
-    font-weight: 500;
-    color: black;
-    line-height: 17px;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 500;
+  color: black;
+  line-height: 17px;
 }
-
-
 
 .card-section .card-container .view-product-A img {
-
-    width: 100%;
-    height: 295px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+  width: 100%;
+  height: 295px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
-
-
 
 .card-section .card-container .car {
-    border-style: solid;
-    border-color: #e3dfdf73;
-    width: 17rem;
-    border-top-left-radius: 13px;
-    border-top-right-radius: 13px;
-    padding-bottom: 2rem;
-
+  border-style: solid;
+  border-color: #e3dfdf73;
+  width: 17rem;
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
+  padding-bottom: 2rem;
 }
-
-
 
 .card-section .card-container .car .card-body {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
 .card-section .card-container .car .card-body h5 {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 19px;
-    font-weight: 600;
-    font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 19px;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .card-section .card-container .car .card-body p {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8px;
 }

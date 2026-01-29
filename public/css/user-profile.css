@@ -1,136 +1,114 @@
-
 .profile-main {
-    display: flex;
-    justify-content: start;
-    width: 100%;
-    padding-top:100px ;
-    height: 85vh;
+  display: flex;
+  justify-content: start;
+  width: 100%;
+  padding-top: 100px;
+  height: 85vh;
 
-    margin-bottom: 2rem;
-
+  margin-bottom: 2rem;
 }
-
 
 .profile-main .profile-sections {
-    
-    height: 100%;
-    width: 20%;
-    background-color: #fff;
-    margin-top: 1rem;
-    border-style: solid;
-    border-color: #e3dfdf73;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
+  height: 100%;
+  width: 20%;
+  background-color: #fff;
+  margin-top: 1rem;
+  border-style: solid;
+  border-color: #e3dfdf73;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-
 
 /* main things displays */
 .profile-main .all-details-profile {
-    
-    height: 100%;
-    width: 80%;
-    margin-top: 1rem;
-    border-style: solid;
-    border-color: #e3dfdf73;
-    background-color: #fff;
-    overflow-x: hidden;
-    overflow-y: auto;
-    
-
+  height: 100%;
+  width: 80%;
+  margin-top: 1rem;
+  border-style: solid;
+  border-color: #e3dfdf73;
+  background-color: #fff;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .profile-main .all-details-profile .addresses a {
-
-    background-color: #1a1a1a;
-    color: white;
-    text-decoration: none;
-    padding: 8px;
-    margin-left: 10px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 8px;
+  background-color: #1a1a1a;
+  color: white;
+  text-decoration: none;
+  padding: 8px;
+  margin-left: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 8px;
 }
 
 .profile-main .all-details-profile .addresses {
-
-    height: 105px;
+  height: 105px;
 }
 
-
 .profile-main .all-details-profile .each-address-container {
-
-    display: flex;
-    flex-wrap: wrap;
-
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .profile-main .all-details-profile .each-address {
-
-    padding: 20px;
-    width: 20%;
-    height: auto;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 10px;
-    border-radius: 4px;
-    box-shadow: 2px 2px 5px -3px;
-
-
+  padding: 20px;
+  width: 20%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 10px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px -3px;
 }
 
 .profile-main .all-details-profile .addresses h3 {
-    margin: 25px;
+  margin: 25px;
 }
-
 
 /* and that's ends */
 
-
 .profile-main .profile-sections .hello-name {
-    width: 95%;
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    height: 15%;
-    border-style: solid;
-    align-items: center;
-    border-color: #e3dfdf73;
+  width: 95%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  height: 15%;
+  border-style: solid;
+  align-items: center;
+  border-color: #e3dfdf73;
 }
 
 .profile-main .profile-sections .profile-section-options {
-
-    width: 95%;
-    margin-top: 10px;
-    border-style: solid;
-    border-color: #e3dfdf73;
-    height: 75%;
+  width: 95%;
+  margin-top: 10px;
+  border-style: solid;
+  border-color: #e3dfdf73;
+  height: 75%;
 }
 
 .profile-main .profile-sections .profile-section-options .profile-section-option {
-    height: calc(100%/5);
-    width: 100%;
-    border-bottom: solid;
-    border-color: #e3dfdf73;
-    display: flex;
-    gap: 20px;
-    align-items: center;
+  height: calc(100% / 5);
+  width: 100%;
+  border-bottom: solid;
+  border-color: #e3dfdf73;
+  display: flex;
+  gap: 20px;
+  align-items: center;
 }
 
 .profile-main .profile-sections .profile-section-options a {
-    text-decoration: none;
-    color: black;
+  text-decoration: none;
+  color: black;
 }
 
 .profile-main .profile-sections .profile-section-options .profile-section-option h3 {
-    font-weight: 500;
-    font-size: 1.25rem;
-
+  font-weight: 500;
+  font-size: 1.25rem;
 }
 
-
 .profile-main .profile-sections .profile-section-options .profile-section-option img {
-    width: 9%;
-    margin-left: 20px;
+  width: 9%;
+  margin-left: 20px;
 }

@@ -1,321 +1,320 @@
 <%- include('../layouts/header.ejs') %>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<style>
+  /* style.css */
 
+  .input {
+    width: 40px;
+    border: none;
+    border-bottom: 3px solid rgba(0, 0, 0, 0.5);
+    margin: 0 10px;
+    text-align: center;
+    font-size: 36px;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
-    <style>
-        /* style.css */
+  .input:focus {
+    border-bottom: 3px solid orange;
+    outline: none;
+  }
 
+  .input:nth-child(1) {
+    cursor: pointer;
+    pointer-events: all;
+  }
+</style>
 
-        .input {
-            width: 40px;
-            border: none;
-            border-bottom: 3px solid rgba(0, 0, 0, 0.5);
-            margin: 0 10px;
-            text-align: center;
-            font-size: 36px;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
+<div class="forget-div-main">
+  <div class="forget-container">
+    <div class="forget-div">
+      <form id="otpForm">
+        <input type="hidden" name="sec" id="sec" value="" />
+        <h2 style="margin-bottom: 0">
+          Please Enter OTP <br />
+          <span style="color: red; font-size: small; font-weight: 500"
+            >please don't refresh this page.</span
+          >
+        </h2>
+        <div
+          class="otpContainerDiv"
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+            padding: 15px;
+          "
+        >
+          <h2 style="margin-bottom: 0" id="timer">00:00</h2>
+          <a
+            href="#"
+            id="resendOTPbutton"
+            style="
+              display: none;
+              padding: 9px;
+              border-radius: 8px;
+              border: 1px solid;
+              background-color: #005affc7;
+              color: white;
+              font-size: 12px;
+              font-weight: 500;
+              text-decoration: none;
+            "
+            >Resend OTP</a
+          >
+        </div>
 
-        .input:focus {
-            border-bottom: 3px solid orange;
-            outline: none;
-        }
+        <div id="inputs" class="inputs" style="padding: 12px">
+          <input
+            class="input"
+            type="text"
+            name="otp"
+            inputmode="numeric"
+            maxlength="1"
+          />
+          <input
+            class="input"
+            type="text"
+            name="otp"
+            inputmode="numeric"
+            maxlength="1"
+          />
+          <input
+            class="input"
+            type="text"
+            name="otp"
+            inputmode="numeric"
+            maxlength="1"
+          />
+          <input
+            class="input"
+            type="text"
+            name="otp"
+            inputmode="numeric"
+            maxlength="1"
+          />
+          <input
+            class="input"
+            type="text"
+            name="otp"
+            inputmode="numeric"
+            maxlength="1"
+          />
+          <input
+            class="input"
+            type="text"
+            name="otp"
+            inputmode="numeric"
+            maxlength="1"
+          />
+        </div>
 
-        .input:nth-child(1) {
-            cursor: pointer;
-            pointer-events: all;
-        }
-    </style>
+        <input type="hidden" id="hidden-otp" name="hiddenOtp" />
 
-    <div class="forget-div-main">
-        <div class="forget-container">
-            <div class="forget-div">
-                <form id="otpForm">
-                    <input type="hidden" name="sec" id="sec" value="">
-                    <h2 style="margin-bottom: 0;">Please Enter OTP <br> <span style="color: red;font-size: small;    font-weight: 500;
-                    ">please don't refresh this page.</span></h2>
-                    <div class="otpContainerDiv" style="    display: flex;
-                    justify-content: center;
-                    gap: 15px;
-                    align-items: center;    padding: 15px;
-">
-                        <h2 style="margin-bottom: 0;" id="timer">00:00</h2>
-                        <a href="#" id="resendOTPbutton" style="    display: none;
-                                padding: 9px;
-                                border-radius: 8px;
-                                border: 1px solid;
-                                background-color: #005affc7;
-                                color: white;
-                                font-size: 12px;
-                                font-weight: 500;
-                                text-decoration: none;">Resend OTP</a>
-                    </div>
-
-
-
-
-                    <div id="inputs" class="inputs" style="padding: 12px;">
-                        <input class="input" type="text" name="otp" inputmode="numeric" maxlength="1" />
-                        <input class="input" type="text" name="otp" inputmode="numeric" maxlength="1" />
-                        <input class="input" type="text" name="otp" inputmode="numeric" maxlength="1" />
-                        <input class="input" type="text" name="otp" inputmode="numeric" maxlength="1" />
-                        <input class="input" type="text" name="otp" inputmode="numeric" maxlength="1" />
-                        <input class="input" type="text" name="otp" inputmode="numeric" maxlength="1" />
-                    </div>
-
-                    <input type="hidden" id="hidden-otp" name="hiddenOtp" />
-
-
-
-                    <!-- <input style="    padding: 10px;
+        <!-- <input style="    padding: 10px;
                 font-size: 17px;
                 border-radius: 8px;
                 font-weight: 600;
                 outline: none;
                 border: 1px solid;
                 width: 175px;" type="number" name="otp"> -->
-                    <input style="padding: 12px;
-                border-radius: 8px;
-                border: 1px solid;
-                background-color: black;
-                color: white;
-                font-size: 14px;
-                font-weight: 500;" type="submit" id="subbu" value="Verify OTP">
+        <input
+          style="
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid;
+            background-color: black;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+          "
+          type="submit"
+          id="subbu"
+          value="Verify OTP"
+        />
 
+        <% if (typeof SuccessMessage !== 'undefined') { %>
+        <script>
+          Swal.fire({
+            title: "Success!",
+            text: "<%= SuccessMessage %>",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        </script>
+        <% } %>
 
-                    <% if (typeof SuccessMessage !== 'undefined') { %>
-                        <script>
-                            Swal.fire({
-                                title: 'Success!',
-                                text: '<%= SuccessMessage %>',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            })
-                        </script>
-                    <% } %>
-                   
-                    <h2 id="errorMsg" style="font-weight: 500;font-size: 14px;color: rgb(171, 41, 41);"></h2>
-
-                </form>
-
-            </div>
-        </div>
+        <h2
+          id="errorMsg"
+          style="font-weight: 500; font-size: 14px; color: rgb(171, 41, 41)"
+        ></h2>
+      </form>
     </div>
+  </div>
+</div>
 
+<script>
+  const inputs = document.getElementById("inputs");
+  const hiddenInput = document.getElementById("hidden-otp");
 
+  inputs.addEventListener("input", function (e) {
+    const target = e.target;
+    const val = target.value;
 
-
-
-    <script>
-
-        const inputs = document.getElementById("inputs");
-        const hiddenInput = document.getElementById("hidden-otp");
-
-        inputs.addEventListener("input", function (e) {
-            const target = e.target;
-            const val = target.value;
-
-            if (isNaN(val) || val.trim() == "") {
-                target.value = "";
-                return;
-            }
-
-            if (val != "") {
-                const next = target.nextElementSibling;
-                if (next) {
-                    next.focus();
-                }
-            }
-
-            // Update hidden input value
-            updateHiddenInputValue();
-        });
-
-        inputs.addEventListener("keyup", function (e) {
-            const target = e.target;
-            const key = e.key.toLowerCase();
-
-            if (key == "backspace" || key == "delete") {
-                target.value = "";
-                const prev = target.previousElementSibling;
-                if (prev) {
-                    prev.focus();
-                }
-                // Update hidden input value
-                updateHiddenInputValue();
-                return;
-            }
-        });
-
-        function updateHiddenInputValue() {
-            const otpInputs = document.querySelectorAll("#inputs input");
-            let otpValue = "";
-            otpInputs.forEach(input => {
-                otpValue += input.value;
-            });
-            hiddenInput.value = otpValue;
-        }
-
-
-
-
-
-    </script>
-
-
-
-
-
-
-
-
-
-            <script type="text/javascript">
-            var sec = 120;
-
-             
-
-
-
-
-         // Function to handle form submission using AJAX
-    function submitForm() {
-        // Prevent default form submission behavior
-        event.preventDefault();
-
-        // Get the form data
-        var formData = new FormData(document.getElementById('otpForm'));
-
-        // Convert form data to JSON
-        var jsonData = {};
-        formData.forEach(function(value, key){
-            jsonData[key] = value;
-        });
-
-        // Make an AJAX request
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/otpSubmit?id=<%= user._id %>', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                // Handle the response from the server
-                if (xhr.status === 200) {
-                    // Handle successful response
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.success) {
-                        // Redirect to a different page upon success
-                        location.href = '/';
-                    } else {
-                        // Display error message if OTP validation fails
-                        Swal.fire({
-                    title: 'Failed!',
-                    text: response.emessage,
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-                    }
-                } else {
-                    // Handle error response
-                    console.error('Error:', xhr.status);
-                    Swal.fire({
-                    title: 'Failed!',
-                    text: 'Something went wrong try again later',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-
-                }
-            }
-        };
-        xhr.send(JSON.stringify(jsonData));
+    if (isNaN(val) || val.trim() == "") {
+      target.value = "";
+      return;
     }
 
-    // Update the value of the hidden input field
+    if (val != "") {
+      const next = target.nextElementSibling;
+      if (next) {
+        next.focus();
+      }
+    }
 
-    // Attach the submitForm function to the form's submit event
-    document.getElementById('otpForm').addEventListener('submit', submitForm);
+    // Update hidden input value
+    updateHiddenInputValue();
+  });
 
+  inputs.addEventListener("keyup", function (e) {
+    const target = e.target;
+    const key = e.key.toLowerCase();
 
+    if (key == "backspace" || key == "delete") {
+      target.value = "";
+      const prev = target.previousElementSibling;
+      if (prev) {
+        prev.focus();
+      }
+      // Update hidden input value
+      updateHiddenInputValue();
+      return;
+    }
+  });
 
+  function updateHiddenInputValue() {
+    const otpInputs = document.querySelectorAll("#inputs input");
+    let otpValue = "";
+    otpInputs.forEach((input) => {
+      otpValue += input.value;
+    });
+    hiddenInput.value = otpValue;
+  }
+</script>
 
+<script type="text/javascript">
+  var sec = 120;
 
-        var timer;
-        (function () {
-            let time_show = sec - 60;
-            let count = 2;
-            let resendOTPbutton = document.getElementById('resendOTPbutton');
-            var ele = document.getElementById('timer');
-            console.log('Starting countdown...');
+  // Function to handle form submission using AJAX
+  function submitForm() {
+    // Prevent default form submission behavior
+    event.preventDefault();
 
-            resendOTPbutton.addEventListener('click', function() { 
+    // Get the form data
+    var formData = new FormData(document.getElementById("otpForm"));
 
-                location.reload()
-            })
+    // Convert form data to JSON
+    var jsonData = {};
+    formData.forEach(function (value, key) {
+      jsonData[key] = value;
+    });
 
-
-            timer = setInterval(() => {
-          
-                console.log('Current sec:', sec);
-
-                if(time_show == 0 && sec >0) {
-                    time_show = 60;
-                }
-
-
-                if(sec == 119 || sec == 59) {
-                    count--
-                }
-
-
-                if(time_show == 60) {
-
-                    ele.innerHTML = '0'+count+' : 00';
-
-                } else {
-
-                    if(sec < 10 || sec > 60 && sec < 70) {
-    
-                        ele.innerHTML = '0'+count+' : 0'+time_show ;
-    
-    
-                    }else {
-                        
-                        ele.innerHTML = '0'+count+' : '+time_show;
-                    }
-                }
-
-
-                sec--;
-                time_show--;
-
-                if (sec == -1) {
-                    pause();
-                }
-
-                document.getElementById('sec').value = sec;
-
-
-                if(sec < 0) {
-            resendOTPbutton.style.display = 'block'
+    // Make an AJAX request
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/otpSubmit?id=<%= user._id %>", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        // Handle the response from the server
+        if (xhr.status === 200) {
+          // Handle successful response
+          var response = JSON.parse(xhr.responseText);
+          if (response.success) {
+            // Redirect to a different page upon success
+            location.href = "/";
+          } else {
+            // Display error message if OTP validation fails
+            Swal.fire({
+              title: "Failed!",
+              text: response.emessage,
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+          }
+        } else {
+          // Handle error response
+          console.error("Error:", xhr.status);
+          Swal.fire({
+            title: "Failed!",
+            text: "Something went wrong try again later",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
         }
+      }
+    };
+    xhr.send(JSON.stringify(jsonData));
+  }
 
+  // Update the value of the hidden input field
 
-            }, 1000); // each 1 second
-        })();
-        
-        function pause() {
-            clearInterval(timer);
+  // Attach the submitForm function to the form's submit event
+  document.getElementById("otpForm").addEventListener("submit", submitForm);
+
+  var timer;
+  (function () {
+    let time_show = sec - 60;
+    let count = 2;
+    let resendOTPbutton = document.getElementById("resendOTPbutton");
+    var ele = document.getElementById("timer");
+    console.log("Starting countdown...");
+
+    resendOTPbutton.addEventListener("click", function () {
+      location.reload();
+    });
+
+    timer = setInterval(() => {
+      console.log("Current sec:", sec);
+
+      if (time_show == 0 && sec > 0) {
+        time_show = 60;
+      }
+
+      if (sec == 119 || sec == 59) {
+        count--;
+      }
+
+      if (time_show == 60) {
+        ele.innerHTML = "0" + count + " : 00";
+      } else {
+        if (sec < 10 || (sec > 60 && sec < 70)) {
+          ele.innerHTML = "0" + count + " : 0" + time_show;
+        } else {
+          ele.innerHTML = "0" + count + " : " + time_show;
         }
+      }
 
-        
+      sec--;
+      time_show--;
 
-            </script>
+      if (sec == -1) {
+        pause();
+      }
 
+      document.getElementById("sec").value = sec;
 
+      if (sec < 0) {
+        resendOTPbutton.style.display = "block";
+      }
+    }, 1000); // each 1 second
+  })();
 
-
-
+  function pause() {
+    clearInterval(timer);
+  }
+</script>
 
 <%- include('../layouts/footer.ejs') %>

@@ -1,6 +1,6 @@
 const express = require('express');
 const userRoute = express();
-const userController = require('../controllers/userController');
+const userController = require('../controllers/user/userController');
 const auth = require('../authentication/userAuth');
 const BlockAuth = require('../authentication/blockAuth');
 const bodyParser = require('body-parser');
@@ -76,7 +76,7 @@ userRoute.get('/editUser',auth.isLogin,userController.editUser)
 userRoute.post('/editUser',auth.isLogin,userController.submitEditUser)
 userRoute.get('/manageAddress', auth.isLogin, userController.loadManageAddress);
 userRoute.get('/addAddress', auth.isLogin, userController.loadAddAddress);
-userRoute.post('/addAddress', auth.isLogin, userController.addANewAddress);
+userRoute.post('/addAddress', auth.isLogin, userController.addANewAddress); 
 userRoute.get('/EditAddress', auth.isLogin, userController.EditAddress);
 userRoute.post('/EditAddress', auth.isLogin, userController.submitEditAddress);
 userRoute.get('/DeleteAddress/:id', auth.isLogin, userController.deleteAddress);
@@ -113,7 +113,6 @@ userRoute.get('/updateOrderInDb',auth.isLogin, userController.updateOrderInDb)
 userRoute.get('/whishlist', auth.isLogin, userController.LoadWhishlist);
 userRoute.get('/addToWhishlist', auth.isLogin, userController.addToWhishlist);
 userRoute.get('/RemovePdtFrmWhishlist/:id/:from', auth.isLogin, userController.RemovePdtFrmWhishlist);
-
 
 userRoute.get('/forget', auth.isLogout, userController.forget);
 userRoute.post('/loadFpOtpPage', auth.isLogout, userController.loadForgetPassOTPPage);

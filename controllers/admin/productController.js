@@ -117,13 +117,13 @@ const loadEditProduct = async (req, res) => {
   try {
     const id = req.query.id;
     const productData = await Product.findById({ _id: id });
+    console.log('got it',req.query)
     const category = await CAtegory.find();
     const emessage = req?.query?.emessage;
     if (productData) {
-      res.render("productEdit", { product: productData, category, emessage });
-    } else {
-      res.redirect("/admin/home");
-    }
+      return res.render("productEdit", { product: productData, category, emessage });
+    } 
+      return res.redirect("/admin/home");
   } catch (error) {
     console.log(error.message);
   }
@@ -149,15 +149,17 @@ const deleteProductIMG = async (req, res) => {
   }
 };
 
-const editProductIMG = async (req, res) => {
+const editProductIMG = async (req, res) => {   
   try {
-    console.log("dkfhjd");
+    console.log("dkfhjd",req.body.id);
     const product = await Product.findById({ _id: req.body.id });
+    console.log('body : ',req.query.id)
     const imgInd = req.query.id;
-    const changeIMG = await Product.findByIdAndUpdate({ _id: req.body.id }, { $set: { [`images.${imgInd}`]: req.file.filename } });
+    await Product.findByIdAndUpdate({ _id: req.body.id }, { $set: { [`images.${imgInd}`]: req.file.filename } });
     const fullPath = path.join(__dirname, `../../public/productImages/${product.images[imgInd]}`);
-    if (fullPath) fs.unlink(fullPath);
+    if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
 
+    console.log('is the call reached here?')
     return res.redirect(`/admin/EditProduct/?id=${req.body.id}`);
   } catch (error) {
     console.log(error.message);
@@ -204,6 +206,7 @@ const handleSubmitEditProduct = async (req, res) => {
 
     if (req.file) await Product.findByIdAndUpdate(id, { $set: updateData, $push: { images: req.file.filename } });
     else await Product.findByIdAndUpdate(id, { $set: updateData });
+    res.redirect('/admin/product/?edited='+true);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("internal server error");

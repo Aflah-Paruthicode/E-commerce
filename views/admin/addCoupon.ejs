@@ -34,7 +34,7 @@
 
 
 
-<% if (typeof emessage !== 'undefined') { %>
+<% if (emessage) { %>
   <script>
       Swal.fire({
           title: 'Failed!',
@@ -45,7 +45,7 @@
   </script>
 <% } %>
 
-<% if (typeof message !== 'undefined') { %>
+<% if (message) { %>
 <script>
     Swal.fire({
         title: 'Success!',

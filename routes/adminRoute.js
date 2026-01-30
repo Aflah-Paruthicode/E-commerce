@@ -4,7 +4,10 @@ const auth = require("../authentication/adminAuth");
 const adminController = require("../controllers/admin/adminController");
 const productController = require("../controllers/admin/productController");
 const orderController = require("../controllers/admin/orderController");
-const bannerController = require("../controllers/admin/bannerController")
+const bannerController = require("../controllers/admin/bannerController");
+const couponController = require("../controllers/admin/couponController");
+const categoryController = require("../controllers/admin/categoryController");
+const offerController = require('../controllers/admin/offerController')
 const path = require("path");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -77,7 +80,7 @@ adminRoute.get("/editOrder", auth.isLogin, orderController.loadEditOrderStatus);
 adminRoute.post("/editOrder", auth.isLogin, orderController.updateOrder);
 
 // -- Banner controller
-adminRoute.get("/banner", auth.isLogin, bannerController.loadBanners); 
+adminRoute.get("/banner", auth.isLogin, bannerController.loadBanners);
 adminRoute.get("/loadUpdateBanner", auth.isLogin, bannerController.loadUpdateBanner);
 adminRoute.post("/updateBanner", auth.isLogin, bannerStorageUpload.single("image"), bannerController.updateBanner);
 adminRoute.get("/deleteBanner/:id", auth.isLogin, bannerController.deleteBanner);
@@ -85,33 +88,35 @@ adminRoute.get("/loadAddBannerToSlide", auth.isLogin, bannerController.loadAddBa
 adminRoute.post("/addBannerToSlide", auth.isLogin, bannerStorageUpload.single("image"), bannerController.addBannerToSlide);
 
 // -- Coupon controller
-adminRoute.get("/couponManagement", auth.isLogin, adminController.loadcouponManagement);
-adminRoute.post("/addCoupon", auth.isLogin, adminController.addCoupon);
-adminRoute.get("/editCoupon", auth.isLogin, adminController.editCoupon);
-adminRoute.post("/updateCoupon", auth.isLogin, adminController.updateCoupon);
-adminRoute.get("/deleteCoupon/:id", auth.isLogin, adminController.deleteCoupon);
+adminRoute.get("/couponManagement", auth.isLogin, couponController.loadcouponManagement);
+adminRoute.post("/addCoupon", auth.isLogin, couponController.addCoupon);
+adminRoute.get("/editCoupon", auth.isLogin, couponController.editCoupon);
+adminRoute.post("/updateCoupon", auth.isLogin, couponController.updateCoupon);
+adminRoute.get("/deleteCoupon/:id", auth.isLogin, couponController.deleteCoupon);
 
 adminRoute.get("/salesReport", auth.isLogin, adminController.loadSalesReport);
 
-adminRoute.get("/category", auth.isLogin, adminController.addCategory);
-adminRoute.post("/category", auth.isLogin, adminController.submitNewCategory);
-adminRoute.get("/toUnlist", auth.isLogin, adminController.toUnlistCategory);
-adminRoute.get("/toList", auth.isLogin, adminController.toListCategory);
-adminRoute.get("/deleteCategory/:id", auth.isLogin, adminController.deleteCategory);
+// -- Category controller
+adminRoute.get("/category", auth.isLogin, categoryController.addCategory);
+adminRoute.post("/category", auth.isLogin, categoryController.submitNewCategory);
+adminRoute.get("/toUnlist", auth.isLogin, categoryController.toUnlistCategory);
+adminRoute.get("/toList", auth.isLogin, categoryController.toListCategory);
+adminRoute.get("/deleteCategory/:id", auth.isLogin, categoryController.deleteCategory);
 
-adminRoute.get("/offerManagement", auth.isLogin, adminController.loadOfferManagement);
-adminRoute.get("/addProductOffer", auth.isLogin, adminController.loadAddProductOffer);
-adminRoute.post("/addProductOffer", auth.isLogin, adminController.submitProductOffer);
-adminRoute.get("/editProductOffer", auth.isLogin, adminController.loadEditProductOffer);
-adminRoute.post("/editProductOffer", auth.isLogin, adminController.submitEditProductOffer);
 
-adminRoute.get("/deleteProductOffer/:id", auth.isLogin, adminController.loadDeleteProductOffer);
+// -- Offer controller
+adminRoute.get("/offerManagement", auth.isLogin, offerController.loadOfferManagement);
+adminRoute.get("/addProductOffer", auth.isLogin, offerController.loadAddProductOffer);
+adminRoute.post("/addProductOffer", auth.isLogin, offerController.submitProductOffer);
+adminRoute.get("/editProductOffer", auth.isLogin, offerController.loadEditProductOffer);
+adminRoute.post("/editProductOffer", auth.isLogin, offerController.submitEditProductOffer);
+adminRoute.get("/deleteProductOffer/:id", auth.isLogin, offerController.loadDeleteProductOffer);
 
+// -- Category Offer controller
 adminRoute.get("/addCategoryOffer", auth.isLogin, adminController.loadAddCategoryOffer);
 adminRoute.post("/addCategoryOffer", auth.isLogin, adminController.submitCategoryOffer);
 adminRoute.get("/editCategoryOffer", auth.isLogin, adminController.loadEditCategoryOffer);
 adminRoute.post("/editCategoryOffer", auth.isLogin, adminController.submitEditCategoryOffer);
-
 adminRoute.get("/deleteCategoryOffer/:category", auth.isLogin, adminController.loadDeleteCategoryOffer);
 
 adminRoute.get("/logout", auth.isLogin, adminController.logout);

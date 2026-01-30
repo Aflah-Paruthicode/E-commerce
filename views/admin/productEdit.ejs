@@ -145,7 +145,7 @@
                 <img
                   style="width: 75px; height: 75px; border: solid black 1px; margin: 3px; padding: 3px; cursor: pointer"
                   src="/productImages/<%= image %>"
-                  onclick="hello(<%= i %>,this.alt)"
+                  onclick="handleChangeImg(<%= i %>,this.alt)"
                   class="imaageA"
                   alt="<%= id %>"
                 />
@@ -166,7 +166,8 @@
 
               <!-- </div> -->
 
-              <% i++ %> <% }) %>
+              <% i++ %> 
+              <% }) %>
             </div>
 
             <input type="file" id="productImages" accept="image/*" name="images" accept=".jpg, .jpeg, .png" />
@@ -233,7 +234,7 @@
 </script>
 
 <script>
-  function hello(pos, num) {
+  function handleChangeImg(pos, num) {
     document.getElementById("confirmationDialog").style.display = "block";
 
     document.getElementsByClassName("close-btn")[0].addEventListener("click", function () {
@@ -243,7 +244,6 @@
     document.getElementById("confirmOrderBtn").addEventListener("click", function () {
       document.getElementById("fileInput").click();
 
-      // window.location.href = `/admin/productIMGChange`;
       document.getElementById("confirmationDialog").style.display = "none";
     });
 

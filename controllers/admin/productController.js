@@ -117,13 +117,13 @@ const loadEditProduct = async (req, res) => {
   try {
     const id = req.query.id;
     const productData = await Product.findById({ _id: id });
+    console.log('got it',req.query)
     const category = await CAtegory.find();
     const emessage = req?.query?.emessage;
     if (productData) {
-      res.render("productEdit", { product: productData, category, emessage });
-    } else {
-      res.redirect("/admin/home");
-    }
+      return res.render("productEdit", { product: productData, category, emessage });
+    } 
+      return res.redirect("/admin/home");
   } catch (error) {
     console.log(error.message);
   }
@@ -149,15 +149,18 @@ const deleteProductIMG = async (req, res) => {
   }
 };
 
-const editProductIMG = async (req, res) => {
+const editProductIMG = async (req, res) => {   
   try {
+    console.log("dkfhjd",req.body.id);
     const product = await Product.findById({ _id: req.body.id });
+    console.log('body : ',req.query.id)
     const imgInd = req.query.id;
-    const changeIMG = await Product.findByIdAndUpdate({ _id: req.body.id }, { $set: { [`images.${imgInd}`]: req.file.filename } });
+    await Product.findByIdAndUpdate({ _id: req.body.id }, { $set: { [`images.${imgInd}`]: req.file.filename } });
     const fullPath = path.join(__dirname, `../../public/productImages/${product.images[imgInd]}`);
-    if (fullPath) fs.unlink(fullPath);
+    if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
 
-    res.redirect(`/admin/EditProduct/?id=${req.body.id}`);
+    console.log('is the call reached here?')
+    return res.redirect(`/admin/EditProduct/?id=${req.body.id}`);
   } catch (error) {
     console.log(error.message);
   }
@@ -166,65 +169,47 @@ const editProductIMG = async (req, res) => {
 const handleSubmitEditProduct = async (req, res) => {
   try {
     const { id } = req.query;
-
-    if (req.file) {
-      const updateIMG = await Product.findByIdAndUpdate({ _id: id }, { $push: { images: req.file.filename } });
-    }
     const { name, company, product_desc, price, original_price, quantity, category } = req.body;
-    const productData = await Product.findById({ _id: id });
-    let categorys = await CAtegory.find();
 
-    if (name.trim() == "" || product_desc.trim() == "" || company.trim() == "" || price.trim() == "" || original_price.trim() == "" || quantity.trim() == "") {
-      res.render("productEdit", {
-        emessage: "fields cant be empty",
-        category: categorys,
-        product: productData,
-      });
+    let categories = await CAtegory.find();
+    const productData = { _id: id, name, company, product_desc, price, og_price: original_price, quantity, category };
+
+    let emessage = null;
+
+    if ([name, product_desc, company, price, original_price, quantity].some((field) => field.trim() == "")) {
+      emessage = "Fields cant be empty";
     } else if (price < 1 || original_price < 1) {
-      res.render("productEdit", {
-        emessage: "Price and Og Price should be more than 1",
-        category: categorys,
-        product: productData,
-      });
+      emessage = "Price and Og Price should be more than 1";
     } else if (quantity < 0) {
-      res.render("productEdit", {
-        emessage: "Quantity should be more than 1",
-        category: categorys,
-        product: productData,
-      });
-    } else if (parseFloat(price) >= parseFloat(original_price)) {
-      res.render("productEdit", {
-        emessage: "Og price should be grater than price",
-        category: categorys,
-        product: productData,
-      });
-    } else {
-      const update = await Product.findByIdAndUpdate(
-        { _id: id },
-        {
-          $set: {
-            name: name,
-            category: category,
-            company: company,
-            product_desc: product_desc,
-            price: price,
-            og_price: original_price,
-            quantity: quantity,
-          },
-        }
-      );
-      if (update) {
-        res.redirect("/admin/product/?edited=true");
-      } else {
-        res.render("productEdit", {
-          emessage: "Updation failed",
-          category: categorys,
-          product: productData,
-        });
-      }
+      emessage = "Quantity should be more than 1";
+    } else if (Number(price) >= Number(original_price)) {
+      emessage = "Og price should be grater than price";
     }
+
+    if (emessage) {
+      return res.render("productEdit", {
+        emessage,
+        category: categories,
+        produt: productData,
+      });
+    }
+
+    const updateData = {
+      name,
+      category,
+      company,
+      product_desc,
+      price: Number(price),
+      og_price: Number(original_price),
+      quantity: Number(quantity),
+    };
+
+    if (req.file) await Product.findByIdAndUpdate(id, { $set: updateData, $push: { images: req.file.filename } });
+    else await Product.findByIdAndUpdate(id, { $set: updateData });
+    res.redirect('/admin/product/?edited='+true);
   } catch (error) {
     console.log(error.message);
+    res.status(500).send("internal server error");
   }
 };
 

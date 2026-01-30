@@ -4,6 +4,7 @@ const auth = require("../authentication/adminAuth");
 const adminController = require("../controllers/admin/adminController");
 const productController = require("../controllers/admin/productController");
 const orderController = require("../controllers/admin/orderController");
+const bannerController = require("../controllers/admin/bannerController")
 const path = require("path");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -72,16 +73,18 @@ adminRoute.post("/EditProduct", auth.isLogin, upload.single("images"), productCo
 
 // -- Order controller
 adminRoute.get("/orders", auth.isLogin, orderController.loadOrders);
-adminRoute.get("/editOrder", auth.isLogin, adminController.loadEditOrder);
-adminRoute.post("/editOrder", auth.isLogin, adminController.updateOrder);
+adminRoute.get("/editOrder", auth.isLogin, orderController.loadEditOrderStatus);
+adminRoute.post("/editOrder", auth.isLogin, orderController.updateOrder);
 
-adminRoute.get("/banner", auth.isLogin, adminController.loadBanners);
-adminRoute.get("/loadUpdateBanner", auth.isLogin, adminController.changeCurrentBanner);
-adminRoute.get("/loadDeleteBanner/:id", auth.isLogin, adminController.loadDeleteBanner);
-adminRoute.post("/updateBanner", auth.isLogin, bannerStorageUpload.single("image"), adminController.updateBanner);
-adminRoute.get("/loadAddBannerToSlide", auth.isLogin, adminController.loadAddBannerToSlide);
-adminRoute.post("/addBannerToSlide", auth.isLogin, bannerStorageUpload.single("image"), adminController.addBannerToSlide);
+// -- Banner controller
+adminRoute.get("/banner", auth.isLogin, bannerController.loadBanners); 
+adminRoute.get("/loadUpdateBanner", auth.isLogin, bannerController.loadUpdateBanner);
+adminRoute.post("/updateBanner", auth.isLogin, bannerStorageUpload.single("image"), bannerController.updateBanner);
+adminRoute.get("/deleteBanner/:id", auth.isLogin, bannerController.deleteBanner);
+adminRoute.get("/loadAddBannerToSlide", auth.isLogin, bannerController.loadAddBannerToSlide);
+adminRoute.post("/addBannerToSlide", auth.isLogin, bannerStorageUpload.single("image"), bannerController.addBannerToSlide);
 
+// -- Coupon controller
 adminRoute.get("/couponManagement", auth.isLogin, adminController.loadcouponManagement);
 adminRoute.post("/addCoupon", auth.isLogin, adminController.addCoupon);
 adminRoute.get("/editCoupon", auth.isLogin, adminController.editCoupon);

@@ -8,17 +8,12 @@
 <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-
-
-
 <div class="ad-home-header-section">
     <div class="ad-home-header-container">
       <nav>
         <div class="logo">
           <img src="/logo/DashFootwares.png" alt="">
           <h3 style="color: black;font-size: 16px;font-weight: 400;margin: 0;"> DASH FOOTWARES </h3>
-  
         </div>
         <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/bell (1).png" alt="">
         <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/user (1).png" alt="">
@@ -26,18 +21,13 @@
         <form action="/admin/logout">
           <input type="submit" value="Logout">
         </form>
-  
-  
       </nav>
     </div>
   </div>
 
-
-
   <div class="ad-home-dashboard-section">
     <div class="ad-home-dashboard-container">
       <div class="ad-home-dashboard-options">
-  
         <button><img src="/adminOptionsImages/dashboard.png" alt=""><a href="/admin/dashboard">Dashboard</a></button>
         <button><img src="/adminOptionsImages/customer.png" alt=""><a href="/admin/customers">Customers</a></button>
         <button><img src="/adminOptionsImages/product.png" alt=""><a href="/admin/product">Products</a></button>
@@ -47,15 +37,9 @@
         <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
         <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
         <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
-
-  
-  
-  
       </div>
-  
       <div class="ad-home-dashboard-optionsDetailPage">
           <h3>EDIT BANNER PAGE</h3>
-
           <% if (typeof emessage !== 'undefined') { %>
             <script>
                 Swal.fire({
@@ -66,37 +50,24 @@
                 })
             </script>
         <% } %>
-          
-          
-  
           <div class="adProduct-formDiv">
             <form action="/admin/updateBanner" id="uploadForm" method="post" enctype="multipart/form-data">
             <div class="pName in">
               <label for="">Banner Discription :</label>
               <input type="text" value="<%= banner.description %>" readonly>
             </div>
-
-              
-              
-
-            
-
             <div class="pDescription in">
               <label for="">Redirect Url :</label>
               <input type="hidden" name="id" value="<%= banner._id %>" >
-
-              <input type="text" name="url" value="<%= banner.url %>" placeholder="ex.(to a product) /viewProduct/?id=665db43ef1b842ae241628fa">
+              <input type="text" name="url" value="<%= banner.url %>" placeholder="Eg. /viewProduct/?id=665b431b842ae2418fa...">
             </div>
-
             <div class="pPrice in">
               <label for="">Start date :</label>
-              <input style="width: 30%;" type="text" id="startDate" name="startDate" value="<%= startDate %>">
+              <input style="width: 30%;" type="date" id="startDate" name="startDate" value="<%= startDate.toISOString().split('T')[0] %>">
 
               <label style="margin: 30px;margin-left: 55px;" for="">End date :</label>
-              <input style="width: 30%;" type="text" id="endDate"   required value="<%= endDate %>" name="endDate">
+              <input style="width: 30%;" type="date" id="endDate"   required value="<%= endDate.toISOString().split('T')[0] %>" name="endDate">
             </div>
-
-            
             <div class="pImages in">
               <label for="">Edit banner :</label>
               <div style="padding: 5px; border: 1px solid rgba(0, 0, 0, 0.64);">
@@ -104,24 +75,15 @@
               </div>
               <input type="file" id="productImages" accept="image/*" name="image" accept=".jpg, .jpeg, .png">
             </div>
-
             <div class="in">
-
             <input style="margin-top: 7px;background-color: green;outline: none;border: none;color: #fff;width: 190px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="ADD BANNER">
           </div>
-
                   </form>
                   <p id="error" style="color: red;"></p>
-
-            
-
           </div>
       </div>
     </div>
   </div>
-
-
-
 
   <script>
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
@@ -129,20 +91,14 @@
       const fileInput = document.getElementById('productImages');
       const file = fileInput.files[0];
       const errorElement = document.getElementById('error');
-  
       if (file) {
         const img = new Image();
         img.src = URL.createObjectURL(file);
         img.onload = function() {
           if (img.width === 1429 && img.height === 781) {
-            // Proceed with the form submission
             errorElement.textContent = '';
-
-            
             document.getElementById('uploadForm').submit()
-
           } else {
-
             Swal.fire({
                     title: 'Failed!',
                     text: 'Image dimensions must be 1429 × 781 pixels.',
@@ -151,7 +107,7 @@
                 })
             errorElement.textContent = 'Image dimensions must be 1429 × 781 pixels.';
           }
-          URL.revokeObjectURL(img.src); // Clean up the object URL
+          URL.revokeObjectURL(img.src);
         };
         img.onerror = function() {
           errorElement.textContent = 'Invalid image file.';
@@ -161,8 +117,3 @@
       }
     });
   </script>
-
-
-
-
-</script>

@@ -39,15 +39,17 @@ const loadProducts = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
 const loadAddProduct = async (req, res) => {
   try {
     const category = await CAtegory.find();
-    res.render("addProduct", { category });
+    return res.render("addProduct", { category });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -96,6 +98,7 @@ const submitNewProduct = async (req, res) => {
     return res.redirect("/admin/product/?newProduct=true");
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -104,12 +107,13 @@ const deleteProduct = async (req, res) => {
     const { id } = req.params;
     const isProductDeleted = await Product.deleteOne({ _id: id });
     if (isProductDeleted) {
-      res.redirect("/admin/product");
+      return res.redirect("/admin/product");
     } else {
-      res.render("listProducts", { emessage: "failed to delete" });
+      return res.render("listProducts", { emessage: "failed to delete" });
     }
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -126,6 +130,7 @@ const loadEditProduct = async (req, res) => {
       return res.redirect("/admin/home");
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -163,6 +168,7 @@ const editProductIMG = async (req, res) => {
     return res.redirect(`/admin/EditProduct/?id=${req.body.id}`);
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -206,10 +212,10 @@ const handleSubmitEditProduct = async (req, res) => {
 
     if (req.file) await Product.findByIdAndUpdate(id, { $set: updateData, $push: { images: req.file.filename } });
     else await Product.findByIdAndUpdate(id, { $set: updateData });
-    res.redirect('/admin/product/?edited='+true);
+     return res.redirect('/admin/product/?edited='+true);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send("internal server error");
+     return res.status(500).send("internal server error");
   }
 };
 

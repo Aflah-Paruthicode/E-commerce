@@ -21,21 +21,16 @@ const loadcouponManagement = async (req, res) => {
       message = "Coupon updated successful";
     }
 
-    res.render("addCoupon", {
+    return res.render("addCoupon", {
       coupons,
       message,
       emessage,
-      pagination: {
-        totalCoupons,
-        totalPages,
-        currentPage: page,
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1,
-      },
+      pagination: { totalCoupons, totalPages, currentPage: page, hasNextPage: page < totalPages, hasPrevPage: page > 1 },
       i,
     });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -58,7 +53,7 @@ const addCoupon = async (req, res) => {
       err = "Discount must be less than purchase amount";
     }
 
-    if (err) res.redirect("/admin/couponManagement/?err=" + err);
+    if (err) return res.redirect("/admin/couponManagement/?err=" + err);
 
     const coupon = new Coupon({
       code: code.toUpperCase(),
@@ -68,9 +63,10 @@ const addCoupon = async (req, res) => {
     });
 
     await coupon.save();
-    res.redirect("/admin/couponManagement/?success=true");
+    return res.redirect("/admin/couponManagement/?success=true");
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -78,9 +74,10 @@ const editCoupon = async (req, res) => {
   try {
     let coupon = await Coupon.findById({ _id: req.query.id });
     let emessage = req?.query?.err ? req.query.err : null;
-    res.render("couponEdit", { coupon, emessage });
+    return res.render("couponEdit", { coupon, emessage });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -106,21 +103,22 @@ const updateCoupon = async (req, res) => {
 
     if (err) return res.redirect(`/admin/editCoupon/?id=${id}&err=${err}`);
 
-    const saveCoupon = await Coupon.findByIdAndUpdate({ _id: id }, 
-        { $set: { code: code.toUpperCase(), discount: discount, expiry: expiry, amount: amount } });
-
+    await Coupon.findByIdAndUpdate({ _id: id },
+       { $set: { code: code.toUpperCase(), discount: discount, expiry: expiry, amount: amount } });
     return res.redirect("/admin/couponManagement/?creation=true");
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
 const deleteCoupon = async (req, res) => {
   try {
-    let deleteCoupon = await Coupon.findOneAndDelete({ _id: req.params.id });
-    res.redirect("/admin/couponManagement");
+    await Coupon.findOneAndDelete({ _id: req.params.id });
+    return res.redirect("/admin/couponManagement");
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 

@@ -1,0 +1,117 @@
+:root {
+  --primary-black: #1a1a1a;
+  --soft-bg: #f4f7f6;
+  --border-color: #eee;
+}
+
+body {
+  background-color: var(--soft-bg);
+  font-family: "Montserrat", sans-serif;
+}
+
+.forget-wrapper {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.forget-card {
+  background: #fff;
+  width: 100%;
+  max-width: 450px;
+  padding: 50px 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.icon-box {
+  width: 70px;
+  height: 70px;
+  background: #f8f9fa;
+  color: var(--primary-black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: 0 auto 25px;
+  font-size: 28px;
+}
+
+.forget-card h2 {
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: var(--primary-black);
+}
+
+.forget-card p {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.input-group-custom {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group-custom i {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+
+.input-group-custom input {
+  width: 100%;
+  padding: 15px 15px 15px 45px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.3s;
+  background: #fdfdfd;
+  font-size: 14px;
+}
+
+.input-group-custom input:focus {
+  border-color: var(--primary-black);
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.03);
+}
+
+.btn-submit {
+  width: 100%;
+  background: var(--primary-black);
+  color: #fff;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-submit:hover {
+  background: #333;
+  transform: translateY(-2px);
+}
+
+.back-to-login {
+  display: inline-block;
+  margin-top: 25px;
+  text-decoration: none;
+  color: #888;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.back-to-login:hover {
+  color: var(--primary-black);
+}

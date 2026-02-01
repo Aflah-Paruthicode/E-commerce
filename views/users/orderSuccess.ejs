@@ -1,40 +1,52 @@
 <%- include('../layouts/header.ejs') %>
 
-
-
-
-<div class="div" style="    height: 80vh;
-display: flex;
-justify-content: center;
-align-items: center;">
-<div class="container" style="    background-color: #fff;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 5px 60px;
-border-radius: 8px;">
-    <dotlottie-player src="https://lottie.host/ed9ee806-6350-4aa5-83c7-429a624c7e75/CbSNWxLaX7.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
-    <h3  style="color: green;    font-size: 23px;">Order successfully Completed <br> <span> <a href="/" style="    color: rgb(255, 255, 255);
-        text-decoration: none;
-        font-size: 18px;
-        background-color: #282828;
-        padding: 8px;
-        border-radius: 4px;
-        margin: 0px 15px;
-        line-height: 3;">Go to home</a></span>  <span> <a href="/myOrders" style="    color: rgb(255, 255, 255);
-    text-decoration: none;
-    font-size: 18px;
-    background-color: green;
-    padding: 8px;
-    border-radius: 4px;
-    margin: 0px 15px;
-    line-height: 3;">View Orders</a></span></h3>
+<div class="div" style="height: 80vh; display: flex; justify-content: center; align-items: center">
+  <div class="container" style="background-color: #fff; display: flex; align-items: center; justify-content: center; padding: 5px 60px; border-radius: 8px">
+    <dotlottie-player
+      src="https://lottie.host/ed9ee806-6350-4aa5-83c7-429a624c7e75/CbSNWxLaX7.json"
+      background="transparent"
+      speed="1"
+      style="width: 300px; height: 300px"
+      loop
+      autoplay
+    ></dotlottie-player>
+    <h3 style="color: green; font-size: 23px">
+      Order successfully Completed <br />
+      <span>
+        <a
+          href="/"
+          style="
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 18px;
+            background-color: #282828;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 0px 15px;
+            line-height: 3;
+          "
+          >Go to home</a
+        ></span
+      >
+      <span>
+        <a
+          href="/myOrders"
+          style="
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            font-size: 18px;
+            background-color: green;
+            padding: 8px;
+            border-radius: 4px;
+            margin: 0px 15px;
+            line-height: 3;
+          "
+          >View Orders</a
+        ></span
+      >
+    </h3>
+  </div>
 </div>
-</div>
 
-
-
-
-
-<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 <%- include('../layouts/footer.ejs') %>

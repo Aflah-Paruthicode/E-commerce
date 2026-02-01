@@ -1,0 +1,88 @@
+.order-card-premium {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.status-banner {
+  padding: 10px 20px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.status-banner.delivered {
+  background: #f6ffed;
+  color: #52c41a;
+}
+.status-banner.shipped {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+.status-banner.cancelled {
+  background: #fff1f0;
+  color: #f5222d;
+}
+
+.product-img-wrapper img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.price-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f9fa;
+  padding: 8px 15px;
+  border-radius: 100px;
+}
+
+.final-price {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #000;
+}
+.original-price {
+  color: #999;
+  font-size: 0.9rem;
+}
+.discount-badge {
+  color: #52c41a;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #666;
+}
+
+.summary-row.total {
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+}
+
+.btn-back-round {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  transition: 0.3s;
+}
+.btn-back-round:hover {
+  background: #000;
+  color: #fff;
+}

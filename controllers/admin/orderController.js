@@ -27,15 +27,9 @@ const loadOrders = async (req, res) => {
       .map((key) => `&${key}=${req.query[key]}`)
       .join("");
 
-    res.render("listOrders", {
+    return res.render("listOrders", {
       orders,
-      pagination: {
-        totalOrders,
-        totalPages,
-        currentPage: page,
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1,
-      },
+      pagination: { totalOrders, totalPages, currentPage: page, hasNextPage: page < totalPages, hasPrevPage: page > 1 },
       i,
       message: req?.query?.orderChanged ? "Order Status Has Been Changed" : null,
       searchData: req.query.searchData,
@@ -43,6 +37,7 @@ const loadOrders = async (req, res) => {
     });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -52,12 +47,14 @@ const loadEditOrderStatus = async (req, res) => {
     let product_id = req.query.product_id;
 
     let product = await Product.findOne({ _id: product_id });
-    let order = await Order.findOne({ _id: order_id });
+    let order = await Order.findOne({ _id: order_id });  
     let user = await User.findOne({ _id: order.user });
+    console.log('huu huu : ',product," : order id : ",order_id," aand product id :",product_id)
 
-    res.render("orderEdit", { product, order, user });
+    return res.render("orderEdit", { product, order, user });
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
@@ -65,16 +62,17 @@ const updateOrder = async (req, res) => {
   try {
     let status = req.body.status;
     let id = req.query.order_id;
-    
+
     await Order.findOneAndUpdate({ _id: id }, { $set: { status: status } });
-    res.redirect("/admin/orders/?orderChanged=true");
+    return res.redirect("/admin/orders/?orderChanged=true");
   } catch (error) {
     console.log(error.message);
+    return res.status(500).send("internal error");
   }
 };
 
 module.exports = {
   loadOrders,
   loadEditOrderStatus,
-  updateOrder
+  updateOrder,
 };

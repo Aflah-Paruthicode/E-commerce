@@ -1,16 +1,53 @@
 <%- include('../layouts/header.ejs') %>
 
-<div class="contactUs-section">
-    <div class="contactUs-container">
+<link rel="stylesheet" href="/css/userCss/contact.css" />
 
-        <h3>How Can We Help?</h3>
-        <p>Send us a text : 9567078537</p>
-        <p>call us on : 9567078537</p>
-        <p>Monday - Friday 6AM - 5PM PST</p>
-        <p>Saturday - Sunday 6AM - 4PM PST</p>
-
+<main class="contact-page-wrapper" style="text-align: center">
+  <div class="contact-hero">
+    <div class="container">
+      <h1 class="fw-800">We're here for you.</h1>
+      <p class="lead">Whether you have a question about sizing, delivery, or anything else, our team is ready to help.</p>
     </div>
-</div>
+  </div>
 
+  <div class="container mt-n5" style="margin: 0px auto">
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-4">
+        <div class="help-card">
+          <div class="help-icon"><i class="fa-solid fa-comment-sms"></i></div>
+          <h4>Send a Text</h4>
+          <p class="text-muted">Fastest response for quick questions.</p>
+          <a href="sms:+9195070 70507" class="contact-link">+91 95070 70507</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="help-card">
+          <div class="help-icon"><i class="fa-solid fa-phone-volume"></i></div>
+          <h4>Call Us</h4>
+          <p class="text-muted">Speak directly with our support team.</p>
+          <a href="tel:+9195070 70507" class="contact-link">+91 95070 70507</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="help-card">
+          <div class="help-icon"><i class="fa-solid fa-clock"></i></div>
+          <h4>Support Hours</h4>
+          <div class="hours-grid">
+            <div class="d-flex justify-content-between">
+              <span>Mon - Fri</span>
+              <strong>6AM - 5PM PST</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Sat - Sun</span>
+              <strong>6AM - 4PM PST</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
 <%- include('../layouts/footer.ejs') %>

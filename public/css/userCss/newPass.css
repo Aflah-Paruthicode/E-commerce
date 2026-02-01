@@ -1,0 +1,96 @@
+.reset-wrapper {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.reset-card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  max-width: 400px;
+  width: 100%;
+}
+
+.reset-card h2 {
+  font-weight: 800;
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #1e293b;
+  text-align: center;
+}
+
+.reset-card p {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.3s;
+  background: #f8fafc;
+}
+
+.form-control:focus {
+  border-color: #000;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.toggle-pass {
+  position: absolute;
+  right: 15px;
+  top: 38px;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.btn-reset {
+  width: 100%;
+  padding: 14px;
+  background: #000;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.btn-reset:hover {
+  background: #334155;
+  transform: translateY(-1px);
+}
+
+.match-error {
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 5px;
+  display: none;
+}

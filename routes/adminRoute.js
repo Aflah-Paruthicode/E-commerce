@@ -7,7 +7,8 @@ const orderController = require("../controllers/admin/orderController");
 const bannerController = require("../controllers/admin/bannerController");
 const couponController = require("../controllers/admin/couponController");
 const categoryController = require("../controllers/admin/categoryController");
-const offerController = require('../controllers/admin/offerController')
+const productOfferController = require("../controllers/admin/productOffController");
+const categoryOfferController = require("../controllers/admin/categoryOffController");
 const path = require("path");
 const bodyParser = require("body-parser");
 const multer = require("multer");
@@ -49,16 +50,12 @@ const upload = multer({ storage: storage });
 const bannerStorageUpload = multer({ storage: bannerStorage });
 
 adminRoute.use(nocache());
-// Middleware to parse application/json
 adminRoute.use(bodyParser.json());
-// Middleware to parse application/x-www-form-urlencoded
 adminRoute.use(bodyParser.urlencoded({ extended: true }));
 
 adminRoute.get("/", auth.isLogout, adminController.loadLogin);
 adminRoute.post("/", auth.isLogout, adminController.verifyLogin);
-
 adminRoute.get("/home", auth.isLogin, adminController.loadDashboard);
-
 adminRoute.get("/customers", auth.isLogin, adminController.loadCustomerList);
 adminRoute.get("/blockUser", auth.isLogin, adminController.blockUser);
 adminRoute.get("/UnBlockUser", auth.isLogin, adminController.UnBlockUser);
@@ -103,21 +100,20 @@ adminRoute.get("/toUnlist", auth.isLogin, categoryController.toUnlistCategory);
 adminRoute.get("/toList", auth.isLogin, categoryController.toListCategory);
 adminRoute.get("/deleteCategory/:id", auth.isLogin, categoryController.deleteCategory);
 
-
 // -- Offer controller
-adminRoute.get("/offerManagement", auth.isLogin, offerController.loadOfferManagement);
-adminRoute.get("/addProductOffer", auth.isLogin, offerController.loadAddProductOffer);
-adminRoute.post("/addProductOffer", auth.isLogin, offerController.submitProductOffer);
-adminRoute.get("/editProductOffer", auth.isLogin, offerController.loadEditProductOffer);
-adminRoute.post("/editProductOffer", auth.isLogin, offerController.submitEditProductOffer);
-adminRoute.get("/deleteProductOffer/:id", auth.isLogin, offerController.loadDeleteProductOffer);
+adminRoute.get("/offerManagement", auth.isLogin, productOfferController.loadOfferManagement);
+adminRoute.get("/addProductOffer", auth.isLogin, productOfferController.loadAddProductOffer);
+adminRoute.post("/addProductOffer", auth.isLogin, productOfferController.submitProductOffer);
+adminRoute.get("/editProductOffer", auth.isLogin, productOfferController.loadEditProductOffer);
+adminRoute.post("/editProductOffer", auth.isLogin, productOfferController.submitEditProductOffer);
+adminRoute.get("/deleteProductOffer/:id", auth.isLogin, productOfferController.loadDeleteProductOffer);
 
 // -- Category Offer controller
-adminRoute.get("/addCategoryOffer", auth.isLogin, adminController.loadAddCategoryOffer);
-adminRoute.post("/addCategoryOffer", auth.isLogin, adminController.submitCategoryOffer);
-adminRoute.get("/editCategoryOffer", auth.isLogin, adminController.loadEditCategoryOffer);
-adminRoute.post("/editCategoryOffer", auth.isLogin, adminController.submitEditCategoryOffer);
-adminRoute.get("/deleteCategoryOffer/:category", auth.isLogin, adminController.loadDeleteCategoryOffer);
+adminRoute.get("/addCategoryOffer", auth.isLogin, categoryOfferController.loadAddCategoryOffer);
+adminRoute.post("/addCategoryOffer", auth.isLogin, categoryOfferController.submitCategoryOffer);
+adminRoute.get("/editCategoryOffer", auth.isLogin, categoryOfferController.loadEditCategoryOffer);
+adminRoute.post("/editCategoryOffer", auth.isLogin, categoryOfferController.submitEditCategoryOffer);
+adminRoute.get("/deleteCategoryOffer/:category", auth.isLogin, categoryOfferController.loadDeleteCategoryOffer);
 
 adminRoute.get("/logout", auth.isLogin, adminController.logout);
 

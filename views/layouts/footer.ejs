@@ -1,90 +1,226 @@
-<!-- footer section starts -->
+<style>
+    footer {
+        background-color: #1a1a1a;
+        color: #ffffff;
+        padding: 60px 0 30px;
+        font-family: 'Montserrat', sans-serif;
+    }   
+
+    footer .container {
+        margin: 5px auto;
+    }
+
+    .footer-advantages {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+        padding-bottom: 50px;
+        border-bottom: 1px solid #333;
+        margin-bottom: 50px;
+        
+    }
+
+    .advantage-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .advantage-item i {
+        font-size: 2rem;
+        color: #2b9dc0; 
+    }
+
+    .advantage-item h4 {
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 5px;
+        letter-spacing: 1px;
+    }
+
+    .advantage-item p {
+        font-size: 12px;
+        color: #999;
+        margin: 0;
+    }
+
+    .newsletter-box input[type="email"] {
+        background: #222;
+        border: 1px solid #444;
+        padding: 8px 12px;
+        color: white;
+        border-radius: 4px;
+        margin-top: 10px;
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .newsletter-box input[type="submit"] {
+        background: #2b9dc0;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        margin-top: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .newsletter-box input[type="submit"]:hover {
+        background: #fff;
+        color: #1a1a1a;
+    }
+
+    .footer-main-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+    }
+
+    .footer-column h4 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .footer-column h4::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -8px;
+        width: 30px;
+        height: 2px;
+        background: #2b9dc0;
+    }
+
+    .footer-column p, .footer-column a {
+        font-size: 14px;
+        color: #ccc;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 12px;
+        transition: 0.3s;
+    }
+
+    .footer-column a:hover {
+        color: #2b9dc0;
+        padding-left: 5px;
+    }
+
+    .social-icons i {
+        font-size: 20px;
+        margin-right: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .social-icons i:hover {
+        color: #2b9dc0;
+        transform: translateY(-3px);
+    }
+
+    .contact-method {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .contact-method i {
+        color: #2b9dc0;
+        width: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .footer-advantages { grid-template-columns: 1fr; }
+    }
+</style>
 
 <footer>
-
     <div class="container">
-
-        <div class="options">
-            <div class="shipping advantages">
-                <i class="fa-solid fa-clock-rotate-left icons"></i>
-                <div class="div-of-adv-txt">
+        <div class="footer-advantages">
+            <div class="advantage-item">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <div>
                     <h4>EXPRESS SHIPPING</h4>
                     <p>Shipping in 24 hours</p>
                 </div>
             </div>
-            <div class="tracking advantages">
-                <i class="fa-solid fa-truck-fast icons"></i>
-                <div class="div-of-adv-txt">
-                    <h4>SHIPPING TRACKING</h4>
-                    <p>Online order tracking</p>
+            <div class="advantage-item">
+                <i class="fa-solid fa-truck-fast"></i>
+                <div>
+                    <h4>ORDER TRACKING</h4>
+                    <p>Real-time updates</p>
                 </div>
             </div>
-            <div class="safely advantages">
-                <i class="fa-solid fa-wallet icons"></i>
-                <div class="div-of-adv-txt">
+            <div class="advantage-item">
+                <i class="fa-solid fa-wallet"></i>
+                <div>
                     <h4>BUY SAFELY</h4>
-                    <p>Any question is here to help!</p>
+                    <p>Secure payment gateways</p>
                 </div>
             </div>
-            <div class="subscribe advantages">
-                <i class="fa-regular fa-envelope icons"></i>
-                <div class="div-of-adv-txt">
-                    <h4>SIGNUP FOR NEWSLETTERS</h4>
-                    <p>Be the first to know. signup for newsletters today</p>
-                    <input class="subscribe" type="email" name="email" placeholder="Enter your email" required>
-                    <input type="submit" value="subscribe">
-
-
+            <div class="advantage-item newsletter-box">
+                <i class="fa-regular fa-envelope"></i>
+                <div>
+                    <h4>NEWSLETTER</h4>
+                    <form action="#">
+                        <input type="email" placeholder="Email Address" required>
+                        <input type="submit" value="SUBSCRIBE">
+                    </form>
                 </div>
             </div>
         </div>
 
-
-        <div class="footer-txt">
-            <div class="customer-service text-div">
+        <div class="footer-main-content">
+            <div class="footer-column">
                 <h4>CUSTOMER SERVICE</h4>
-                <p>Contact Us</p>
-                <p>Shipping & Returns</p>
-                <p>Terms & Conditions</p>
-                <p>Delivery</p>
+                <a href="/contactUs">Contact Us</a>
+                <a href="#">Shipping & Returns</a>
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Delivery Information</a>
             </div>
-            <div class="information text-div">
+            <div class="footer-column">
                 <h4>INFORMATION</h4>
-                <p>About</p>
-                <p>Payments</p>
-                <p>Size Guide</p>
-                <p>Administrator</p>
+                <a href="/aboutUs">About Us</a>
+                <a href="#">Payment Methods</a>
+                <a href="#">Size Guide</a>
+                <a href="/admin/login">Administrator</a>
             </div>
-            <div class="follow-us text-div">
+            <div class="footer-column">
                 <h4>FOLLOW US</h4>
-                <i class="fa-brands fa-square-instagram"></i>
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-linkedin"></i>
+                <div class="social-icons">
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-linkedin-in"></i>
+                    <i class="fa-brands fa-x-twitter"></i>
+                </div>
             </div>
-            <div class="contact-us text-div">
+            <div class="footer-column">
                 <h4>CONTACT US</h4>
-                <div class="phone contact-methods">
-                    <i class="fa-solid fa-phone-volume"></i>
-                    <p>(+91) 9567078537</p>
+                <div class="contact-method">
+                    <i class="fa-solid fa-phone"></i>
+                    <p>(+91) 9507070507</p>
                 </div>
-
-                <div class="email contact-methods">
+                <div class="contact-method">
                     <i class="fa-solid fa-envelope"></i>
-                    <p>aflutech2@gmail.com</p>
+                    <p>technologia@gmail.com</p>
                 </div>
-
-                <div class="time contact-methods">
+                <div class="contact-method">
                     <i class="fa-regular fa-clock"></i>
-                    <p>8:00 - 21:00 GMT + 5:30</p>
+                    <p>8:00 - 21:00 (GMT +5:30)</p>
                 </div>
-
             </div>
         </div>
 
+        <div style="text-align: center; margin-top: 50px; font-size: 12px; color: #555;">
+            &copy; 2026 Dash Footwares. All rights reserved.
+        </div>
     </div>
 </footer>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

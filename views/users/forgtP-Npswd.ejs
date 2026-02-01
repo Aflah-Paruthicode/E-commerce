@@ -1,49 +1,77 @@
 <%- include('../layouts/header.ejs') %>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
 
+<link rel="stylesheet" href="/css/userCss/newPass.css">
 
-<div class="forget-div-main">
-    <div class="forget-container">
-        <div class="forget-div">
-            <form action="setNewPass?id=<%= id %>" method="post">
-                <h2>Set New password</h2>
-                <input type="number" name="password" placeholder="Enter pass..." style="padding: 5px 
-                
-                ;
-                    font-size: 15px;
-                    margin-bottom: 15px;">
-                <br>
-                <input type="number" name="cpassword" placeholder="Re-nter pass..." style="padding: 5px 
-                
-                ;
-                    font-size: 15px;
-                    margin-bottom: 15px;">
-                <br>
-                <input type="submit" value="Get OTP" style="    background-color: black;
-                border: none;
-                color: white;
-                padding: 6px;
-                font-size: 14px;
-                width: 86px;
-                border-radius: 5px;">
-            </form>
-            <% if (typeof emessage !== 'undefined') { %>
-                <script>
-                    Swal.fire({
-                        title: 'Failed!',
-                        text: '<%= emessage %>',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    })
-                </script>
-            <% } %>
+<div class="reset-wrapper">
+    <div class="reset-card">
+        <h2>New Password</h2>
+        <p>Ensure your new password is at least 8 characters long for better security.</p>
 
-        </div>
+        <form action="/setNewPass?id=<%= id %>" method="post" id="resetForm">
+            <div class="form-group">
+                <label>New Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="••••••••" required>
+                <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('password')"></i>
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" name="cpassword" id="cpassword" class="form-control" placeholder="••••••••" required>
+                <i class="fa-solid fa-eye toggle-pass" onclick="toggleVisibility('cpassword')"></i>
+                <div id="passwordError" class="match-error">Passwords do not match!</div>
+            </div>
+
+            <button type="submit" class="btn-reset">Update Password</button>
+        </form>
+
+        <% if (typeof emessage !== 'undefined') { %>
+            <script>
+                Swal.fire({
+                    title: 'Error!',
+                    text: '<%= emessage %>',
+                    icon: 'error',
+                    confirmButtonColor: '#000'
+                })
+            </script>
+        <% } %>
     </div>
 </div>
 
+<script>
+    function toggleVisibility(id) {
+        const input = document.getElementById(id);
+        const icon = input.nextElementSibling;
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
 
+    const form = document.getElementById('resetForm');
+    const pass = document.getElementById('password');
+    const cPass = document.getElementById('cpassword');
+    const errorDiv = document.getElementById('passwordError');
 
+    cPass.addEventListener('input', () => {
+        if (cPass.value !== pass.value) {
+            errorDiv.style.display = 'block';
+            cPass.style.borderColor = '#ef4444';
+        } else {
+            errorDiv.style.display = 'none';
+            cPass.style.borderColor = '#10b981';
+        }
+    });
 
+    form.addEventListener('submit', (e) => {
+        if (pass.value !== cPass.value) {
+            e.preventDefault();
+            Swal.fire('Oops!', 'Passwords must match before continuing.', 'warning');
+        }
+    });
+</script>
 
 <%- include('../layouts/footer.ejs') %>

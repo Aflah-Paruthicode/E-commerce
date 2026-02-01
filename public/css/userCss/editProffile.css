@@ -1,0 +1,50 @@
+ 
+  .form-card-premium {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  }
+
+  .input-group-custom {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .input-group-custom label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  .form-control-custom {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1.5px solid #eee;
+    background-color: #f9f9f9;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    width: 100%;
+  }
+
+  .form-control-custom:focus {
+    border-color: #000;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+    outline: none;
+  }
+
+  .bg-light {
+    background-color: #f0f0f0 !important;
+    cursor: not-allowed;
+  }
+
+  .btn-lg {
+    padding: 16px;
+    font-weight: 700;
+    border-radius: 12px;
+    font-size: 16px;
+  }

@@ -1,0 +1,129 @@
+body {
+  background-color: #f8f9fa;
+  font-family: "Montserrat", sans-serif;
+}
+.cart-wrapper {
+  padding: 50px 0;
+}
+.cart-card {
+  background: #fff;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.cart-item {
+  padding: 25px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.cart-item:last-child {
+  border-bottom: none;
+}
+.product-img-container {
+  position: relative;
+  width: 140px;
+  height: 160px;
+  flex-shrink: 0;
+}
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.out-of-stock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.qty-control {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 5px;
+  width: fit-content;
+}
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s;
+  font-weight: bold;
+  background: #fff;
+}
+.qty-btn:hover {
+  background: #000;
+  color: #fff;
+}
+.qty-input {
+  width: 40px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  position: sticky;
+  top: 100px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  color: #64748b;
+  font-size: 14px;
+}
+.summary-total {
+  border-top: 2px dashed #e2e8f0;
+  padding-top: 20px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-final {
+  color: #10b981;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.price-og {
+  text-decoration: line-through;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+.offer-tag {
+  font-size: 11px;
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+}

@@ -12,7 +12,6 @@ const isLogin = async (req, res, next) => {
                 delete req.session.user_id
                 res.redirect('/login');         
                }
-            console.log("re checkkkkkk");
             next();
             return
         }

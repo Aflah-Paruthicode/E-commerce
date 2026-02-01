@@ -1,40 +1,40 @@
-<%- include('../layouts/header.ejs') %>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<%- include('../layouts/header.ejs') %>  
 
+<link rel="stylesheet" href="/css/userCss/forgotP.css">
 
-<div class="forget-div-main">
-    <div class="forget-container">
-        <div class="forget-div">
-            <form action="loadFpOtpPage" method="post">
-                <h2>Enter youre email</h2>
-                <input type="email" name="email" style="    padding: 5px;
-                font-size: 13px;">
-                <input type="submit" value="Get OTP" style="    background-color: black;
-                border: none;
-                color: white;
-                padding: 6px;
-                font-size: 14px;
-                width: 86px;
-                border-radius: 5px;">
-            </form>
-            <% if (typeof emessage !== 'undefined') { %>
-                <script>
-                    Swal.fire({
-                        title: 'Failed!',
-                        text: '<%= emessage %>',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    })
-                </script>
-            <% } %>
-        </div>
+<div class="forget-wrapper">
+  <div class="forget-card">
+    <div class="icon-box">
+      <i class="fa-solid fa-lock-open"></i>
     </div>
+
+    <h2>Forgot Password?</h2>
+    <p>No worries! Enter the email associated with your account and we'll send an OTP to reset your password.</p>
+
+    <form action="/loadFpOtpPage" method="post">
+      <div class="input-group-custom">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" name="email" placeholder="Enter your email address" required />
+      </div>
+
+      <button type="submit" class="btn-submit">Send OTP</button>
+    </form>
+
+    <a href="/login" class="back-to-login"> <i class="fa-solid fa-arrow-left me-2"></i> Back to Login </a>
+
+    <% if (typeof emessage !== 'undefined') { %>
+    <script>
+      Swal.fire({
+        title: "Oops!",
+        text: "<%= emessage %>",
+        icon: "error",
+        confirmButtonColor: "#1a1a1a",
+        background: "#fff",
+        color: "#1a1a1a",
+      });
+    </script>
+    <% } %>
+  </div>
 </div>
 
-
-
-
-
-
 <%- include('../layouts/footer.ejs') %>
-

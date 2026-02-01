@@ -1,104 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashFootwares</title>
-  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/login.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | DashFootwares</title>
+    <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/css/userCss/login.css" />
+  </head>
 
-</head>
-
-<body>
-
-
-    <!-- navbar section starts -->
-
-    <header style="margin-bottom: 10px;">
-        <div class="container">
-            <nav>
-                <div style="display: flex;align-items: center;" class="logo">
-                    <img src="/logo/DashFootwares.png" alt="">
-                    <h3 style="color: black;font-weight: 400;">DASH FOOTWARES </h3>
-
-                </div>
-
-                <ul class="navbar">
-                    <li><a href="/register">Signup</a></li>
-
-                </ul>
-            </nav>
-        </div>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <a href="/" style="text-decoration: none; display: flex; align-items: center; color: inherit">
+              <img src="/logo/DashFootwares.png" alt="Logo" />
+              <h3>DASH FOOTWARES</h3>
+            </a>
+          </div>
+          <ul class="navbar">
+            <li><a href="/register">Create Account</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
 
-    <!-- navbar section ends -->
-
-
-    <!-- login form section starts -->
-
-    <main>
-        <div class="login-form-section">
-            <div class="container">
-
-                <div class="text-div">
-                    <p style="line-height: 25px;"> Welcome to dashFootwares, we have the hard copy products of company's like, nike, adidas, puma, new balance, oagi. <br>
-                        Quality never goes out.</p>
-                   
-                </div>
-                <div class="form-div">
-                    <h2>Login Here</h2>
-                    <form action="/login" method="post">
-                        <input class="field" type="email" name="email" placeholder="Enter email" value="" required>
-                        <input class="field" type="password" name="password" placeholder="Enter password" value="" required>
-                        <a href="/forget">forget password?</a>
-                        <input class="l-btn" type="submit" value="login">
-
-                        <% if (typeof message !== 'undefined') { %>
-                            <script>
-                                Swal.fire({
-                                    title: 'Success!',
-                                    text: '<%= message %>',
-                                    icon: 'success',
-                                    confirmButtonText: 'OK'
-                                }).then((result) => {
-                                    if (result) {
-                                        // Redirect to the href of the anchor tag if the user confirms
-                                        window.location.href = '/loogin';
-                                    }
-                                })
-                            </script>
-                        <% } %>
-
-                        <% if (typeof emessage !== 'undefined') { %>
-                            <script>
-                                Swal.fire({
-                                    title: 'Failed!',
-                                    text: '<%= emessage %>',
-                                    icon: 'error',
-                                    confirmButtonText: 'OK'
-                                })
-                            </script>
-                        <% } %>
-                        
-
-                    </form>
-
-
-                </div>
-            </div>
+    <main class="login-wrapper">
+      <div class="login-card">
+        <div class="brand-side">
+          <h1>Quality Never Goes Out.</h1>
+          <p>Welcome back to DashFootwares. Experience the premium collection from Nike, Adidas, Puma, New Balance, and more.</p>
         </div>
+
+        <div class="form-side">
+          <h2>Login</h2>
+          <form action="/login" method="post">
+            <div class="input-group-custom">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" name="email" placeholder="Email Address" required />
+            </div>
+
+            <div class="input-group-custom">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" name="password" placeholder="Password" required />
+            </div>
+
+            <a href="/forget" class="forget-link">Forgot password?</a>
+
+            <button type="submit" class="l-btn">Sign In</button>
+
+            <div class="signup-prompt">Don't have an account? <a href="/register">Register here</a></div>
+          </form>
+        </div>
+      </div>
     </main>
 
-    <!-- login form section ends -->
-
-
-    <%- include('../layouts/footer.ejs') %>
+    <%- include('../layouts/footer.ejs') %> <% if (typeof message !== 'undefined') { %>
+    <script>
+      Swal.fire({
+        title: "Welcome!",
+        text: "<%= message %>",
+        icon: "success",
+        confirmButtonColor: "#1a1a1a",
+      }).then(() => {
+        window.location.href = "/";
+      });
+    </script>
+    <% } %> <% if (typeof emessage !== 'undefined') { %>
+    <script>
+      Swal.fire({
+        title: "Login Failed",
+        text: "<%= emessage %>",
+        icon: "error",
+        confirmButtonColor: "#1a1a1a",
+      });
+    </script>
+    <% } %>
+  </body>
+</html>

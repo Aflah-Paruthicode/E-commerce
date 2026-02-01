@@ -49,6 +49,7 @@ const loadEditOrderStatus = async (req, res) => {
     let product = await Product.findOne({ _id: product_id });
     let order = await Order.findOne({ _id: order_id });  
     let user = await User.findOne({ _id: order.user });
+    console.log('huu huu : ',product," : order id : ",order_id," aand product id :",product_id)
 
     return res.render("orderEdit", { product, order, user });
   } catch (error) {

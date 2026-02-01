@@ -1,0 +1,152 @@
+.wallet-balance-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #3d3d3d 100%);
+  border-radius: 24px;
+  padding: 30px;
+  position: relative;
+  color: white;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-width: 450px;
+}
+
+.card-pattern {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+}
+
+.balance-label {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.balance-amount {
+  font-size: 42px;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+
+.balance-amount .decimal {
+  font-size: 20px;
+  opacity: 0.6;
+}
+
+.wallet-chip {
+  font-size: 35px;
+  color: #d4af37;
+  margin-bottom: 10px;
+  opacity: 0.9;
+}
+
+.wallet-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.user-card-name {
+  font-size: 14px;
+  letter-spacing: 2px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Transaction List */
+.transaction-container {
+  background: #fff;
+  border-radius: 20px;
+  border: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #f8f8f8;
+  transition: background 0.2s;
+}
+
+.transaction-item:hover {
+  background: #fafafa;
+}
+
+.trans-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.type-debit {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+.type-credit {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.trans-details {
+  flex: 1;
+}
+
+.trans-name {
+  font-weight: 700;
+  margin: 0;
+  color: #222;
+  font-size: 15px;
+}
+
+.trans-meta {
+  font-size: 13px;
+  color: #888;
+  margin: 0;
+}
+
+.trans-amount {
+  font-weight: 800;
+  margin: 0;
+  font-size: 16px;
+}
+
+.status-pill {
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pill-success {
+  background: #f6ffed;
+  color: #52c41a;
+}
+.pill-danger {
+  background: #fff1f0;
+  color: #ff4d4f;
+}
+
+.pagination-modern .page-link {
+  border: none;
+  color: #333;
+  padding: 8px 16px;
+  margin: 0 4px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.pagination-modern .active .page-link {
+  background: #000;
+  color: #fff;
+}

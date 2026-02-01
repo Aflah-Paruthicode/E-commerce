@@ -1,0 +1,88 @@
+.contact-page-wrapper {
+  background-color: #fcfcfc;
+  padding-bottom: 100px;
+}
+
+.contact-hero {
+  background: #000;
+  color: #fff;
+  padding: 100px 0 150px 0;
+  text-align: center;
+}
+
+.fw-800 {
+  font-weight: 800;
+  font-size: 3.5rem;
+}
+
+.mt-n5 {
+  margin-top: -80px !important;
+}
+
+.help-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px 30px;
+  text-align: center;
+  border: 1px solid #eee;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.help-card:hover {
+  transform: translateY(-10px);
+}
+
+.help-icon {
+  width: 60px;
+  height: 60px;
+  background: #f8f9fa;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+}
+
+.contact-link {
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+  font-size: 1.2rem;
+  border-bottom: 2px solid #eee;
+}
+
+.hours-grid {
+  font-size: 14px;
+  margin-top: 15px;
+  line-height: 2;
+}
+
+.about-story-section {
+  margin-top: 120px;
+  padding: 60px;
+  background: #fff;
+  border-radius: 30px;
+}
+
+.floating-logo {
+  width: 250px;
+  filter: grayscale(1);
+  opacity: 0.2;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

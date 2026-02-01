@@ -55,7 +55,7 @@ const submitProductOffer = async (req, res) => {
       err = "A better or equel category offer already applied to this product";
     }
 
-    if (err) res.redirect("/admin/addProductOffer/?err=" + err);
+    if (err) return res.redirect("/admin/addProductOffer/?err=" + err);
 
     const offerData = {
       discountPercentage: Number(DiscountPercentage),
@@ -64,7 +64,7 @@ const submitProductOffer = async (req, res) => {
       offerEndDate,
     };
 
-    await Product.findOneAndUpdate(product_Id, { $set: { product_OfferDetails: offerData }, $unset: { category_OfferDetails: "" } });
+    await Product.findOneAndUpdate({ _id: product_Id }, { $set: { product_OfferDetails: offerData }, $unset: { category_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
     console.log(error.message);
@@ -109,7 +109,7 @@ const submitEditProductOffer = async (req, res) => {
       err = "A better or equel category offer already applied to this product";
     }
 
-    if (err) res.redirect("/admin/addProductOffer/?err=" + err);
+    if (err) return res.redirect("/admin/editProductOffer/?err=" + err + "&id=" + id);
 
     const offerData = {
       discountPercentage: Number(DiscountPercentage),
@@ -118,7 +118,7 @@ const submitEditProductOffer = async (req, res) => {
       offerEndDate,
     };
 
-    await Product.findOneAndUpdate(product_Id, { $set: { product_OfferDetails: offerData }, $unset: { category_OfferDetails: "" } });
+    await Product.findOneAndUpdate(id, { $set: { product_OfferDetails: offerData }, $unset: { category_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
     console.log(error.message);

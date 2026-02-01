@@ -1,223 +1,136 @@
+<%- include('../layouts/header.ejs') %>
+<link rel="stylesheet" href="/css/userCss/userProffile.css" />  
 
-<!DOCTYPE html>
-<html lang="en">
+<link rel="stylesheet" href="/css/userCss/manageAdd.css">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashFootwares</title>
-  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/  azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/css/headerFooter.css">
-    <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/otp.css">
-    <link rel="stylesheet" href="/css/user-profile.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="profile-wrapper">
+  <aside class="profile-sidebar">
+    <div class="user-greeting">
+      <img src="/userProfileImages/user (1).png" alt="User" />
+      <div>
+        <small class="text-muted">Hello,</small>
+        <h2><%= user.name %></h2>
+      </div>
+    </div>
 
-</head>
+    <nav class="nav-menu">
+      <a href="/profile" class="nav-item-link"> <i class="fa-solid fa-gauge"></i> Account Overview </a>
+      <a href="/myOrders" class="nav-item-link"> <i class="fa-solid fa-box"></i> My Orders </a>
+      <a href="/manageAddress" class="nav-item-link active"> <i class="fa-solid fa-map-location-dot"></i> Manage Addresses </a>
+      <a href="/whishlist" class="nav-item-link"> <i class="fa-solid fa-heart"></i> My Wishlist </a>
+      <a href="/wallet" class="nav-item-link"> <i class="fa-solid fa-wallet"></i> Wallet </a>
+      <a href="/logout" class="nav-item-link text-danger"> <i class="fa-solid fa-right-from-bracket"></i> Logout </a>
+    </nav>
+  </aside>
 
+  <main class="profile-content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold m-0">Manage Address</h3>
+    </div>
 
+    <main class="profile-content" style="border: none">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="/addAddress" class="btn btn-dark px-4 py-2"> <i class="fa-solid fa-plus me-2"></i> Add New Address </a>
+      </div>
 
-<header style="margin-bottom: 10px;">
-    <div class="container">
-        <nav>
-            <div style="display: flex;align-items: center;" class="logo">
-                <img src="/logo/DashFootwares.png" alt="">
-                <h3 style="color: black;font-size: 1.25rem;"> DASH FOOTWARES </h3>
+      <div class="address-grid">
+        <% if (address.length === 0) { %>
+        <div class="text-center py-5 w-100">
+          <img src="/userProfileImages/location.png" width="80" class="mb-3 opacity-25" />
+          <p class="text-muted">No addresses saved yet.</p>
+        </div>
+        <% } %> <% address.forEach((addrss) => { %>
+        <div class="address-card-modern <%= addrss.isSelected ? 'selected' : '' %>">
+          <% if(addrss.isSelected) { %>
+          <div class="default-badge">DEFAULT</div>
+          <% } %>
 
+          <div class="address-card-header">
+            <div class="address-type-icon">
+              <i class="fa-solid <%= addrss.isSelected ? 'fa-location-dot' : 'fa-map-pin' %>"></i>
             </div>
+            <div class="address-actions">
+              <a href="/EditAddress?id=<%= addrss._id %>" title="Edit"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a href="javascript:void(0)" onclick="confirmDelete(event, '<%= addrss._id %>')" title="Delete" class="text-danger"
+                ><i class="fa-solid fa-trash-can"></i
+              ></a>
+            </div>
+          </div>
 
-            
+          <div class="address-body">
+            <h5 class="customer-name"><%= user.name %></h5>
+            <p class="address-details">
+              <%= addrss.houseName %>, <%= addrss.street %><br />
+              <%= addrss.city %>, <%= addrss.state %><br />
+              <strong>PIN: <%= addrss.pincode %></strong>
+            </p>
+            <p class="phone-number"><i class="fa-solid fa-phone me-2"></i> <%= addrss.mobile || user.mobile %></p>
+          </div>
 
-            <ul class="navbar">
-                
-                <li><a href="/register">Home</a></li>
-                <li><a href="/aboutUs">About Us</a></li>
-                <li><a href="/contactUs">Contact</a></li>
-                <li><a href="/logout">Logout</a></li>
-
-
-
-            </ul>
-        </nav>
-    </div>
-</header>
-
-<body>
-
-
-<!-- user profile starts here -->
-
-
-
-
-<div class="profile-main">
-    <div class="profile-sections">
-        <div class="hello-name"><img width="50px" src="/userProfileImages/user (1).png" alt=""> <h2><%= user.name %></h2> </div>
-        <div class="profile-section-options">
-            <a href="/profile">
-            <div class="overview profile-section-option"><img src="/userProfileImages/user (1).png" alt=""> <h3>Account Overview</h3></div>
-        </a><a href="/myOrders">
-            <div class="my-orders profile-section-option"><img src="/userProfileImages/package.png" alt=""> <h3>My Orders</h3></div>
-        </a><a href="/manageAddress">
-            <div class="manage-address profile-section-option"><img src="/userProfileImages/location.png" alt=""> <h3>Manage Addressess</h3></div>
-        </a><a href="/whishlist">
-            <div class="my-wishlist profile-section-option"><img src="/userProfileImages/wishlist.png" alt=""> <h3>My Wishlist</h3></div>
-        </a><a href="/wallet">
-            <div class="wallet profile-section-option"><img src="/userProfileImages/wallet.png" alt=""> <h3>Wallet</h3></div>
-        </a>
-        </div>
-    </div>
-    <div class="all-details-profile">
-
-
-
-        <div class="addresses">
-            <h3>Manage Address</h3>
-
-           
-            <a class="btn" href="/addAddress">Add Address</a>
-            
-            
-        </div>
-        
-
-        
-        <% if (typeof emessage !== 'undefined') { %>
-            <script>
-                Swal.fire({
-                    title: 'Failed!',
-                    text: '<%= emessage %>',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-            </script>
-        <% } %>
-
-
-            <% if (typeof message !== 'undefined') { %>
-                <script>
-                    Swal.fire({
-                        title: 'Success!',
-                        text: '<%= message %>',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-            if (result) {
-                // Redirect to the href of the anchor tag if the user confirms
-                window.location.href = '/manageAddress';
-            }
-        })
-                </script>
+          <div class="address-footer">
+            <% let selectUrl = (typeof from !== 'undefined') ? `/selectAddress?id=${addrss._id}&from=${from}` :
+            `/selectAddress?id=${addrss._id}&from=userManagement` %> <% if(addrss.isSelected) { %>
+            <button class="btn-selected w-100" disabled><i class="fa-solid fa-circle-check"></i> Primary Address</button>
+            <% } else { %>
+            <a href="<%= selectUrl %>" class="btn-select-address w-100">Set as Primary</a>
             <% } %>
-        <div class="each-address-container">
-        
-           <% address.forEach((addrss) =>  { %>
-
-            <div class="each-address">
-                <% if (typeof check == 'undefined') { %>
-
-                    <div class="select-btn" style="width: 100%;">
-                      <%  if(typeof from !== 'undefined') { %>
-
-                        <% if(addrss.isSelected == true) {  %>
-
-                            <a class="btn btn-dark" href="/selectAddress?id=<%= addrss._id %>&from=<%= from %>" type="submit" >Selected</a> 
-                       <% } else {  %>
-
-                        <a class="btn btn-secondary" href="/selectAddress?id=<%= addrss._id %>&from=<%= from %>" type="submit" >Select</a> 
-                        <%   }  %>
-
-                       <% } else { %>
-
-                       <% if(addrss.isSelected == true) {  %>
-
-                            <a class="btn btn-dark" href="/selectAddress?id=<%= addrss._id %>&from=userManagement" type="submit" >Selected</a> 
-                       <% } else {  %>
-
-                            <a class="btn btn-secondary" href="/selectAddress?id=<%= addrss._id %>&from=userManagement" type="submit" >Select</a> 
-                     <%   }  %>
-
-                       <% } %>
-                </div>
-
-              <%  }  %>
-            
-
-            <% Object.keys(addrss).forEach(key => { %>
-                <% if (!['_id', '__v', 'activePaths', 'skipId', '$isNew','block','password','user_id','select'].includes(key)) { %>
-                    <% if (typeof addrss[key] !== 'object' || Array.isArray(addrss[key])) { %>
-                        <p> <%= addrss[key] %></p>
-                    <% } else if (typeof addrss[key] === 'object') { %>
-                        <% Object.keys(addrss[key]).forEach(innerKey => { %>
-                            <% if (!['_id', '__v', 'activePaths', 'skipId', '$isNew','block','password','user_id','select'].includes(innerKey)) { %>
-                                <p style="font-weight: 500;"> <%= addrss[key][innerKey]+',' %>&nbsp;</p>
-                                
-                            <% } %>
-                        <% }) %>
-                    <% } %>
-                <% } %>
-            <% }) %>
-            <div class="buttons" style="width: 100%;">
-
-                <a class="btn btn-success" href="/EditAddress?id=<%= addrss._id %>" type="submit" >EDIT</a>
-                <a href="/DeleteAddress/<%= addrss._id%>"
-                    class="btn btn-danger delete-link"
-                    onclick="confirmDelete(event, '<%= addrss._id%>');"
-                    type="button">DELETE</a>
-
+          </div>
         </div>
-        </div>
-
-          <%  })  %>
-
-        </div>
-        
-
-
-
-
-
-        
-    </div>
+        <% }) %>
+      </div>
+    </main>
+  </main>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+  function confirmDelete(event, productId) {
+    event.preventDefault();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to cancel this order!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#000",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/cancelOrder/" + productId;
+      }
+    });
+  }
+
+  $(document).ready(function () {
+    $(".retry-payment").click(function () {
+      var orderId = $(this).data("order-id");
+      $.ajax({
+        url: "/confirmRetryOrder",
+        method: "POST",
+        data: { id: orderId },
+        success: function (res) {
+          if (res.success) {
+            var options = {
+              key: res.key_id,
+              amount: res.amount,
+              currency: "INR",
+              name: "Dash Footwares",
+              order_id: res.order_id,
+              handler: function (response) {
+                window.location.href = "/updateOrderInDb/?id=" + orderId;
+              },
+              theme: { color: "#000000" },
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+          } else {
+            alert(res.msg);
+          }
+        },
+      });
+    });
+  });
+</script>
 
 <%- include('../layouts/footer.ejs') %>
-
-
-
-
-
-<script>
-    function confirmDelete(event, productId) {
-        event.preventDefault(); // Prevent the default action of the anchor tag
-    
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'You want to delete this address!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Redirect to the href of the anchor tag if the user confirms
-                window.location.href = '/DeleteAddress/' + productId;
-            }
-        });
-    }
-
-
-    </script>
-
-
-

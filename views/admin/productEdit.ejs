@@ -79,7 +79,7 @@
     </div>
 
     <div class="ad-home-dashboard-optionsDetailPage">
-      <% if (typeof emessage !== 'undefined') { %>
+      <% if (emessage) { %>
       <script>
         Swal.fire({
           title: "Failed!",
@@ -91,7 +91,7 @@
       <% } %>
       <h3>EDIT PRODUCT PAGE</h3>
 
-      <div class="adProduct-formDiv">
+      <div class="adProduct-formDiv">   
         <form action="/admin/EditProduct?id=<%= product._id %>" id="uploadForm" method="post" enctype="multipart/form-data">
           <div class="pName in">
             <label for="">Product Name :</label>
@@ -166,8 +166,7 @@
 
               <!-- </div> -->
 
-              <% i++ %> 
-              <% }) %>
+              <% i++ %> <% }) %>
             </div>
 
             <input type="file" id="productImages" accept="image/*" name="images" accept=".jpg, .jpeg, .png" />

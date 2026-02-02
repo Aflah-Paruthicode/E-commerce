@@ -38,7 +38,7 @@ const loadProducts = async (req, res) => {
       queryString,
     });
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -48,7 +48,7 @@ const loadAddProduct = async (req, res) => {
     const category = await CAtegory.find();
     return res.render("addProduct", { category });
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -94,10 +94,9 @@ const submitNewProduct = async (req, res) => {
     });
 
     saveProduct = await product.save();
-    console.log("yeaah bruh damn it2");
     return res.redirect("/admin/product/?newProduct=true");
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -112,7 +111,7 @@ const deleteProduct = async (req, res) => {
       return res.render("listProducts", { emessage: "failed to delete" });
     }
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -121,7 +120,6 @@ const loadEditProduct = async (req, res) => {
   try {
     const id = req.query.id;
     const productData = await Product.findById({ _id: id });
-    console.log('got it',req.query)
     const category = await CAtegory.find();
     const emessage = req?.query?.emessage;
     if (productData) {
@@ -129,7 +127,7 @@ const loadEditProduct = async (req, res) => {
     } 
       return res.redirect("/admin/home");
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -149,25 +147,22 @@ const deleteProductIMG = async (req, res) => {
     }
     return res.redirect(`/admin/EditProduct/?id=${id}`);
   } catch (error) {
-    console.log(error.message);
+    
     res.status(500).send("Internal Server Error");
   }
 };
 
 const editProductIMG = async (req, res) => {   
   try {
-    console.log("dkfhjd",req.body.id);
     const product = await Product.findById({ _id: req.body.id });
-    console.log('body : ',req.query.id)
     const imgInd = req.query.id;
     await Product.findByIdAndUpdate({ _id: req.body.id }, { $set: { [`images.${imgInd}`]: req.file.filename } });
     const fullPath = path.join(__dirname, `../../public/productImages/${product.images[imgInd]}`);
     if (fs.existsSync(fullPath)) fs.unlinkSync(fullPath);
 
-    console.log('is the call reached here?')
     return res.redirect(`/admin/EditProduct/?id=${req.body.id}`);
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -214,7 +209,7 @@ const handleSubmitEditProduct = async (req, res) => {
     else await Product.findByIdAndUpdate(id, { $set: updateData });
      return res.redirect('/admin/product/?edited='+true);
   } catch (error) {
-    console.log(error.message);
+    
      return res.status(500).send("internal server error");
   }
 };

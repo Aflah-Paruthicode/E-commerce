@@ -2,6 +2,9 @@ require("dotenv").config();
 const User = require("../../models/userModel");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer")
+const Wallet = require("../../models/walletModel");
+const baseUrl = process.env.baseUrl
+
 
 let otp;
 
@@ -26,7 +29,7 @@ const sendVerifyMail = async (name, email, fromForgot = null) => {
       subject: "For otp verification email",
       html: fromForgot
         ? `<p>Hi <span style="font-weight:bold">  ${name}
-          </span> please click here to <a style="font-weight:bold;text-decoration:none" href="http://localhost:5008/change?id= ${fromForgot} 
+          </span> please click here to <a style="font-weight:bold;text-decoration:none" href="${baseUrl}/change?id= ${fromForgot} 
            > Change </a> youre password.</p> `
         : `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
             <div style="margin:50px auto;width:70%;padding:20px 0">
@@ -64,7 +67,6 @@ const getHashedPass = async (password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     return hashedPassword;
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -232,7 +234,7 @@ const verifyRegisterOtp = async (req, res) => {
 
     return res.json({ success: true });
   } catch (error) {
-    console.log(error.message);
+    console.log(error.message); 
     return res.status(500).json({ success: false, emessage: "Server error during verification" });
   }
 };

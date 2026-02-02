@@ -8,7 +8,7 @@ const loadAddCategoryOffer = async (req, res) => {
     if (req.query.err) emessage = req.query.err;
     return res.render("addOffer", { categories, emessage });
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
     return res.status(500).send("internal error");
   }
 };
@@ -48,7 +48,7 @@ const submitCategoryOffer = async (req, res) => {
     await Product.updateMany({ category: category_name }, { $set: { category_OfferDetails: offerData }, $unset: { product_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
     return res.status(500).send("internal error");
   }
 };
@@ -61,15 +61,13 @@ const loadEditCategoryOffer = async (req, res) => {
     if (req.query.err) err = req.query.err;
     return res.render("editOffer", { product, err });
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
     return res.status(500).send("internal error");
   }
 };
 
 const submitEditCategoryOffer = async (req, res) => {
   try {
-    console.log(req.body);
-
     let { category_name, offerName, DiscountPercentage, offerStartDate, offerEndDate } = req.body;
 
     let today = new Date();
@@ -104,7 +102,6 @@ const submitEditCategoryOffer = async (req, res) => {
     await Product.updateMany({ category: category_name }, { $set: { category_OfferDetails: offerData }, $unset: { product_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
-    conosle.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -115,7 +112,6 @@ const loadDeleteCategoryOffer = async (req, res) => {
     await Product.updateMany({ category: category }, { $unset: { category_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };

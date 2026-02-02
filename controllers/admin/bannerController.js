@@ -7,7 +7,6 @@ const loadBanners = async (req, res) => {
     let slideBanners = await Banner.find({ description: "Banner for home page slide" });
     return res.render("listBanners", { slideBanners });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -22,7 +21,6 @@ const loadUpdateBanner = async (req, res) => {
 
     return res.render("editBanner", { banner, startDate, endDate });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -47,7 +45,6 @@ const updateBanner = async (req, res) => {
     await Banner.findByIdAndUpdate(id, { $set: updateFields });
     return res.redirect("/admin/banner");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -57,14 +54,12 @@ const loadAddBannerToSlide = async (req, res) => {
     let today = new Date();
     return res.render("addBanner", { today });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
 
 const addBannerToSlide = async (req, res) => {
   try {
-    console.log("yeah here");
     let { startDate, endDate, url } = req.body;
     let today = new Date();
     let emessage = null;
@@ -83,7 +78,6 @@ const addBannerToSlide = async (req, res) => {
     await saveNewBanner.save();
     return res.redirect("/admin/banner");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -95,7 +89,6 @@ const deleteBanner = async (req, res) => {
     await Banner.findOneAndDelete({ _id: id });
     return res.redirect("/admin/banner");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };

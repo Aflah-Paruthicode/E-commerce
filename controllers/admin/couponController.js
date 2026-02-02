@@ -29,7 +29,6 @@ const loadcouponManagement = async (req, res) => {
       i,
     });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -65,7 +64,7 @@ const addCoupon = async (req, res) => {
     await coupon.save();
     return res.redirect("/admin/couponManagement/?success=true");
   } catch (error) {
-    console.log(error.message);
+  
     return res.status(500).send("internal error");
   }
 };
@@ -76,7 +75,7 @@ const editCoupon = async (req, res) => {
     let emessage = req?.query?.err ? req.query.err : null;
     return res.render("couponEdit", { coupon, emessage });
   } catch (error) {
-    console.log(error.message);
+  
     return res.status(500).send("internal error");
   }
 };
@@ -107,7 +106,7 @@ const updateCoupon = async (req, res) => {
        { $set: { code: code.toUpperCase(), discount: discount, expiry: expiry, amount: amount } });
     return res.redirect("/admin/couponManagement/?creation=true");
   } catch (error) {
-    console.log(error.message);
+  
     return res.status(500).send("internal error");
   }
 };
@@ -117,7 +116,7 @@ const deleteCoupon = async (req, res) => {
     await Coupon.findOneAndDelete({ _id: req.params.id });
     return res.redirect("/admin/couponManagement");
   } catch (error) {
-    console.log(error.message);
+  
     return res.status(500).send("internal error");
   }
 };

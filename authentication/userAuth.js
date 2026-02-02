@@ -3,31 +3,27 @@ const User = require('../models/userModel');
 const isLogin = async (req, res, next) => {
     try {
         if (req.session.user_id) {
-            let user = await User.findOne({_id:req.session.user_id});
-            if(user.block) {
-                console.log('yeven blocked')
-                delete req.session.user_id
-                res.redirect('/login');         
-               }
-            next();
-            return
+
+            const userData = await User.findById({_id:req.session.user_id});
+            if(userData.block) {
+                delete req.session.user_id;
+                return res.redirect('/login');
+            }
+
+           return next();
         }
-        console.log('evde session')
-            res.redirect('/login');
+           return res.redirect('/login');
     } catch (error) {
-        console.log(error.message);
+        res.status(500).send('internal error from isLogin')
     }
 }
 const isLogout = async (req, res, next) => {
     try {
-
-        if (req.session.user_id) {
-            res.redirect('/');
-            return
-        }
+        if (req.session.user_id) return res.redirect('/');
+        
         next()
     } catch (error) {
-        console.log(error.message);
+        res.status(500).send('internal error from isLogout')
     }
 }
 module.exports = {

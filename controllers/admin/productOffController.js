@@ -9,10 +9,8 @@ const loadOfferManagement = async (req, res) => {
 
     const productOfferQuery = Product.find({ product_OfferDetails: { $exists: true } });
     const [categoryOffers, productOffers] = await Promise.all([categoryOfferQuery, productOfferQuery]);
-    console.log('category offers : ,' , categoryOffers)
     return res.render("offerManagement", { productOffers, categoryOffers });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -25,14 +23,12 @@ const loadAddProductOffer = async (req, res) => {
 
     return res.render("addOffer", { products, emessage });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
 
 const submitProductOffer = async (req, res) => {
   try {
-    console.log(req.body);
 
     let { product_Id, offerName, DiscountPercentage, offerStartDate, offerEndDate } = req.body;
     let today = new Date();
@@ -67,7 +63,7 @@ const submitProductOffer = async (req, res) => {
     await Product.findOneAndUpdate({ _id: product_Id }, { $set: { product_OfferDetails: offerData }, $unset: { category_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -80,7 +76,7 @@ const loadEditProductOffer = async (req, res) => {
 
     return res.render("editOffer", { product, emessage });
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -121,7 +117,7 @@ const submitEditProductOffer = async (req, res) => {
     await Product.findOneAndUpdate(id, { $set: { product_OfferDetails: offerData }, $unset: { category_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };
@@ -132,7 +128,7 @@ const loadDeleteProductOffer = async (req, res) => {
     await Product.findOneAndUpdate({ _id: id }, { $unset: { product_OfferDetails: "" } });
     return res.redirect("/admin/offerManagement");
   } catch (error) {
-    console.log(error.message);
+    
     return res.status(500).send("internal error");
   }
 };

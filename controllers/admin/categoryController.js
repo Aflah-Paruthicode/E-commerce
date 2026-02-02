@@ -21,7 +21,6 @@ const addCategory = async (req, res) => {
       message,
     });
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -46,7 +45,6 @@ const submitNewCategory = async (req, res) => {
     await categorY.save();
     return res.redirect("/admin/category/?message=Category created successfull");
   } catch (error) {
-    console.log(error.message);
     return res.status(500).send("internal error");
   }
 };
@@ -56,7 +54,7 @@ const toUnlistCategory = async (req, res) => {
     let setCategoryToUnlisted = await CAtegory.findByIdAndUpdate({ _id: req.query.id }, { $set: { isListed: false } });
      return res.redirect("/admin/category");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
     return res.status(500).send("internal error");
   }
 };
@@ -66,7 +64,7 @@ const toListCategory = async (req, res) => {
     let setCategoryToUnlisted = await CAtegory.findByIdAndUpdate({ _id: req.query.id }, { $set: { isListed: true } });
      return res.redirect("/admin/category");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
     return res.status(500).send("internal error");
   }
 };
@@ -78,7 +76,7 @@ const deleteCategory = async (req, res) => {
     if (isCategoryDelted) return res.redirect("/admin/category");
      return res.render("addCategory", { emessage: "failed to delete" });
   } catch (error) {
-    console.log(error.message);  
+    res.status(500).send('internal error')  
     return res.status(500).send("internal error"); 
   }
 };

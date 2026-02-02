@@ -17,7 +17,7 @@ const loadLogin = async (req, res) => {
   try {
     res.render("login");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
   }
 };
 
@@ -37,7 +37,7 @@ const verifyLogin = async (req, res) => {
       res.render("login", { emessage: "User not valid" });
     }
   } catch (error) {
-    console.log(error.message);
+     res.status(500).send('internal error')
   }
 };
 
@@ -345,7 +345,8 @@ const loadDashboard = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error.message);
+        res.status(500).send('internal error')
+
   }
 };
 
@@ -468,7 +469,7 @@ const loadCustomerList = async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
   }
 };
 
@@ -478,7 +479,7 @@ const blockUser = async (req, res) => {
     const block_User = await User.findByIdAndUpdate({ _id: id }, { $set: { block: true } });
     res.redirect("/admin/customers/?userblockUnblock=User has been blocked");
   } catch (error) {
-    console.log(error.message);
+   res.status(500).send('internal error')
   }
 };
 
@@ -489,7 +490,7 @@ const UnBlockUser = async (req, res) => {
 
     res.redirect("/admin/customers/?userblockUnblock=User has been unblocked");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
   }
 };
 
@@ -498,7 +499,7 @@ const deleteUser = async (req, res) => {
     let customer = await User.findOneAndDelete({ _id: req.params.id });
     res.redirect("/admin/customers/?userDeleted=User has been deleted");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
   }
 };
 
@@ -507,7 +508,7 @@ const logout = async (req, res) => {
     delete req.session.admin_id;
     res.redirect("/admin");
   } catch (error) {
-    console.log(error.message);
+    res.status(500).send('internal error')
   }
 };
 
@@ -775,16 +776,6 @@ function generatePDFReport(orders, users, products, res) {
   doc.end();
 }
 
-// const resultOfSearch = (req,res) => {
-
-//     try {
-
-//         res.render('/admin/searched')
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 module.exports = {
   loadLogin,
@@ -796,5 +787,4 @@ module.exports = {
   deleteUser,
   logout,
   loadSalesReport,
-  // resultOfSearch
 };

@@ -1,0 +1,38 @@
+.form-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #475569;
+}
+.form-control:focus {
+  border-color: #1e293b;
+  box-shadow: none;
+}
+.image-preview-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f8fafc;
+  position: relative;
+}
+.cropper-container {
+  max-height: 400px !important;
+}
+.btn-submit {
+  background: #1e293b;
+  color: white;
+  font-weight: 700;
+  padding: 12px;
+  border-radius: 8px;
+  width: 100%;
+  transition: 0.3s;
+  border: none;
+}
+.btn-submit:hover {
+  background: #0f172a;
+}
+#image-preview-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}

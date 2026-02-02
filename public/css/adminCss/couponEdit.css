@@ -1,0 +1,48 @@
+.form-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #475569;
+}
+.coupon-preview {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 25px;
+  position: relative;
+  overflow: hidden;
+  border: 1px dashed #94a3b8;
+}
+.coupon-preview::before,
+.coupon-preview::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: #f8fafc;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.coupon-preview::before {
+  left: -15px;
+}
+.coupon-preview::after {
+  right: -15px;
+}
+.btn-save {
+  background: #1e293b;
+  color: white;
+  font-weight: 700;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+}
+.input-group-text {
+  background: #f1f5f9;
+  border-right: none;
+}
+.form-control:focus {
+  border-color: #1e293b;
+  box-shadow: none;
+}

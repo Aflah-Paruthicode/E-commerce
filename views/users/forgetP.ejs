@@ -22,7 +22,7 @@
 
     <a href="/login" class="back-to-login"> <i class="fa-solid fa-arrow-left me-2"></i> Back to Login </a>
 
-    <% if (typeof emessage !== 'undefined') { %>
+    <% if (locals.emessage) { %>
     <script>
       Swal.fire({
         title: "Oops!",

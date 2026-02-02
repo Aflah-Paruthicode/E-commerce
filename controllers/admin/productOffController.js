@@ -9,7 +9,7 @@ const loadOfferManagement = async (req, res) => {
 
     const productOfferQuery = Product.find({ product_OfferDetails: { $exists: true } });
     const [categoryOffers, productOffers] = await Promise.all([categoryOfferQuery, productOfferQuery]);
-
+    console.log('category offers : ,' , categoryOffers)
     return res.render("offerManagement", { productOffers, categoryOffers });
   } catch (error) {
     console.log(error.message);

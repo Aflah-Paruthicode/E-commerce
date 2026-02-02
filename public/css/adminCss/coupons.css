@@ -1,0 +1,160 @@
+:root {
+  --sidebar-width: 260px;
+  --bg-gray: #f4f7f6;
+  --dark-slate: #1e293b;
+  --accent-blue: #3b82f6;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--bg-gray);
+  margin: 0;
+}
+
+header {
+  background: #fff;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e2e8f0;
+  justify-content: space-between;
+}
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--dark-slate);
+  height: 100vh;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  padding: 20px 10px;
+  overflow-y: auto;
+}
+.nav-btn {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  text-decoration: none;
+}
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-btn i {
+  color: #94a3b8;
+  width: 25px;
+  font-size: 18px;
+}
+.nav-btn span {
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.nav-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-btn.active span,
+.nav-btn.active i {
+  color: #fff;
+  font-weight: 700;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  margin-top: 70px;
+  padding: 30px;
+}
+
+.card-custom {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+.table thead th {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.table tbody td {
+  padding: 15px;
+  vertical-align: middle;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.coupon-code-badge {
+  background: #1e293b;
+  color: #fff;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.discount-val {
+  color: #10b981;
+  font-weight: 700;
+}
+
+.add-section {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+.form-group label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+.form-control-custom {
+  border-radius: 8px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-weight: 500;
+  font-size: 14px;
+}
+.btn-save {
+  background: var(--dark-slate);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  border: none;
+  transition: 0.3s;
+}
+.btn-save:hover {
+  background: #000;
+  transform: translateY(-1px);
+}
+
+.pagination .btn {
+  border: 1px solid #e2e8f0;
+  margin: 0 3px;
+  font-size: 13px;
+}
+.pagination .btn.active {
+  background: var(--dark-slate);
+  color: white;
+}

@@ -43,7 +43,7 @@
           <p class="subtitle">Join the Dash community today.</p>
 
           <a href="/auth/google" class="google-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_激Logo.svg" width="18" alt="" />
+            <img src="/signupWith/google (1).png" width="18" alt="" />
             Sign up with Google
           </a>
 
@@ -78,7 +78,7 @@
       </div>
     </main>
 
-    <%- include('../layouts/footer.ejs') %> <% if (typeof message !== 'undefined') { %>
+    <%- include('../layouts/footer.ejs') %> <% if (locals.message) { %>
     <script>
       Swal.fire({
         title: "Success!",
@@ -87,7 +87,7 @@
         confirmButtonColor: "#1a1a1a",
       });
     </script>
-    <% } %> <% if (typeof emessage !== 'undefined') { %>
+    <% } %> <% if (locals.emessage) { %>
     <script>
       Swal.fire({
         title: "Registration Failed",

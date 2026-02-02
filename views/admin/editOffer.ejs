@@ -1,168 +1,150 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-  rel="stylesheet">
-  <title>DashFootwares</title>
-  <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png">
-<link rel="stylesheet" href="/css/adminCss/adminHome.css">
-<link rel="stylesheet" href="/css/adminCss/adminListCus.css">
-<link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-
-
-
-<div class="ad-home-header-section">
-    <div class="ad-home-header-container">
-      <nav>
-        <div class="logo">
-          <img src="/logo/DashFootwares.png" alt="">
-          <h3 style="color: black;font-size: 16px;font-weight: 400;margin: 0;"> DASH FOOTWARES </h3>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Offer | DashControl</title>
+    <link rel="icon" type="image/x-icon" href="/logo/DashFootwares.png" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/css/adminCss/products.css" />
+    
+    <style>
+        .form-label { font-weight: 700; font-size: 0.8rem; color: #64748b; text-transform: uppercase; margin-bottom: 5px; }
+        .edit-card { border-left: 5px solid #1e293b; background: #ffffff; }
+        .readonly-select { background-color: #f8fafc !important; font-weight: 600; color: #1e293b; cursor: not-allowed; }
+        .discount-badge-preview { 
+            background: #1e293b; color: white; border-radius: 50%; 
+            width: 80px; height: 80px; display: flex; align-items: center; 
+            justify-content: center; font-weight: 800; font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-update { background: #1e293b; color: white; font-weight: 700; width: 100%; padding: 14px; border: none; border-radius: 8px; transition: 0.3s; }
+        .btn-update:hover { background: #000; transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="d-flex align-items-center">
+            <img src="/logo/DashFootwares.png" alt="" width="35" />
+            <h3 class="ms-3 mb-0" style="font-size: 16px; font-weight: 800">DASH CONTROL</h3>
         </div>
-        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/bell (1).png" alt="">
-        <img style="width: 2.5%;margin: 10px;" src="/userProfileImages/user (1).png" alt="">
-        <h3 style="color: black;font-size: 16px;font-weight: 400;margin-right: 25px;margin-bottom: 0;">Aflah</h3>
-        <form action="/admin/logout">
-          <input type="submit" value="Logout">
-        </form>
-  
-  
-      </nav>
-    </div>
-  </div>
+        <div class="d-flex align-items-center gap-3">
+            <span class="small fw-bold me-2">Aflah (Admin)</span>
+            <form action="/admin/logout"><button type="submit" class="btn btn-sm btn-outline-danger fw-bold">LOGOUT</button></form>
+        </div>
+    </header>
 
+    <aside class="sidebar">
+        <a href="/admin/dashboard" class="nav-btn"> <i class="fa-solid fa-chart-line"></i><span>Dashboard</span> </a>
+        <a href="/admin/customers" class="nav-btn"> <i class="fa-solid fa-users"></i><span>Customers</span> </a>
+        <a href="/admin/product" class="nav-btn"> <i class="fa-solid fa-shoe-prints"></i><span>Products</span> </a>
+        <a href="/admin/orders" class="nav-btn"> <i class="fa-solid fa-bag-shopping"></i><span>Orders</span> </a>
+        <a href="/admin/category" class="nav-btn"> <i class="fa-solid fa-layer-group"></i><span>Categories</span> </a>
+        <a href="/admin/couponManagement" class="nav-btn"> <i class="fa-solid fa-ticket"></i><span>Coupons</span> </a>
+        <a href="/admin/banner" class="nav-btn"> <i class="fa-solid fa-image"></i><span>Banners</span> </a>
+        <a href="/admin/offerManagement" class="nav-btn active"><i class="fa-solid fa-percent"></i><span>Offers</span></a>
+        <a href="/admin/salesReport" class="nav-btn"> <i class="fa-solid fa-file-invoice-dollar"></i><span>Sales Report</span> </a>
+    </aside>
 
+    <main class="main-content">
+        <div class="action-bar">
+            <h4 class="fw-bold m-0">Modify Offer Details</h4>
+            <a href="/admin/offerManagement" class="btn btn-sm btn-outline-secondary"> <i class="fa-solid fa-arrow-left me-2"></i>Back to Offers</a>
+        </div>
 
-  <div class="ad-home-dashboard-section">
-    <div class="ad-home-dashboard-container">
-      <div class="ad-home-dashboard-options">
-  
-        <button><img src="/adminOptionsImages/dashboard.png" alt=""><a href="/admin/dashboard">Dashboard</a></button>
-        <button><img src="/adminOptionsImages/customer.png" alt=""><a href="/admin/customers">Customers</a></button>
-        <button><img src="/adminOptionsImages/product.png" alt=""><a href="/admin/product">Products</a></button>
-        <button><img src="/adminOptionsImages/checkout.png" alt=""><a href="/admin/orders">Orders</a></button>
-        <button><img src="/adminOptionsImages/slider.png" alt=""><a href="/admin/banner">Banner Management</a></button>
-        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/couponManagement">Coupon Management</a></button>
-        <button><img src="/adminOptionsImages/sales.png" alt=""><a href="/admin/salesReport">Sales Report</a></button>
-        <button><img src="/adminOptionsImages/list.png" alt=""><a href="/admin/category">Category</a></button>
-        <button><img src="/adminOptionsImages/promo-code.png" alt=""><a href="/admin/offerManagement">Offer Management</a></button>
-
-  
-  
-  
-      </div>
-  
-      <div class="ad-home-dashboard-optionsDetailPage">
-          <h3>EDIT OFFER PAGE</h3>
-
-          <% if (emessage) { %>
-            <script>
-                Swal.fire({
-                    title: 'Failed!',
-                    text: '<%= emessage %>',
-                    icon: 'error',
-                    confirmButtonText: 'OK'
-                })
-            </script>
+        <% if (locals.emessage) { %>
+            <script>Swal.fire({ title: 'Failed!', text: '<%= emessage %>', icon: 'error' });</script>
         <% } %>
-          
-          
-  
-          <div class="adProduct-formDiv">
-            <form action="" method="post">
 
-                <div class="pName in">
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="content-card edit-card p-4 p-md-5 shadow-sm">
+                    <form action="" method="post">
+                        
+                        <div class="row align-items-center mb-5">
+                            <div class="col-md-8">
+                                <label class="form-label">Applying Offer To:</label>
+                                <% if(typeof product !== 'undefined' ) { %>
+                                    <div class="h4 fw-bold text-dark"><i class="fa-solid fa-shoe-prints me-2"></i><%= product.name %></div>
+                                    <input type="hidden" name="product_Id" value="<%= product._id %>">
+                                <% } else { %>
+                                    <div class="h4 fw-bold text-dark"><i class="fa-solid fa-layer-group me-2"></i><%= categoryOfferedProduct.category %></div>
+                                    <input type="hidden" name="category_name" value="<%= categoryOfferedProduct.category %>">
+                                <% } %>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <div class="d-inline-block text-center">
+                                    <div class="discount-badge-preview mx-auto" id="discountDisplay">
+                                        <%= (typeof product !== 'undefined' ? product.product_OfferDetails.discountPercentage : categoryOfferedProduct.category_OfferDetails.discountPercentage) %>%
+                                    </div>
+                                    <div class="small fw-bold mt-2 text-muted">CURRENT DISCOUNT</div>
+                                </div>
+                            </div>
+                        </div>
 
-                   <%  if(typeof product !== 'undefined' ) {  %>
-                    
-                    <label for="">Product :</label>
-                    <select name="product_Id" id="">
-                        <option value="<%= product.name %>"><%= product.name %></option>
+                        <div class="row g-4">
+                            <div class="col-md-8">
+                                <label class="form-label">Offer Campaign Name</label>
+                                <input type="text" name="offerName" class="form-control border-2" 
+                                    value="<%= typeof product !== 'undefined' ? product.product_OfferDetails.offerName : categoryOfferedProduct.category_OfferDetails.offerName %>" required>
+                                <% if(typeof product !== 'undefined') { %>
+                                    <input type="hidden" name="id" value="<%= product._id %>">
+                                <% } %>
+                            </div>
 
-                    </select>
-                   <%  } else { %>
+                            <div class="col-md-4">
+                                <label class="form-label">New Percentage (%)</label>
+                                <input type="number" name="DiscountPercentage" id="discountInput" class="form-control border-2" min="1" max="99" 
+                                    value="<%= typeof product !== 'undefined' ? product.product_OfferDetails.discountPercentage : categoryOfferedProduct.category_OfferDetails.discountPercentage %>" required>
+                            </div>
 
-                    <label for="">Category :</label>
-                    <select name="category_name" id="">
+                            <div class="col-md-6">
+                                <label class="form-label">Start Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fa-solid fa-calendar-day"></i></span>
+                                    <% let startDate = (typeof product !== 'undefined' ? product.product_OfferDetails.offerStartDate : categoryOfferedProduct.category_OfferDetails.offerStartDate) %>
+                                    <input type="date" name="offerStartDate" class="form-control" 
+                                        value="<%= startDate.toISOString().split('T')[0] %>" required>
+                                </div>
+                            </div>
 
-                            <option value="<%= categoryOfferedProduct.category %>"><%= categoryOfferedProduct.category %></option>
+                            <div class="col-md-6">
+                                <label class="form-label">End Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fa-solid fa-calendar-check"></i></span>
+                                    <% let endDate = (typeof product !== 'undefined' ? product.product_OfferDetails.offerEndDate : categoryOfferedProduct.category_OfferDetails.offerEndDate) %>
+                                    <input type="date" id="date" name="offerEndDate" class="form-control" 
+                                        value="<%= endDate.toISOString().split('T')[0] %>" required>
+                                </div>
+                            </div>
 
-                    </select>
-
-              <%  } %>
-                  </div>
-
-
-            <div class="pName in">
-              <label for="">Offer name :</label>
-              <%  if(typeof product !== 'undefined' ) {  %>
-
-              <input type="text" name="offerName" value="<%= product.product_OfferDetails.offerName %>" >
-              <input type="hidden" name="id" value="<%= product._id %>">
-                <% } else {  %>
-                <input type="text" name="offerName" value="<%= categoryOfferedProduct.category_OfferDetails.offerName %>">
-
-               <% } %>
+                            <div class="col-12 mt-5">
+                                <button type="submit" class="btn-update shadow-sm">
+                                    <i class="fa-solid fa-floppy-disk me-2"></i> UPDATE OFFER CAMPAIGN
+                                </button>
+                                <p id="error" class="text-danger small mt-2 fw-bold text-center"></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
+        </div>
+    </main>
 
-              
-              
+    <script>
+        // Real-time badge update
+        const discountInput = document.getElementById('discountInput');
+        const discountDisplay = document.getElementById('discountDisplay');
 
-            
-
-            <div class="pDescription in">
-              <label for="">Discount Percentage :</label>
-
-              <%  if(typeof product !== 'undefined' ) {  %>
-
-              <input type="number" name="DiscountPercentage" value="<%= product.product_OfferDetails.discountPercentage %>" >
-
-              <% } else {  %>
-
-                <input type="number" name="DiscountPercentage" value="<%= categoryOfferedProduct.category_OfferDetails.discountPercentage %>" >
-
-
-                <% } %>
-
-            </div>
-            
-            <div class="pPrice in">
-              <label for="">Offer Start Date :</label>
-              <%  if(typeof product !== 'undefined' ) {  %>
-                 
-                    <input style="width: 30%;" type="date" name="offerStartDate" value="<%= product.product_OfferDetails.offerStartDate.getFullYear() %>-<%= (product.product_OfferDetails.offerStartDate.getMonth() + 1).toString().padStart(2, '0') %>-<%= product.product_OfferDetails.offerStartDate.getDate().toString().padStart(2, '0') %>" >
-                   
-
-                    <label style="margin: 30px;margin-left: 55px;" for=""> Offer End Date :</label>
-                    <input style="width: 30%;" id="date" type="date" required  name="offerEndDate" value="<%= product.product_OfferDetails.offerEndDate.getFullYear() %>-<%= (product.product_OfferDetails.offerEndDate.getMonth() + 1).toString().padStart(2, '0') %>-<%= product.product_OfferDetails.offerEndDate.getDate().toString().padStart(2, '0') %>" >
-                 
-                    <% } else { %>
-
-                    <input style="width: 30%;" type="date" name="offerStartDate" value="<%= categoryOfferedProduct.category_OfferDetails.offerStartDate.getFullYear() %>-<%= (categoryOfferedProduct.category_OfferDetails.offerStartDate.getMonth() + 1).toString().padStart(2, '0') %>-<%= categoryOfferedProduct.category_OfferDetails.offerStartDate.getDate().toString().padStart(2, '0') %>" >
-
-                    <label style="margin: 30px;margin-left: 55px;" for=""> Offer End Date :</label>
-                    <input style="width: 30%;" id="date" type="date" required  name="offerEndDate" value="<%= categoryOfferedProduct.category_OfferDetails.offerEndDate.getFullYear() %>-<%= (categoryOfferedProduct.category_OfferDetails.offerEndDate.getMonth() + 1).toString().padStart(2, '0') %>-<%= categoryOfferedProduct.category_OfferDetails.offerEndDate.getDate().toString().padStart(2, '0') %>" >
-                 
-                <% } %>
-
-          </div>
-
-            
-            
-            <div class="in">
-
-            <input style="    margin-top: 25px;
-            margin-left: 170px;background-color: green;outline: none;border: none;color: #fff;width: 210px;font-size: 16px;font-weight: 600;border-radius: 10px;" type="submit" value="Submit changes">
-          </div>
-
-                  </form>
-                  <p id="error" style="color: red;"></p>
-
-            
-
-          </div>
-      </div>
-    </div>
-  </div>
-
+        discountInput.addEventListener('input', function() {
+            let val = this.value;
+            if(val > 99) this.value = 99;
+            if(val < 0) this.value = 0;
+            discountDisplay.innerText = (this.value || 0) + '%';
+        });
+    </script>
+</body>
+</html>

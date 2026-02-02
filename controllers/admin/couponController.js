@@ -10,8 +10,8 @@ const loadcouponManagement = async (req, res) => {
     const totalCoupons = await Coupon.countDocuments();
     const totalPages = Math.ceil(totalCoupons / limit);
     const coupons = await Coupon.find().sort({ _id: -1 }).skip(skip).limit(limit);
-    const emessage = null;
-    const message = null;
+    let emessage = null;
+    let message = null;
 
     if (req.query.err) {
       emessage = req.query.err;

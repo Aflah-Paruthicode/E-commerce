@@ -1,8 +1,8 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/E-commerce');
+mongoose.connect(process.env.MONGODB_URI);
 const bodyParser = require('body-parser');
 
-require('dotenv').config();
 
 const PORT = process.env.PORT
 const SecretKey = process.env.SessionSecretKey

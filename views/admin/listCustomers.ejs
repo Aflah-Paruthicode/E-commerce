@@ -9,173 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-      :root {
-        --sidebar-width: 260px;
-        --bg-gray: #f4f7f6;
-        --dark-slate: #1e293b;
-        --accent-blue: #3b82f6;
-      }
-
-      body {
-        font-family: "Montserrat", sans-serif;
-        background-color: var(--bg-gray);
-        margin: 0;
-      }
-
-      /* Reusing Sidebar & Header Styles */
-      header {
-        background: #fff;
-        height: 70px;
-        display: flex;
-        align-items: center;
-        padding: 0 30px;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        border-bottom: 1px solid #e2e8f0;
-        justify-content: space-between;
-      }
-      .sidebar {
-        width: var(--sidebar-width);
-        background: var(--dark-slate);
-        height: 100vh;
-        position: fixed;
-        top: 70px;
-        left: 0;
-        padding: 20px 10px;
-        overflow-y: auto;
-      }
-      .nav-btn {
-        width: 100%;
-        border: none;
-        background: transparent;
-        padding: 12px 15px;
-        border-radius: 8px;
-        margin-bottom: 5px;
-        display: flex;
-        align-items: center;
-        transition: 0.3s;
-        text-decoration: none;
-      }
-      .nav-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
-      .nav-btn i {
-        color: #94a3b8;
-        width: 25px;
-        font-size: 18px;
-      }
-      .nav-btn span {
-        color: #cbd5e1;
-        font-size: 14px;
-        font-weight: 500;
-        margin-left: 10px;
-      }
-      .nav-btn.active {
-        background: rgba(255, 255, 255, 0.1);
-      }
-      .nav-btn.active span {
-        color: #fff;
-        font-weight: 700;
-      }
-      .nav-btn.active i {
-        color: #fff;
-      }
-
-      .main-content {
-        margin-left: var(--sidebar-width);
-        margin-top: 70px;
-        padding: 30px;
-      }
-
-      /* Table & Search Card */
-      .content-card {
-        background: #fff;
-        padding: 25px;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      }
-
-      .search-wrapper {
-        position: relative;
-        max-width: 400px;
-        margin-bottom: 25px;
-      }
-      .search-wrapper i {
-        position: absolute;
-        left: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #94a3b8;
-      }
-      .search-wrapper input {
-        padding-left: 45px;
-        border-radius: 10px;
-        border: 1px solid #e2e8f0;
-        background: #f8fafc;
-      }
-
-      .table thead th {
-        background: #f8fafc;
-        color: #64748b;
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border-bottom: 2px solid #f1f5f9;
-        padding: 15px;
-      }
-      .table tbody td {
-        padding: 15px;
-        vertical-align: middle;
-        color: #1e293b;
-        font-size: 14px;
-        border-bottom: 1px solid #f1f5f9;
-      }
-
-      .badge-status {
-        padding: 6px 12px;
-        border-radius: 50px;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        text-decoration: none;
-        display: inline-block;
-      }
-      .status-active {
-        background: #dcfce7;
-        color: #15803d;
-      }
-      .status-blocked {
-        background: #fee2e2;
-        color: #b91c1c;
-      }
-
-      .btn-delete {
-        color: #94a3b8;
-        transition: 0.3s;
-        font-size: 18px;
-      }
-      .btn-delete:hover {
-        color: #ef4444;
-      }
-
-      .pagination .btn {
-        margin: 0 4px;
-        border-radius: 8px;
-        border: 1px solid #e2e8f0;
-        background: #fff;
-        color: #64748b;
-      }
-      .pagination .btn.active {
-        background: var(--dark-slate);
-        color: #fff;
-        border-color: var(--dark-slate);
-      }
-    </style>
+    <link rel="stylesheet" href="/css/adminCss/customers.css" />
   </head>
   <body>
     <header>
@@ -291,12 +125,11 @@
       }
 
       function searchInput(value) {
-        // Adding a slight debounce would be better, but keeping your logic:
         window.location.href = `/admin/customers/?searchData=${value}`;
       }
     </script>
 
-    <% if (typeof message !== 'undefined') { %>
+    <% if (locals.message) { %>
     <script>
       Swal.fire({
         title: "Success!",

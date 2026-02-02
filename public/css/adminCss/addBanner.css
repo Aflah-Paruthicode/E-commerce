@@ -1,0 +1,44 @@
+.form-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #475569;
+}
+.banner-placeholder {
+  width: 100%;
+  aspect-ratio: 1429 / 781;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  overflow: hidden;
+  position: relative;
+}
+.banner-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+.btn-create {
+  background: #1e293b;
+  color: white;
+  font-weight: 700;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+.btn-create:hover {
+  background: #0f172a;
+}
+.dimension-info {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  margin-top: 8px;
+}

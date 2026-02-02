@@ -1,0 +1,143 @@
+:root {
+  --sidebar-width: 260px;
+  --bg-gray: #f4f7f6;
+  --dark-slate: #1e293b;
+  --accent-blue: #3b82f6;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--bg-gray);
+  margin: 0;
+}
+
+header {
+  background: #fff;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e2e8f0;
+  justify-content: space-between;
+}
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--dark-slate);
+  height: 100vh;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  padding: 20px 10px;
+  overflow-y: auto;
+}
+.nav-btn {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+  text-decoration: none;
+}
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-btn i {
+  color: #94a3b8;
+  width: 25px;
+  font-size: 18px;
+}
+.nav-btn span {
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 10px;
+}
+.nav-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+.nav-btn.active span,
+.nav-btn.active i {
+  color: #fff;
+  font-weight: 700;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  margin-top: 70px;
+  padding: 30px;
+}
+
+.banner-preview {
+  width: 160px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #eee;
+}
+.dimension-hint {
+  background: #fff1f2;
+  color: #e11d48;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.card-custom {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+.table thead th {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 15px;
+}
+
+.status-countdown {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.status-expired {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.btn-add-banner {
+  background: var(--dark-slate);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: 0.3s;
+}
+.btn-add-banner:hover {
+  background: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+.action-btns .btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+}

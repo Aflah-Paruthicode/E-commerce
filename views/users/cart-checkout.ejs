@@ -245,32 +245,16 @@
                                                 <% product_ids.push(product._id) %>
 
                                                     <% if(HIGHTdistance> 0) { %>
-                                                        <p style="    position: absolute; left: <%= distance %>px; top: <%= HIGHTdistance %>px;
-                                    background: #ffffffbf;
-                                    color: black;
-                                    padding: 7px 15px;
-                                    margin: 7px;
-                                    border-radius: 50%;
-                                    font-weight: 700;">
+                                                        <p style="position: absolute; left: <%= locals.distance %>px; top: <%= HIGHTdistance %>px;background: #ffffffbf;color: black;padding: 7px 15px;margin: 7px;border-radius: 50%;font-weight: 700;">
                                                             <%= quantity[i] %>
                                                         </p>
-                                                        <img src="/productImages/<%= product.images[0] %>" style="width: 150px;    border-radius: 5px;
-                                
-                            " alt="">
+                                                        <img src="/productImages/<%= product.images[0] %>" style="width: 150px;    border-radius: 5px;" alt="">
                                                         <% } else { %>
 
-                                                            <p style="    position: absolute; left: <%= distance %>px; 
-                                background: #ffffffbf;
-                                color: black;
-                                padding: 7px 15px;
-                                margin: 7px;
-                                border-radius: 50%;
-                                font-weight: 700;">
+                                                            <p style="    position: absolute; left: <%= distance %>px; background: #ffffffbf;color: black;padding: 7px 15px;margin: 7px;border-radius: 50%;font-weight: 700;">
                                                                 <%= quantity[i] %>
                                                             </p>
-                                                            <img src="/productImages/<%= product.images[0] %>" style="width: 150px;    border-radius: 5px;
-                            
-                        " alt="">
+                                                            <img src="/productImages/<%= product.images[0] %>" style="width: 150px;    border-radius: 5px;" alt="">
                                                             <% } %>
 
                                                                 <% ogTotel +=product.og_price %>
@@ -393,10 +377,10 @@
 
 
                     </div>
-                    <hr>
+                    <hr>   
 
 
-                    <% if (typeof emessage !=='undefined' ) { %>
+                    <% if (locals.emessage) { %>
                         <script>
                             Swal.fire({
                                 title: 'Failed!',

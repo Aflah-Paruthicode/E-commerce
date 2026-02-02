@@ -513,204 +513,105 @@ const logout = async (req, res) => {
 
 const loadSalesReport = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const limit = parseInt(req.query.limit) || 10; // Default to 10 items per page
-
-    // Calculate the number of items to skip
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
-    // Get total number of products for pagination information
-    let totalOrders = await Order.countDocuments({ status: "Delivered" });
 
-    // Calculate total number of pages
+    // 1. Build the Match Filter (Let MongoDB do the work)
+    let matchQuery = { status: "Delivered" };
+    const period = req.query.period;
 
-    let orders = await Order.find({ status: "Delivered" }).sort({ _id: -1 }).skip(skip).limit(limit);
+    if (period) {
+      const today = new Date();
+      let startDate = new Date();
 
-    if (req.query.period) {
-      if (req.query.period !== "day" && req.query.period !== "week" && req.query.period !== "month" && req.query.period !== "year") {
-        let wholeOrders = await Order.find({ status: "Delivered" }).sort({ _id: -1 }).skip(skip).limit(limit);
-
-        // User-provided date in YYYY/MM/DD format
-        const userDate = req.query.period;
-
-        // Convert the userDate to a Date object directly
-        const startDateObj = new Date(userDate); // This creates a Date object from the string
-
-        orders = await Order.aggregate([
-          {
-            $match: {
-              status: "Delivered",
-            },
-          },
-          {
-            // Step 1: Convert the 'date' field in the schema from 'DD/MM/YYYY' to a Date object
-            $addFields: {
-              dateObj: {
-                $dateFromString: {
-                  dateString: "$date", // Converts the string date in the schema to Date object
-                  format: "%d/%m/%Y", // Format of the date strings in your schema
-                },
-              },
-            },
-          },
-          {
-            // Step 2: Match documents where 'dateObj' is between 'startDateObj' and now
-            $match: {
-              dateObj: {
-                $gte: startDateObj, // Use the Date object created from the user input
-                $lte: new Date(), // Compare with the current date
-              },
-            },
-          },
-          {
-            // Step 3: Optionally remove the temporary 'dateObj' field
-            $project: {
-              dateObj: 0,
-            },
-          },
-        ]);
-
-        totalOrders = wholeOrders.length;
-      } else if (req.query.period == "day") {
-        let today = createDateString();
-        orders = await Order.find({ status: "Delivered", date: today }).sort({ _id: -1 }).skip(skip).limit(limit);
-        totalOrders = orders.length;
-      } else if (req.query.period == "week") {
-        let wholeOrders = await Order.find({ status: "Delivered" }).sort({ _id: -1 }).skip(skip).limit(limit);
-
-        function parseDate(dateStr) {
-          const [day, month, year] = dateStr.split("/");
-          return new Date(`${year}-${month}-${day}`);
-        }
-
-        // Get today's date
-        const today = new Date();
-
-        // Calculate the date 6 days ago
-        const sixDaysAgo = new Date(today);
-        sixDaysAgo.setDate(today.getDate() - 6);
-
-        // Filter the documents based on the date range
-        orders = wholeOrders.filter((doc) => {
-          const docDate = parseDate(doc.date);
-          return docDate >= sixDaysAgo && docDate <= today;
-        });
-        totalOrders = wholeOrders.length;
-      } else if (req.query.period == "month") {
-        let wholeOrders = await Order.find({ status: "Delivered" }).sort({ _id: -1 }).skip(skip).limit();
-
-        function parseDateTODate(dateStr) {
-          const [day, month, year] = dateStr.split("/");
-          return new Date(`${year}-${month}-${day}`);
-        }
-
-        // Get today's date
-        const today = new Date();
-
-        // Calculate the date 6 days ago
-        const thirtyDaysAgo = new Date(today);
-        thirtyDaysAgo.setDate(today.getDate() - 30);
-
-        // Filter the documents based on the date range
-        orders = wholeOrders.filter((doc) => {
-          const docDate = parseDateTODate(doc.date);
-          return docDate >= thirtyDaysAgo && docDate <= today;
-        });
-        totalOrders = wholeOrders.length;
-      } else if (req.query.period == "year") {
-        let wholeOrders = await Order.find({ status: "Delivered" }).sort({ _id: -1 }).skip(skip).limit();
-
-        function parseDateTODate(dateStr) {
-          const [day, month, year] = dateStr.split("/");
-          return new Date(`${year}-${month}-${day}`);
-        }
-
-        // Get today's date
-        const today = new Date();
-
-        const yearAgo = new Date(today);
-        yearAgo.setDate(today.getDate() - 365);
-
-        // Filter the documents based on the date range
-        orders = wholeOrders.filter((doc) => {
-          const docDate = parseDateTODate(doc.date);
-          return docDate >= yearAgo && docDate <= today;
-        });
-        totalOrders = wholeOrders.length;
+      if (period === "day") {
+        startDate.setHours(0, 0, 0, 0);
+      } else if (period === "week") {
+        startDate.setDate(today.getDate() - 7);
+      } else if (period === "month") {
+        startDate.setMonth(today.getMonth() - 1);
+      } else if (period === "year") {
+        startDate.setFullYear(today.getFullYear() - 1);
+      } else {
+        // Custom date provided (YYYY-MM-DD)
+        startDate = new Date(period);
       }
+
+      // We use aggregation to handle your string-based 'date' field ('DD/MM/YYYY')
+      matchQuery.dateAsDate = { $gte: startDate, $lte: today };
     }
 
-    const totalPages = Math.ceil(totalOrders / limit);
-
-    let FindordersSum = await Order.aggregate([
+    // 2. Aggregate Orders (Handles Filtering, Pagination, and Totals in one go)
+    const pipeline = [
       { $match: { status: "Delivered" } },
       {
-        $group: {
-          _id: null,
-          totalAmount: { $sum: "$totelAmmount" },
-        },
+        $addFields: {
+          dateAsDate: {
+            $dateFromString: { dateString: "$date", format: "%d/%m/%Y" }
+          }
+        }
       },
+      { $match: period ? { dateAsDate: matchQuery.dateAsDate } : {} },
+      { $sort: { _id: -1 } }
+    ];
+
+    // Get Total Statistics (Sum of all delivered orders)
+    const stats = await Order.aggregate([
+      ...pipeline,
+      { $group: { _id: null, totalAmount: { $sum: "$totelAmmount" }, count: { $sum: 1 } } }
     ]);
 
-    let orderTotel = FindordersSum[0].totalAmount;
+    const orderTotal = stats[0]?.totalAmount || 0;
+    const totalFilteredOrders = stats[0]?.count || 0;
+    const totalPages = Math.ceil(totalFilteredOrders / limit);
 
-    let users = [];
-    let products = [];
-    let coupon = [];
+    // 3. Fetch Paginated Orders with .populate() (Solves N+1 problem)
+    // Populate replaces the for-loop you had earlier
+    const orders = await Order.aggregate(pipeline)
+      .skip(skip)
+      .limit(limit);
 
-    for (let i = 0; i < orders.length; i++) {
-      users.push(await User.findOne({ _id: orders[i].user }));
-      products.push(await Product.findOne({ _id: orders[i].product }));
-      if (orders[i].coupon_applied !== "no") {
-        coupon.push(await Coupon.findOne({ code: orders[i].coupon_applied }));
-      } else {
-        coupon.push("no");
-      }
-    }
+    // To get user/product details efficiently:
+    const populatedOrders = await Order.populate(orders, [
+      { path: 'user' },
+      { path: 'product' }
+    ]);
 
+    // Handle Export Formats (PDF/Excel)
     if (req.query.format) {
-      let orders = await Order.find({ status: "Delivered" });
-      let users = [];
-      let products = [];
-
-      for (let i = 0; i < orders.length; i++) {
-        users.push(await User.findOne({ _id: orders[i].user }));
-        products.push(await Product.findOne({ _id: orders[i].product }));
-      }
-
-      if (req.query.format == "pdf") {
-        generatePDFReport(orders, users, products, res);
+      const allOrdersForReport = await Order.find({ status: "Delivered" }).populate('user product');
+      if (req.query.format === "pdf") {
+        return generatePDFReport(allOrdersForReport, res);
       } else {
-        generateExcelReport(orders, users, products, res);
+        return generateExcelReport(allOrdersForReport, res);
       }
-    } else {
-      let i = skip;
-
-      const queryString = Object.keys(req.query)
-        .filter((key) => key !== "page" && key !== "limit")
-        .map((key) => `&${key}=${req.query[key]}`)
-        .join("");
-
-      let totel_orders = await Order.countDocuments({ status: "Delivered" });
-      res.render("salesReport", {
-        orders,
-        coupon,
-        users,
-        products,
-        totel_orders,
-        orderTotel,
-        pagination: {
-          totalOrders,
-          totalPages,
-          currentPage: page,
-          hasNextPage: page < totalPages,
-          hasPrevPage: page > 1,
-        },
-        i,
-        queryString,
-      });
     }
+
+    // 4. Final Render
+    const queryString = Object.keys(req.query)
+      .filter(key => key !== "page" && key !== "limit")
+      .map(key => `&${key}=${req.query[key]}`)
+      .join("");
+
+    res.render("salesReport", {
+      orders: populatedOrders,
+      orderTotel: orderTotal,
+      totel_orders: totalFilteredOrders,
+      pagination: {
+        totalOrders: totalFilteredOrders,
+        totalPages,
+        currentPage: page,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+      i: skip,
+      queryString,
+    });
+
   } catch (error) {
-    console.log(error.message);
+    console.error("Sales Report Error:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

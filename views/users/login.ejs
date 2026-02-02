@@ -61,7 +61,8 @@
       </div>
     </main>
 
-    <%- include('../layouts/footer.ejs') %> <% if (typeof message !== 'undefined') { %>
+    <%- include('../layouts/footer.ejs') %> 
+    <% if (locals.message) { %>
     <script>
       Swal.fire({
         title: "Welcome!",
@@ -72,7 +73,7 @@
         window.location.href = "/";
       });
     </script>
-    <% } %> <% if (typeof emessage !== 'undefined') { %>
+    <% } %> <% if (locals.emessage) { %>
     <script>
       Swal.fire({
         title: "Login Failed",

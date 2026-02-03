@@ -1,3 +1,6 @@
+
+// TODO: Refactor this controller into smaller modules (UserAuth, UserProfile, UserProduct, UserCart, UserOrders, UserWishlist).
+
 const User = require("../../models/userModel");
 const Address = require("../../models/addressModel");
 const Cart = require("../../models/cartModel");

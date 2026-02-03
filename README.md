@@ -27,7 +27,7 @@
 
 1. clone this repository
 ```bash
-git clone https://github.com/Aflah-Paruthicode/Dash_Footweares.git
+git clone https://github.com/Aflah-Paruthicode/Dash_Footwares.git
 ```
 
 2. navigate into the folder
@@ -51,5 +51,5 @@ Building dash footwares taught me how to handle complex Real World logic—like 
 
 ---
 
-Developed with ❤️ by Aflah 😊
+Developed with ❤️ by Aflah 😊 <br />
 if the repo felt useful! consider giving it a star 🫰
